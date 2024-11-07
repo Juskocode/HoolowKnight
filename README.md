@@ -9,9 +9,8 @@
 - - Long Range
 - - Ataque especial
 - Adicionar colectáveis
-- Adicionar alguns tipos de inimigos 
+- Adicionar alguns tipos de inimigos
 - Adicionar um menu
 - Adicionar barras de informação
 - Possível implementação de "dash" ou "dodge"
 - Alterar resolução
-
