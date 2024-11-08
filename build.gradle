@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'HollowKnight'
@@ -10,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.googlecode.lanterna:lanterna:3.1.1'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
