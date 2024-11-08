@@ -1,5 +1,5 @@
 package HollowKnight.gui;
 
-public class GUI {
-
+public interface GUI {
+    enum ACTION{UP, DOWN, RIGHT, LEFT, QUIT, SELECT}
 }

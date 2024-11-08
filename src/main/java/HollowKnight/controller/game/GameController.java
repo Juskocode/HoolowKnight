@@ -1,4 +1,7 @@
 package HollowKnight.controller.game;
 
-public class GameController {
+import HollowKnight.controller.Controller;
+
+public abstract class GameController extends Controller<Scene> {
+    public GameController(Scene scene) {super(scene);}
 }
