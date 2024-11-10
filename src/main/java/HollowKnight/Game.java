@@ -3,6 +3,7 @@ package HollowKnight;
 
 import HollowKnight.gui.LanternaGUI;
 import HollowKnight.model.game.elements.map.Scene;
+import HollowKnight.model.game.elements.map.SceneLoader;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.state.GameState;
 import HollowKnight.state.MenuState;
@@ -23,7 +24,7 @@ public class Game {
         int SCREEN_HEIGHT = 40;
 
         this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT);
-        this.state = new GameState(new Scene(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.state = new GameState(new SceneLoader().createScene());
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
