@@ -3,7 +3,7 @@ package HollowKnight.view.states;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Model;
 
-public abstract class ScreenViewer<T extends Model> {
+public abstract class ScreenViewer<T> {
     final protected GUI gui;
     final protected T model;
 
