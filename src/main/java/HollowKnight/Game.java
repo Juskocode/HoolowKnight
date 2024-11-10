@@ -19,8 +19,11 @@ public class Game {
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        this.gui = new LanternaGUI(80, 40);
-        this.state = new GameState(new Scene(80, 40));
+        int SCREEN_WIDTH = 80;
+        int SCREEN_HEIGHT = 40;
+
+        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.state = new GameState(new Scene(SCREEN_WIDTH, SCREEN_HEIGHT));
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
