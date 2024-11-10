@@ -2,7 +2,9 @@ package HollowKnight;
 
 
 import HollowKnight.gui.LanternaGUI;
+import HollowKnight.model.game.elements.map.Scene;
 import HollowKnight.model.menu.Menu;
+import HollowKnight.state.GameState;
 import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
 
@@ -18,7 +20,7 @@ public class Game {
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
         this.gui = new LanternaGUI(80, 40);
-        this.state = new MenuState(new Menu());
+        this.state = new GameState(new Scene(80, 40));
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {        Logger logger = Logger.getLogger(Game.class.getName());
@@ -29,7 +31,7 @@ public class Game {
         }
     }
 
-    public void setState(MenuState state) {
+    public void setState(State state) {
         this.state = state;
     }
 

@@ -18,7 +18,7 @@ public class SceneController extends GameController {
 
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         if (action == GUI.ACTION.QUIT)
-            game.setState(new MenuState(new Menu()));
+            game.setState(null);
         else {
             playerController.move(game, action, time);
         }
