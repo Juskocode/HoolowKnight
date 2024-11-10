@@ -34,7 +34,7 @@ public class LanternaGUI implements GUI{
         return terminalFactory.createTerminal();
     }
     private AWTTerminalFontConfiguration loadFont() throws URISyntaxException, IOException, FontFormatException {
-        URL resource = getClass().getClassLoader().getResource("...");
+        URL resource = getClass().getClassLoader().getResource("fonts/SuperPixel.ttf");
         assert resource != null;
         File fontFile = new File(resource.toURI());
         Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, 11);

@@ -4,12 +4,12 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.map.Scene;
 
 public class GameViewer extends ScreenViewer<Scene> {
-    public GameViewer(GUI gui, Scene map) {
-        super(gui, map);
+    public GameViewer(Scene model) {
+        super(model);
     }
 
     @Override
-    public void draw() {
+    public void draw(GUI gui) {
 
     }
 }
