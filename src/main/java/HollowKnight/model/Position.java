@@ -13,4 +13,5 @@ public record Position(int x, int y) {
     public Position getDown() {
         return new Position(x, y + 1);
     }
+
 }
