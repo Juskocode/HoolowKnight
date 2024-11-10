@@ -4,12 +4,12 @@ import HollowKnight.model.Position;
 
 public class Knight extends Element{
     private int HP;
-    private int Damage;
+    private float Damage_multiplier;
     private int Energy;
-    public Knight(int x, int y, int HP, int Damage, int Energy){
+    public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
         super(x,y);
         this.HP=HP;
-        this.Damage = Damage;
+        this.Damage_multiplier = Damage_multiplier;
         this.Energy = Energy;
     }
 }
