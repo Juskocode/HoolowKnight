@@ -1,12 +1,9 @@
 package HollowKnight.controller.game;
 
-import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.map.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerControllerTest {
     private PlayerController playerController;
