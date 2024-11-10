@@ -23,7 +23,8 @@ public class Game {
         this.state = new GameState(new Scene(80, 40));
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {        Logger logger = Logger.getLogger(Game.class.getName());
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+        Logger logger = Logger.getLogger(Game.class.getName());
         try {
             new Game().start();
         } catch (Exception e) {
