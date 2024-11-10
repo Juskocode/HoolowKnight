@@ -3,7 +3,6 @@ package HollowKnight.state;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
-import HollowKnight.gui.LanternaGUI;
 import HollowKnight.view.states.ScreenViewer;
 
 import java.io.IOException;
