@@ -1,7 +1,7 @@
 package HollowKnight.model.game.elements.map;
 
 import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.knight;
+import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.tile.Tile;
 
 import java.util.List;

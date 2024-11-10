@@ -1,5 +1,7 @@
 package HollowKnight.model.game.elements.Collectables;
 
+import HollowKnight.model.game.elements.Knight.Knight;
+
 public class HealthOrb extends Collectables{
     private int health;
     public HealthOrb(int x, int y, int health){
