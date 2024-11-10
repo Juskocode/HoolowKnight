@@ -1,19 +1,13 @@
 package HollowKnight.controller.game;
 
 import HollowKnight.Game;
-import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.map.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static HollowKnight.gui.GUI.ACTION.*;
-import static net.jqwik.time.api.Times.times;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerControllerTest {
     private Scene scene;
