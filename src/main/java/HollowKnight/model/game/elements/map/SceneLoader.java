@@ -63,7 +63,10 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'P') return new Knight(x, y, 50, 10, 5);
+                if (line.charAt(x) == 'P') {
+                    System.out.println("Found Player " + x + " - "+ y);
+                    return new Knight(x, y, 50, 10, 5);
+                }
         }
         return null;
     }
