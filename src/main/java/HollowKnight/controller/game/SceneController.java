@@ -1,8 +1,9 @@
 package HollowKnight.controller.game;
 
 import HollowKnight.Game;
-import HollowKnight.controller.menu.Menu;
+import HollowKnight.model.menu.Menu;
 import HollowKnight.gui.GUI;
+import HollowKnight.model.game.elements.map.Scene;
 import HollowKnight.state.MenuState;
 
 import java.io.IOException;

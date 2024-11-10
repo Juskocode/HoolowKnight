@@ -3,6 +3,7 @@ package HollowKnight.controller.game;
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
+import HollowKnight.model.game.elements.map.Scene;
 
 public class PlayerController extends GameController {
     public PlayerController(Scene scene) {
@@ -25,25 +26,26 @@ public class PlayerController extends GameController {
         movePlayer(this.getModel().getPlayer().getPosition().getDown());
     }
 
-    private void movePlayer(Posit   ion position) {
+    private void movePlayer(Position position) {
         this.getModel().getPlayer().setPosition(position);
     }
 
     @Override
     public void move(Game game, GUI.ACTION action, long time) {
         switch (action){
-            case GUI.ACTION.UP:
+            case UP:
                 movePlayerUp();
                 break;
-            case GUI.ACTION.DOWN:
+            case DOWN:
                 movePlayerDown();
                 break;
-            case GUI.ACTION.LEFT:
+            case LEFT:
                 movePlayerLeft();
                 break;
-            case GUI.ACTION.RIGHT:
+            case RIGHT:
                 movePlayerRight();
                 break;
+            default:
         }
     }
 }

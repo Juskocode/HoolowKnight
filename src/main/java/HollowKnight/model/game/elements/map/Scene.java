@@ -6,7 +6,7 @@ import HollowKnight.model.game.elements.tile.Tile;
 
 import java.util.List;
 
-public class Map {
+public class Scene {
     private final int width;
     private final int height;
 
@@ -14,7 +14,7 @@ public class Map {
 
     private List<Tile> tiles;
 
-    public Map(int width, int height) {
+    public Scene(int width, int height) {
         this.width = width;
         this.height = height;
     }
