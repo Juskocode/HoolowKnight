@@ -29,10 +29,8 @@ public class MenuController extends Controller<Menu> {
                 if (this.getModel().isSelectedExit()) {
                     game.setState(null);
                 }
-                else {
-                    State nextState = new GameState(new load.createLevel());
-                    game.setState(nextState);
-                }
+                break;
+            default:
         }
     }
 }

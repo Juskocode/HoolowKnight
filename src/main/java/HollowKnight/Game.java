@@ -22,7 +22,7 @@ public class Game {
             game.start();
     }
 
-    public void setState(State state) {
+    public void setState(MenuState state) {
         this.state = state;
     }
 
