@@ -3,6 +3,8 @@ package HollowKnight.controller;
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 
+import java.io.IOException;
+
 public abstract class Controller<T> {
     private final T model;
 
@@ -14,5 +16,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void move(Game game, GUI action, long time);
+    public abstract void move(Game game, GUI.ACTION action, long time) throws IOException;
 }

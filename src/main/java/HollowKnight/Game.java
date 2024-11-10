@@ -2,32 +2,45 @@ package HollowKnight;
 
 
 import HollowKnight.gui.LanternaGUI;
+import HollowKnight.model.game.elements.map.Scene;
+import HollowKnight.model.menu.Menu;
+import HollowKnight.state.GameState;
 import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game {
     private final LanternaGUI gui;
     private State state;
 
-    public Game(LanternaGUI gui) {
-        this.gui = new LanternaGUI();
-        //this.state = new MenuState();
+    public Game() throws IOException, URISyntaxException, FontFormatException {
+        this.gui = new LanternaGUI(80, 40);
+        this.state = new GameState(new Scene(80, 40));
     }
 
-    public static void main(String[] args) {
-            Game game = new Game(new LanternaGUI());
-            game.run();
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+        Logger logger = Logger.getLogger(Game.class.getName());
+        try {
+            new Game().start();
+        } catch (Exception e) {
+            logger.log(Level.INFO, "An error occurred while running Game.start()", e);
+        }
     }
 
     public void setState(State state) {
         this.state = state;
     }
 
-    public void start() {
+    public void start() throws IOException{
         int FPS = 60;
         int TBF = 1000/60;
 
-        while (this.state) {
+        while (this.state != null) {
             long startTime = System.currentTimeMillis();
             state.move(this, gui, startTime);
             long elapsedTime = System.currentTimeMillis() - startTime;

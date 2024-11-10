@@ -1,6 +1,8 @@
-package HollowKnight.model.game.elements;
+package HollowKnight.model.game.elements.enemies;
 
-public abstract class Enemies extends Element{
+import HollowKnight.model.game.elements.Element;
+
+public abstract class Enemies extends Element {
     private int HP;
     private int Damage;
 

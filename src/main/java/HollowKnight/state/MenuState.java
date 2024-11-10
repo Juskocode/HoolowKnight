@@ -1,4 +1,6 @@
 package HollowKnight.state;
 
-public class MenuState {
+import HollowKnight.model.menu.Menu;
+
+public class MenuState{
 }
