@@ -4,12 +4,12 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.menu.Menu;
 
 public class MenuViewer extends ScreenViewer<Menu> {
-    public MenuViewer(GUI gui, Menu model) {
-        super(gui, model);
+    public MenuViewer(Menu model) {
+        super(model);
     }
 
     @Override
-    public void draw() {
+    public void draw(GUI gui) {
 
     }
 }
