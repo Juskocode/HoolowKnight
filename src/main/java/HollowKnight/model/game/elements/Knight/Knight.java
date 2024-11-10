@@ -5,13 +5,13 @@ import HollowKnight.model.game.elements.Element;
 
 public class Knight extends Element {
     private int HP;
-    private int Damage;
+    private float Damage_multiplier;
     private int Energy;
     private double velocity;
-    public Knight(int x, int y, int HP, int Damage, int Energy){
+    public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
         super(x,y);
         this.HP=HP;
-        this.Damage = Damage;
+        this.Damage_multiplier = Damage_multiplier;
         this.Energy = Energy;
     }
 
@@ -23,13 +23,17 @@ public class Knight extends Element {
         return HP;
     }
 
-    public void setDamage(int damage) {
-        this.Damage = damage;
+    public void setDamage(float damage) {
+        this.Damage_multiplier = damage;
     }
 
-    public int getDamage() {
-        return Damage;
+    public float getDamage() {
+        return Damage_multiplier;
     }
+
+    public void multiplyDamage(float damage){
+        this.Damage_multiplier = this.Damage_multiplier * damage;
+    } // para ser usado quando tivermos collectables que multiplicam a damage
 
     public void setEnergy(int energy) {
         Energy = energy;
