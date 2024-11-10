@@ -9,11 +9,13 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class LanternaGUI implements GUI{
     private final Screen screen;
-    public LanternaGUI(int width, int height) throws IOException {
+    public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
         Terminal terminal = createTerminal(width, height);
         this.screen = createScreen(terminal);
     }
