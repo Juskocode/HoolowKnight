@@ -61,9 +61,9 @@ public class LanternaGUI implements GUI{
     }
 
     @Override
-    public void drawPixel(int x, int y, String color) {
+    public void drawPixel(int x, int y, TextColor.RGB color) {
         TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(TextColor.Factory.fromString(color));
+        tg.setBackgroundColor(color);
         tg.putString(x, y + 1, " ");
     }
 

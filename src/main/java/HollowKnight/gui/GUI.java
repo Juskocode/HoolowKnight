@@ -1,5 +1,7 @@
 package HollowKnight.gui;
 
+import com.googlecode.lanterna.TextColor;
+
 import java.io.IOException;
 
 public interface GUI {
@@ -8,6 +10,6 @@ public interface GUI {
     void flush() throws IOException;
     void close() throws IOException;
     ACTION getACTION() throws IOException;
-    void drawPixel(int x, int y, String color);
+    void drawPixel(int x, int y, TextColor.RGB color);
 
 }
