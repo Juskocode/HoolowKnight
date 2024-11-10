@@ -5,9 +5,11 @@ import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.map.Scene;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.elements.KnightViewer;
+import HollowKnight.view.elements.TileViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GameViewer extends ScreenViewer<Scene> {
     public GameViewer(Scene model) {
@@ -17,7 +19,20 @@ public class GameViewer extends ScreenViewer<Scene> {
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
-// COLOR 1: 255  205  178
+        gradientLoader(gui);
+        drawElements(gui, getModel().getTiles(), new TileViewer());
+        drawElement(gui, getModel().getPlayer(), new KnightViewer());
+        gui.flush();
+    }
+    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {
+        viewer.draw(element, gui);
+    }
+    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
+        for (T element : elements)
+            drawElement(gui, element, viewer);
+    }
+    private void gradientLoader(GUI gui){
+        // COLOR 1: 255  205  178
 // COLOR 2: 109  104  117
         TextColor.RGB color1 = new TextColor.RGB(34, 87, 122);
         TextColor.RGB color2 = new TextColor.RGB(128, 237, 153);
@@ -98,9 +113,5 @@ public class GameViewer extends ScreenViewer<Scene> {
             gui.drawPixel(74, h, current);
         }
 
-        gui.flush();
-    }
-    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {
-        viewer.draw(element, gui);
     }
 }
