@@ -20,11 +20,11 @@ public class PlayerController extends GameController {
 
     public void movePlayerUp() {
         movePlayer(this.getModel().getPlayer().getPosition().getUp());
-    }
+    } // nao testar
 
     public void movePlayerDown() {
         movePlayer(this.getModel().getPlayer().getPosition().getDown());
-    }
+    } //não testar
 
     private void movePlayer(Position position) {
         this.getModel().getPlayer().setPosition(position);
