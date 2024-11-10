@@ -19,10 +19,4 @@ public class Position {
     public Position getDown() {
         return new Position(x, y + 1);
     }
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
 }
