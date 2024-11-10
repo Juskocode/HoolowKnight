@@ -22,6 +22,7 @@ dependencies {
 application {
     mainClass.set('HollowKnight.Game')
 }
+
 test {
     useJUnitPlatform()
 }
