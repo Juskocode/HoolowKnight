@@ -39,21 +39,21 @@ public class Game {
         this.state = state;
     }
 
-    public void start() throws IOException{
+    private void start() throws IOException, InterruptedException {
         int FPS = 60;
-        int TBF = 1000/60;
+        int frameTime = 1000 / FPS;
 
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
+
             state.move(this, gui, startTime);
+
             long elapsedTime = System.currentTimeMillis() - startTime;
-            long sleepTime = TBF - elapsedTime;
-            try {
-                if (sleepTime > 0) Thread.sleep(sleepTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                System.out.println("Error handling thread");
-            }
+            long sleepTime = frameTime - elapsedTime;
+
+            if (sleepTime > 0) Thread.sleep(sleepTime);
         }
+
+        gui.close();
     }
 }
