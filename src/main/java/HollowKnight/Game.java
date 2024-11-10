@@ -25,7 +25,7 @@ public class Game {
         try {
             new Game().start();
         } catch (Exception e) {
-            logger.log(Level.INFO, "An error occurred", e);
+            logger.log(Level.INFO, "An error occurred while running Game.start()", e);
         }
     }
 
