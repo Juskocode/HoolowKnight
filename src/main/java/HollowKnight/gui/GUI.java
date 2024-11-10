@@ -1,11 +1,13 @@
 package HollowKnight.gui;
 
-public interface GUI {
-    enum ACTION{UP, DOWN, RIGHT, LEFT, QUIT, SELECT};
+import java.io.IOException;
 
-    void flush();
-    void drawPixel();
-    void cleanUp();
-    void close();
+public interface GUI {
+    enum ACTION{UP, DOWN, RIGHT, LEFT, QUIT, SELECT, NULL};
+    void cls();
+    void flush() throws IOException;
+    void close() throws IOException;
+    ACTION getACTION() throws IOException;
+    void drawPixel(int x, int y, String color);
 
 }
