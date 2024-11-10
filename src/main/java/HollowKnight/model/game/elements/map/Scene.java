@@ -2,6 +2,7 @@ package HollowKnight.model.game.elements.map;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Knight.Knight;
+import HollowKnight.model.game.elements.knight;
 import HollowKnight.model.game.elements.tile.Tile;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class Scene {
     public Scene(int width, int height) {
         this.width = width;
         this.height = height;
+        this.player = new Knight(width / 2, height / 2, 100, 10, 5);
     }
 
     public int getWidth() {
