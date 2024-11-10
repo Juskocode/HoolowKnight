@@ -1,7 +1,8 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Model;
+
+import java.io.IOException;
 
 public abstract class ScreenViewer<T> {
     final protected T model;
@@ -14,5 +15,5 @@ public abstract class ScreenViewer<T> {
         return model;
     }
 
-    public abstract void draw(GUI gui);
+    public abstract void draw(GUI gui) throws IOException;
 }
