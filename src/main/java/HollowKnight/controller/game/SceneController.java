@@ -7,9 +7,9 @@ import HollowKnight.model.game.scene.Scene;
 public class SceneController extends GameController {
     private final PlayerController playerController;
 
-    public SceneController(Scene scene) {
+    public SceneController(Scene scene, PlayerController playerController) {
         super(scene);
-        this.playerController = new PlayerController(scene);
+        this.playerController = playerController;
     }
 
     public void move(Game game, GUI.ACTION action, long time){
