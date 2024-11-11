@@ -31,27 +31,35 @@ public class GameViewer extends ScreenViewer<Scene> {
         for (T element : elements)
             drawElement(gui, element, viewer);
     }
+    private void setBackgroundColor(GUI gui, TextColor.RGB color) {
+        // BACKGROUND (NOT SCENE RELATED)
+        for (int w = 0; w < 160; w++) {
+            for (int h = 0; h < 90; h++) {
+                gui.drawPixel(w, h, color);
+            }
+        }
+    }
     private void gradientLoader(GUI gui){
         // COLOR 1: 255  205  178
-// COLOR 2: 109  104  117
+        // COLOR 2: 109  104  117
         TextColor.RGB color1 = new TextColor.RGB(34, 87, 122);
         TextColor.RGB color2 = new TextColor.RGB(128, 237, 153);
 
-// Outer background
+        // Outer background
         for (int w = 0; w < 80; w++) {
             for (int h = 0; h < 40; h++) {
                 gui.drawPixel(w, h, new TextColor.RGB(28, 28, 28));
             }
         }
 
-// Inner rectangle with gradient
+        // Inner rectangle with gradient
         for (int w = 5; w < 75; w++) {
             for (int h = 5; h < 35; h++) {
                 gui.drawPixel(w, h, new TextColor.RGB(55, 55, 55));
             }
         }
 
-// Top and bottom gradients
+        // Top and bottom gradients
         for (int w = 0; w < 80; w++) {
             TextColor.RGB current = new TextColor.RGB(
                     color1.getRed() + (color2.getRed() - color1.getRed()) * w / 80,
@@ -82,7 +90,7 @@ public class GameViewer extends ScreenViewer<Scene> {
             gui.drawPixel(w, 34, current);
         }
 
-// Left and right gradients
+        // Left and right gradients
         for (int h = 1; h < 39; h++) {
             TextColor.RGB current = new TextColor.RGB(
                     color1.getRed() + (color2.getRed() - color1.getRed()) * h / 40,
