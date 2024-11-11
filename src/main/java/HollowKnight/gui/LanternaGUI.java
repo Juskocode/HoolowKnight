@@ -24,7 +24,7 @@ public class LanternaGUI implements GUI{
     }
 
     private Terminal createTerminal(int width, int height) throws IOException, URISyntaxException, FontFormatException {
-        TerminalSize size = new TerminalSize(width, height + 1);
+        TerminalSize size = new TerminalSize(width, height );
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(size);
 
