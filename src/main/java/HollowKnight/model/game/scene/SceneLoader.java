@@ -1,4 +1,4 @@
-package HollowKnight.model.game.elements.map;
+package HollowKnight.model.game.scene;
 
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.tile.Tile;

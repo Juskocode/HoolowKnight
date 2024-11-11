@@ -2,7 +2,7 @@ package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
-import HollowKnight.model.game.elements.map.Scene;
+import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.TileViewer;

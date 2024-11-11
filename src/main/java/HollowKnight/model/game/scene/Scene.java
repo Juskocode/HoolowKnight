@@ -1,4 +1,4 @@
-package HollowKnight.model.game.elements.map;
+package HollowKnight.model.game.scene;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Knight.Knight;

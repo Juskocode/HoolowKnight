@@ -2,11 +2,8 @@ package HollowKnight;
 
 
 import HollowKnight.gui.LanternaGUI;
-import HollowKnight.model.game.elements.map.Scene;
-import HollowKnight.model.game.elements.map.SceneLoader;
-import HollowKnight.model.menu.Menu;
+import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.state.GameState;
-import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
 
 import java.awt.*;

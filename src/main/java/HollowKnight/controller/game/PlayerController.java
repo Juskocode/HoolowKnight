@@ -3,7 +3,7 @@ package HollowKnight.controller.game;
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.map.Scene;
+import HollowKnight.model.game.scene.Scene;
 
 public class PlayerController extends GameController {
     public PlayerController(Scene scene) {
