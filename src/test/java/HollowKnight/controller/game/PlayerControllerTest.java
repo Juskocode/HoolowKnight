@@ -2,6 +2,7 @@ package HollowKnight.controller.game;
 
 import HollowKnight.Game;
 import HollowKnight.model.Position;
+import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
