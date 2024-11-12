@@ -18,26 +18,27 @@ import java.net.URL;
 
 public class LanternaGUI implements GUI{
     private final Screen screen;
-    public LanternaGUI(int width, int height) throws IOException, FontFormatException, URISyntaxException {
-        Terminal terminal = createTerminal(width, height);
+    public LanternaGUI(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
+        Terminal terminal = createTerminal(width, height, fontSize);
         this.screen = createScreen(terminal);
     }
 
-    private Terminal createTerminal(int width, int height) throws IOException, URISyntaxException, FontFormatException {
-        TerminalSize size = new TerminalSize(width, height );
+    private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
+        TerminalSize size = new TerminalSize(width, height);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(size);
 
-        AWTTerminalFontConfiguration fontConfig = loadFont();
+        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
         terminalFactory.setForceAWTOverSwing(true);
         terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
         return terminalFactory.createTerminal();
     }
-    private AWTTerminalFontConfiguration loadFont() throws URISyntaxException, IOException, FontFormatException {
+
+    private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
         URL resource = getClass().getClassLoader().getResource("fonts/pixel.ttf");
         assert resource != null;
         File fontFile = new File(resource.toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, 11);
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 
@@ -64,7 +65,7 @@ public class LanternaGUI implements GUI{
     public void drawPixel(int x, int y, TextColor.RGB color) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
-        tg.putString(x, y + 1, " ");
+        tg.putString(x, y, " ");
     }
 
     @Override
