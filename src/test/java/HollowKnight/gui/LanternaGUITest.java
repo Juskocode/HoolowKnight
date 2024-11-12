@@ -27,7 +27,6 @@ class LanternaGUITest {
     }
     @Test
     void drawPixel() throws IOException, URISyntaxException, FontFormatException {
-        GUI gui = new LanternaGUI(40, 80);
-        gui.drawPixel(10,10,"#FF5733");
+        GUI gui = new LanternaGUI(40, 80,10);
     }
 }

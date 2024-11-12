@@ -21,10 +21,10 @@ public class MenuController extends Controller<Menu> {
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         switch (action) {
             case UP:
-                this.getModel().nextOption();
+                this.getModel().previousOption();
                 break;
             case DOWN:
-                this.getModel().previousOption();
+                this.getModel().nextOption();
                 break;
             case SELECT:
                 if (this.getModel().isSelectedExit()) {
