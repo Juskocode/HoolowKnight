@@ -69,6 +69,13 @@ public class LanternaGUI implements GUI{
     }
 
     @Override
+    public void drawText(int x, int y, TextColor.RGB color,TextColor.RGB backgroundcolor, String Text) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(backgroundcolor);
+        tg.putString(x, y,Text);
+    }
+
+    @Override
     public ACTION getACTION() throws IOException {
         KeyStroke keyStroke = screen.pollInput();
         if (keyStroke == null)

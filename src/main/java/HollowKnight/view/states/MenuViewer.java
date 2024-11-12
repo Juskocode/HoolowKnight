@@ -25,9 +25,9 @@ public class MenuViewer extends ScreenViewer<Menu> {
         int boxHeight = 2; // Height of the selection box (thickness)
 
         // Iterate through the options
-        for (int idx = 0; idx < 2; idx++) {
+        for (int idx = 0; idx < options.size(); idx++) {
             // Calculate gradient color based on the index
-            TextColor.RGB selected = calculateGradient(idx, 2);
+            TextColor.RGB selected = calculateGradient(idx, options.size());
 
             // Draw a thicker line for the selected option with gradient
             for (int y = 0; y < boxHeight; y++) {
@@ -39,6 +39,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
                     }
                 }
             }
+            gui.drawText(35,15, new TextColor.RGB(0, 0, 0), options.get(idx));
         }
     }
 
