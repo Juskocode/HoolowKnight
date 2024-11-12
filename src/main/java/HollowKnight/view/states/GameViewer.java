@@ -24,11 +24,10 @@ public class GameViewer extends ScreenViewer<Scene> {
         gradientLoader(gui);
         //drawElements(gui, getModel().getTiles(), new TileViewer());
         drawElement(gui, getModel().getPlayer(), new KnightViewer());
-        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight/Idle/pixil-frame-0.png");
-        sprite.draw(gui, 30, 25);
+
         gui.flush();
     }
-    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {
+    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) throws IOException {
         viewer.draw(element, gui);
     }
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
