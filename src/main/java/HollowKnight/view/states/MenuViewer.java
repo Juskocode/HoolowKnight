@@ -18,6 +18,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
+        drawBackGround(gui);
         this.drawOptions(gui, getModel().getOptions(), new OptionViewer());
         gui.flush();
     }
@@ -57,5 +58,30 @@ public class MenuViewer extends ScreenViewer<Menu> {
         int r = (int)(255 * (idx / (float) totalOptions)); // Red increases as idx increases
         int g = (int)(255 * (1 - (idx / (float) totalOptions))); // Green decreases as idx increases
         return new TextColor.RGB(r, g, 0); // Green to red gradient
+    }
+    private void drawBackGround(GUI gui) throws IOException {
+        // Background gradient color
+        for (int w = 0; w < 80; w++) {
+            // Calculate the intermediate RGB values based on the position
+            int greenValue = 255 - (int)(255 * w / 79.0); // Green decreases as w increases
+            int blueValue = (int)(255 * w / 79.0);         // Blue increases as w increases
+            TextColor.RGB color = new TextColor.RGB(0, greenValue, blueValue);
+
+            // Draw a vertical line with this color across the height
+            for (int h = 0; h < 40; h++) {
+                gui.drawPixel(w, h, color);
+            }
+        }
+
+        // Border color
+        TextColor.RGB white = new TextColor.RGB(25, 25, 25);
+        for (int w = 0; w < 80; w++) {
+            gui.drawPixel(w, 0, white);
+            gui.drawPixel(w, 39, white);
+        }
+        for (int h = 1; h < 39; h++) {
+            gui.drawPixel(0, h, white);
+            gui.drawPixel(79, h, white);
+        }
     }
 }
