@@ -43,6 +43,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
                     }
                 }
             }
+
             if(select)
                 gui.drawText(35,15+(idx*5)+1, selected,options.get(idx));
             else{
