@@ -24,7 +24,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     }
 
     private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer) throws IOException {
-        TextColor.RGB deselected = new TextColor.RGB(255, 255, 255); // Deselected color (white)
+        TextColor.RGB deselected = new TextColor.RGB(25, 25, 25); // Deselected color (white)
         int boxWidth = 10;  // Width of the selection box (fat line)
         int boxHeight = 2; // Height of the selection box (thickness)
         boolean select= false;
@@ -37,18 +37,18 @@ public class MenuViewer extends ScreenViewer<Menu> {
             for (int y = 0; y < boxHeight; y++) {
                 for (int x = 0; x < boxWidth; x++) {
                     if (getModel().isSelected(idx)) {
-                        gui.drawPixel(35 + x, 15 + (5 * idx) + y, selected); // Draw selected with gradient
+                        gui.drawPixel(34 + x, 15 + (5 * idx) + y, selected); // Draw selected with gradient
                         select = true;
                     } else {
-                        gui.drawPixel(35 + x, 15 + (5 * idx) + y, deselected); // Draw deselected
+                        gui.drawPixel(34 + x, 15 + (5 * idx) + y, deselected); // Draw deselected
                         select = false;
                     }
                 }
             }
             if(select)
-                gui.drawText(35,15+(idx*5)+1, selected, options.get(idx).getText());
+                gui.drawText(34,15+(idx*5)+1, selected, options.get(idx).getText());
             else{
-                gui.drawText(35,15+(idx*5)+1, new TextColor.RGB(255, 255,255),options.get(idx).getText());
+                gui.drawText(34,15+(idx*5)+1, new TextColor.RGB(25, 25,25),options.get(idx).getText());
             }
         }
     }
