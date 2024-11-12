@@ -3,6 +3,7 @@ package HollowKnight.view.states;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.menu.Menu;
 import com.googlecode.lanterna.TextColor;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +16,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
+
         this.drawOptions(gui, getModel().getOptions());
         gui.flush();
     }
@@ -23,7 +25,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
         TextColor.RGB deselected = new TextColor.RGB(255, 255, 255); // Deselected color (white)
         int boxWidth = 10;  // Width of the selection box (fat line)
         int boxHeight = 2; // Height of the selection box (thickness)
-
+        boolean select= false;
         // Iterate through the options
         for (int idx = 0; idx < options.size(); idx++) {
             // Calculate gradient color based on the index
@@ -34,12 +36,19 @@ public class MenuViewer extends ScreenViewer<Menu> {
                 for (int x = 0; x < boxWidth; x++) {
                     if (getModel().isSelected(idx)) {
                         gui.drawPixel(35 + x, 15 + (5 * idx) + y, selected); // Draw selected with gradient
+                        select = true;
                     } else {
                         gui.drawPixel(35 + x, 15 + (5 * idx) + y, deselected); // Draw deselected
+                        select = false;
                     }
                 }
             }
-            gui.drawText(35+2,15*(idx+1)-1, new TextColor.RGB(0, 0, 0),options.get(idx));
+            if(select)
+                gui.drawText(35,15+(idx*5)+1, selected,options.get(idx));
+            else{
+                gui.drawText(35,15+(idx*5)+1, new TextColor.RGB(255, 255,255),options.get(idx));
+            }
+
         }
     }
 
@@ -50,6 +59,8 @@ public class MenuViewer extends ScreenViewer<Menu> {
         int g = (int)(255 * (1 - (idx / (float) totalOptions))); // Green decreases as idx increases
         return new TextColor.RGB(r, g, 0); // Green to red gradient
     }
+
+
 
 
 }
