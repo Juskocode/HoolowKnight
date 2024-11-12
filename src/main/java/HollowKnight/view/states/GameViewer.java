@@ -2,9 +2,11 @@ package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.elements.KnightViewer;
+import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.elements.TileViewer;
 import HollowKnight.view.sprites.Sprite;
 import HollowKnight.view.sprites.SpriteLoader;
@@ -14,26 +16,26 @@ import java.io.IOException;
 import java.util.List;
 
 public class GameViewer extends ScreenViewer<Scene> {
+    private final ParticleViewer particleViewer;
+    private final KnightViewer knightViewer;
     public GameViewer(Scene model) {
         super(model);
+        this.particleViewer = new ParticleViewer();
+        this.knightViewer = new KnightViewer();
     }
 
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
         gradientLoader(gui);
-        //drawElements(gui, getModel().getTiles(), new TileViewer());
-        drawElement(gui, getModel().getPlayer(), new KnightViewer());
 
+        //drawElements(gui, getModel().getTiles(), new TileViewer());
+        drawElement(gui, getModel().getPlayer(), this.knightViewer);
+        drawElements(gui, getModel().getParticles(), this.particleViewer);
         gui.flush();
     }
-    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) throws IOException {
-        viewer.draw(element, gui);
-    }
-    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
-        for (T element : elements)
-            drawElement(gui, element, viewer);
-    }
+
+
     private void setBackgroundColor(GUI gui, TextColor.RGB color) {
         // BACKGROUND (NOT SCENE RELATED)
         for (int w = 0; w < 160; w++) {
