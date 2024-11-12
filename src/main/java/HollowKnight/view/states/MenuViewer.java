@@ -28,18 +28,24 @@ public class MenuViewer extends ScreenViewer<Menu> {
         for (int idx = 0; idx < options.size(); idx++) {
             // Calculate gradient color based on the index
             TextColor.RGB selected = calculateGradient(idx, options.size());
-
+            boolean select = false;
             // Draw a thicker line for the selected option with gradient
             for (int y = 0; y < boxHeight; y++) {
                 for (int x = 0; x < boxWidth; x++) {
                     if (getModel().isSelected(idx)) {
-                        gui.drawPixel(35 + x, 15 + (5 * idx) + y, selected); // Draw selected with gradient
+                        gui.drawPixel(35 + x, 15 + (5 * idx) + y, selected);// Draw selected with gradient
+                        select = true;
                     } else {
                         gui.drawPixel(35 + x, 15 + (5 * idx) + y, deselected); // Draw deselected
+                        select = false;
                     }
                 }
             }
-            gui.drawText(35,15, new TextColor.RGB(0, 0, 0), new TextColor.RGB(0, 0, 0), options.get(idx));
+            if(select)
+                gui.drawText(35,15+(idx*5)+1, selected,options.get(idx));
+            else{
+                gui.drawText(35,15+(idx*5)+1, new TextColor.RGB(255, 255,255),options.get(idx));
+            }
         }
     }
 
