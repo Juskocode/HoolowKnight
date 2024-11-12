@@ -15,11 +15,11 @@ public class GameState extends State<Scene> {
 
     @Override
     protected Controller<Scene> getController() {
-        return new SceneController(model, new PlayerController(model), new ParticleController(model));
+        return new SceneController(getModel(), new PlayerController(getModel()), new ParticleController(getModel()));
     }
 
     @Override
     protected ScreenViewer<Scene> getScreenViewer() {
-        return new GameViewer(model);
+        return new GameViewer(getModel());
     }
 }

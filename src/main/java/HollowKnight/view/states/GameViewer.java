@@ -1,19 +1,12 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
-import HollowKnight.model.game.elements.Element;
-import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.scene.Scene;
-import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
-import HollowKnight.view.elements.TileViewer;
-import HollowKnight.view.sprites.Sprite;
-import HollowKnight.view.sprites.SpriteLoader;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
-import java.util.List;
 
 public class GameViewer extends ScreenViewer<Scene> {
     private final ParticleViewer particleViewer;
