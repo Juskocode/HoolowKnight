@@ -19,11 +19,4 @@ public abstract class ScreenViewer<T> {
     }
 
     public abstract void draw(GUI gui) throws IOException;
-    public  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
-        for (T element : elements)
-            drawElement(gui, element, viewer);
-    }
-    public  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) throws IOException {
-        viewer.draw(element, gui);
-    }
 }
