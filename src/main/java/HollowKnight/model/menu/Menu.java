@@ -6,7 +6,7 @@ public class Menu {
     private final List<String> options;
     private int currentOption = 0;
     public Menu() {
-        this.options = Arrays.asList("Start", "Settings", "ScoreBoard", "Exit");
+        this.options = Arrays.asList("Start", "Exit", "ScoreBoard", "Settings");
     }
 
     public List<String> getOptions() {
