@@ -72,7 +72,7 @@ public class LanternaGUI implements GUI{
     public void drawText(int x, int y, TextColor.RGB color, String Text) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
-        tg.putString(x, y,Text);
+        tg.putString(x, y, Text);
     }
 
     @Override
