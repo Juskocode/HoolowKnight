@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public abstract class ScreenViewer<T> {
-    final protected T model;
+    private final T model;
 
     public ScreenViewer(T model) {
         this.model = model;
