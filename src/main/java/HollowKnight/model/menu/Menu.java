@@ -1,5 +1,8 @@
 package HollowKnight.model.menu;
 
+import HollowKnight.model.game.elements.Particle.Particle;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 public class Menu {
@@ -10,8 +13,8 @@ public class Menu {
         Option settings = new Option(30, 20, "Settings");
         Option scoreboard = new Option(30, 25, "ScoreBoard");
         Option exit = new Option(30, 30, "Exit");
-
         this.options = Arrays.asList(start, settings, scoreboard, exit);
+
     }
 
     public List<Option> getOptions() {
@@ -41,4 +44,6 @@ public class Menu {
     public boolean isSelectedStart() {
         return isSelected(0);
     }
+
+
 }

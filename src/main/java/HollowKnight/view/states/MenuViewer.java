@@ -3,6 +3,7 @@ package HollowKnight.view.states;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Option;
+import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.menu.OptionViewer;
 import com.googlecode.lanterna.TextColor;
 
@@ -10,8 +11,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class MenuViewer extends ScreenViewer<Menu> {
+    private final ParticleViewer particleViewer;
     public MenuViewer(Menu model) {
         super(model);
+        this.particleViewer = new ParticleViewer();
     }
 
     @Override

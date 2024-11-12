@@ -1,7 +1,9 @@
 package HollowKnight.model.game.scene;
 
 import HollowKnight.model.game.elements.Knight.Knight;
+import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.tile.Tile;
+import com.googlecode.lanterna.TextColor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,13 +11,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SceneLoader {
     private final List<String> lines;
 
     public Scene createScene() {
-        Scene scene = new Scene(getWidth(), getHeight());
-
+        Scene scene = new Scene(80, 40);
+        scene.setParticles(createParticles(10,scene));
         scene.setPlayer(createPlayer());
         scene.setTiles(createWalls());
 
@@ -69,5 +72,19 @@ public class SceneLoader {
                 }
         }
         return null;
+    }
+
+    private List<Particle> createParticles(int size, Scene scene){
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+        for(int i =0; i < size; i++){
+            Particle new_particle = new Particle(
+                    random.nextInt(scene.getWidth()),
+                    random.nextInt(scene.getHeight()),
+                    new TextColor.RGB(0, 0, random.nextInt(100, 255))
+            );
+            particles.add(new_particle);
+        }
+        return particles;
     }
 }
