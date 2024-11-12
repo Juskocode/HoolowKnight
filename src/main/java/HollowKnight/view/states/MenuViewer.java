@@ -39,7 +39,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
                     }
                 }
             }
-            gui.drawText(35,15, new TextColor.RGB(0, 0, 0), options.get(idx));
+            gui.drawText(35+2,15*(idx+1)-1, new TextColor.RGB(0, 0, 0),options.get(idx));
         }
     }
 
