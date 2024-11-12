@@ -11,6 +11,6 @@ public interface GUI {
     void close() throws IOException;
     ACTION getACTION() throws IOException;
     void drawPixel(int x, int y, TextColor.RGB color);
-    void drawText(int x, int y, TextColor.RGB color, TextColor.RGB backgroundcolor,String Text);
+    void drawText(int x, int y, TextColor.RGB color,String Text);
 
 }
