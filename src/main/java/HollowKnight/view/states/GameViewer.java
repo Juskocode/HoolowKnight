@@ -22,10 +22,10 @@ public class GameViewer extends ScreenViewer<Scene> {
     public void draw(GUI gui) throws IOException {
         gui.cls();
         gradientLoader(gui);
-        drawElements(gui, getModel().getTiles(), new TileViewer());
-        drawElement(gui, getModel().getPlayer(), new KnightViewer());
-        Sprite sprite = new SpriteLoader().createSprite("");
-        sprite.draw(gui, 32, 32);
+        //drawElements(gui, getModel().getTiles(), new TileViewer());
+        //drawElement(gui, getModel().getPlayer(), new KnightViewer());
+        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight.png");
+        sprite.draw(gui, 30, 25);
         gui.flush();
     }
     private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {

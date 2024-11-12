@@ -20,7 +20,7 @@ public class Game {
         int SCREEN_WIDTH = 80;
         int SCREEN_HEIGHT = 40;
 
-        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.gui = new LanternaGUI(SCREEN_WIDTH*10, SCREEN_HEIGHT*10);
         this.state = new GameState(new SceneLoader().createScene());
     }
 
