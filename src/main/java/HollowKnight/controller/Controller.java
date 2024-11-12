@@ -16,5 +16,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void move(Game game, GUI.ACTION action, long time);
+    public abstract void move(Game game, GUI.ACTION action, long time) throws IOException;
 }
