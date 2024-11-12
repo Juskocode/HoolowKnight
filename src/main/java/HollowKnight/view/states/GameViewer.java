@@ -24,7 +24,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         gradientLoader(gui);
         //drawElements(gui, getModel().getTiles(), new TileViewer());
         drawElement(gui, getModel().getPlayer(), new KnightViewer());
-        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight.png");
+        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight/Idle/pixil-frame-0.png");
         sprite.draw(gui, 30, 25);
         gui.flush();
     }
