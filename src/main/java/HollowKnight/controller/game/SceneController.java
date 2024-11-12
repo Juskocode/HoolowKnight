@@ -1,12 +1,13 @@
 package HollowKnight.controller.game;
 
 import HollowKnight.Game;
+import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.scene.Scene;
 
 import java.io.IOException;
 
-public class SceneController extends GameController {
+public class SceneController extends Controller<Scene> {
     private final PlayerController playerController;
     private final ParticleController particleController;
 

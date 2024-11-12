@@ -18,7 +18,7 @@ public class SceneLoader {
 
     public Scene createScene() {
         Scene scene = new Scene(80, 40);
-        scene.setParticles(createParticles(10,scene));
+        scene.setParticles(createParticles(40,scene));
         scene.setPlayer(createPlayer());
         scene.setTiles(createWalls());
 
