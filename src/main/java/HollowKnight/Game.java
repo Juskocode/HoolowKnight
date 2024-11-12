@@ -3,7 +3,9 @@ package HollowKnight;
 
 import HollowKnight.gui.LanternaGUI;
 import HollowKnight.model.game.scene.SceneLoader;
+import HollowKnight.model.menu.Menu;
 import HollowKnight.state.GameState;
+import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
 
 import java.awt.*;
@@ -20,8 +22,15 @@ public class Game {
         int SCREEN_WIDTH = 80;
         int SCREEN_HEIGHT = 40;
 
-        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT);
-        this.state = new GameState(new SceneLoader().createScene());
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        double maxFontWidth = width / SCREEN_WIDTH;
+        double maxFontHeight = height / SCREEN_HEIGHT;
+        int fontSize = (int) Math.min(maxFontWidth, maxFontHeight);
+
+        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT, 10);
+        this.state = new MenuState(new Menu());
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {

@@ -8,6 +8,11 @@ public class Menu {
     public Menu() {
         this.options = Arrays.asList("Start", "Settings", "ScoreBoard", "Exit");
     }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
     public int getNumberOptions() {
         return this.options.size();
     }

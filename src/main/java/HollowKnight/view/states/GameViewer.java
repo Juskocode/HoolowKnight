@@ -6,6 +6,8 @@ import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.TileViewer;
+import HollowKnight.view.sprites.Sprite;
+import HollowKnight.view.sprites.SpriteLoader;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
@@ -20,8 +22,10 @@ public class GameViewer extends ScreenViewer<Scene> {
     public void draw(GUI gui) throws IOException {
         gui.cls();
         gradientLoader(gui);
-        drawElements(gui, getModel().getTiles(), new TileViewer());
+        //drawElements(gui, getModel().getTiles(), new TileViewer());
         drawElement(gui, getModel().getPlayer(), new KnightViewer());
+        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight.png");
+        sprite.draw(gui, 30, 25);
         gui.flush();
     }
     private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {
