@@ -3,13 +3,18 @@ package HollowKnight.model.menu;
 import java.util.Arrays;
 import java.util.List;
 public class Menu {
-    private final List<String> options;
+    private final List<Option> options;
     private int currentOption = 0;
     public Menu() {
-        this.options = Arrays.asList("Start", "Exit", "ScoreBoard", "Settings");
+        Option start = new Option(30, 15, "Start");
+        Option settings = new Option(30, 20, "Settings");
+        Option scoreboard = new Option(30, 25, "ScoreBoard");
+        Option exit = new Option(30, 30, "Exit");
+
+        this.options = Arrays.asList(start, settings, scoreboard, exit);
     }
 
-    public List<String> getOptions() {
+    public List<Option> getOptions() {
         return options;
     }
 
@@ -24,14 +29,14 @@ public class Menu {
         if (--currentOption < 0)
             currentOption = getNumberOptions() - 1;
     }
-    public String getOption(int i) {
+    public Option getOption(int i) {
         return options.get(i);
     }
     public boolean isSelected(int i) {
         return currentOption == i;
     }
     public boolean isSelectedExit() {
-        return isSelected(1);
+        return isSelected(getNumberOptions() - 1);
     }
     public boolean isSelectedStart() {
         return isSelected(0);
