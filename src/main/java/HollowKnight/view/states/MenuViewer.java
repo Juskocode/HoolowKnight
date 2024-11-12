@@ -2,6 +2,8 @@ package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.menu.Menu;
+import HollowKnight.model.menu.Option;
+import HollowKnight.view.menu.OptionViewer;
 import com.googlecode.lanterna.TextColor;
 import org.w3c.dom.Text;
 
@@ -16,11 +18,11 @@ public class MenuViewer extends ScreenViewer<Menu> {
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
-        this.drawOptions(gui, getModel().getOptions());
+        this.drawOptions(gui, getModel().getOptions(), new OptionViewer());
         gui.flush();
     }
 
-    private void drawOptions(GUI gui, List<String> options) throws IOException {
+    private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer) throws IOException {
         TextColor.RGB deselected = new TextColor.RGB(255, 255, 255); // Deselected color (white)
         int boxWidth = 10;  // Width of the selection box (fat line)
         int boxHeight = 2; // Height of the selection box (thickness)
@@ -43,9 +45,9 @@ public class MenuViewer extends ScreenViewer<Menu> {
                 }
             }
             if(select)
-                gui.drawText(35,15+(idx*5)+1, selected,options.get(idx));
+                gui.drawText(35,15+(idx*5)+1, selected, options.get(idx).getText());
             else{
-                gui.drawText(35,15+(idx*5)+1, new TextColor.RGB(255, 255,255),options.get(idx));
+                gui.drawText(35,15+(idx*5)+1, new TextColor.RGB(255, 255,255),options.get(idx).getText());
             }
         }
     }
