@@ -25,7 +25,7 @@ public class SceneLoader {
     private final int TILE_SIZE = 8;
     public Scene createScene() {
         Scene scene = new Scene(160, 90);
-        scene.setParticles(createParticles(40,scene));
+        scene.setParticles(createParticles(60,scene));
         scene.setPlayer(createPlayer());
         scene.setTiles(createWalls());
         scene.setSmallTrees(createSmallTrees());
