@@ -121,11 +121,19 @@ public class Scene {
     }
 
     public boolean isEmpty(Position position) {
-        for (Tile tile : tiles)
-            if (tile.getPosition().equals(position))
-                return false;
-        return true;
+        for (Tile tile : tiles) {
+            int tileX = tile.getPosition().x();
+            int tileY = tile.getPosition().y();
+
+            // Check if the position is within the bounds of the 8x8 tile
+            if (position.x() >= tileX && position.x() < tileX + 8 &&
+                    position.y() >= tileY && position.y() < tileY + 8) {
+                return false; // Position is within the tile, so it's not empty
+            }
+        }
+        return true; // Position is not within any tile
     }
+
     public boolean isTile(Position position) {
         for (Tile tile : tiles)
             if (tile.getPosition().equals(position))
