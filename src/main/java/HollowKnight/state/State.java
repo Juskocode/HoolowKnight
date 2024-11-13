@@ -8,9 +8,9 @@ import HollowKnight.view.states.ScreenViewer;
 import java.io.IOException;
 
 public abstract class State<T> {
-    protected final T model;
-    protected final Controller<T> controller;
-    protected final ScreenViewer<T> screenViewer;
+    private final T model;
+    private final Controller<T> controller;
+    private final ScreenViewer<T> screenViewer;
 
     public State(T model) throws IOException {
         this.model = model;
