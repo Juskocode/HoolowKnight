@@ -3,9 +3,15 @@ package HollowKnight.model.game.scene;
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
-import HollowKnight.model.game.elements.Tree.Tree;
+import HollowKnight.model.game.elements.Tree.MediumTree;
+import HollowKnight.model.game.elements.Tree.SmallTree;
+import HollowKnight.model.game.elements.enemies.MinhoteMonster;
+import HollowKnight.model.game.elements.enemies.PurpleMonster;
+import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.rocks.BigRock;
+import HollowKnight.model.game.elements.rocks.SmallRock;
 import HollowKnight.model.game.elements.tile.Tile;
+import com.sun.source.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +23,17 @@ public class Scene {
     private Knight player;
 
     private List<Tile> tiles;
-    private List<Tree> trees;
+
+    private List<SmallTree> smallTrees;
+    private List<MediumTree> mediumTrees;
+
     private List<BigRock> bigRocks;
+    private List<SmallRock> SmallRocks;
+
+    private List<SwordMonster> swordMonsters;
+    private List<PurpleMonster> purpleMonsters;
+    private List<MinhoteMonster> minhoteMonsters;
+
 
     public Scene(int width, int height) {
         this.width = width;
@@ -51,12 +66,19 @@ public class Scene {
         this.tiles = tiles;
     }
 
-    public List<Tree> getTrees() {
-        return trees;
+    public List<SmallTree> getSmallTrees() {
+        return smallTrees;
     }
 
-    public void setTrees(List<Tree> trees) {
-        this.trees = trees;
+    public void setSmallTrees(List<SmallTree> trees) {
+        this.smallTrees = trees;
+    }
+
+    public List<MediumTree> getMediumTrees() {
+        return mediumTrees;
+    }
+    public void setMediumTrees(List<MediumTree> trees) {
+        this.mediumTrees = trees;
     }
 
     public List<BigRock> getBigRocks() {
@@ -65,6 +87,37 @@ public class Scene {
 
     public void setBigRocks(List<BigRock> bigRocks) {
         this.bigRocks = bigRocks;
+    }
+
+    public List<SmallRock> getSmallRocks() {
+        return SmallRocks;
+    }
+    public void setSmallRocks(List<SmallRock> smallRocks) {
+        this.SmallRocks = smallRocks;
+    }
+
+    public List<SwordMonster> getSwordMonstersEnemies() {
+        return swordMonsters;
+    }
+
+    public void setSwordMonsters(List<SwordMonster> enemies) {
+        this.swordMonsters = enemies;
+    }
+
+    public List<PurpleMonster> getPurpleMonsters() {
+        return purpleMonsters;
+    }
+
+    public void setPurpleMonsters(List<PurpleMonster> purpleMonsters) {
+        this.purpleMonsters = purpleMonsters;
+    }
+
+    public List<MinhoteMonster> getMinhoteMonsters() {
+        return minhoteMonsters;
+    }
+
+    public void setMinhoteMonsters(List<MinhoteMonster> minhoteMonsters) {
+        this.minhoteMonsters = minhoteMonsters;
     }
 
     public boolean isEmpty(Position position) {
