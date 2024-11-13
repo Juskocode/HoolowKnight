@@ -2,8 +2,13 @@ package HollowKnight.model.game.scene;
 
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
-import HollowKnight.model.game.elements.Tree.Tree;
+import HollowKnight.model.game.elements.Tree.MediumTree;
+import HollowKnight.model.game.elements.Tree.SmallTree;
+import HollowKnight.model.game.elements.enemies.MinhoteMonster;
+import HollowKnight.model.game.elements.enemies.PurpleMonster;
+import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.rocks.BigRock;
+import HollowKnight.model.game.elements.rocks.SmallRock;
 import HollowKnight.model.game.elements.tile.Tile;
 import com.googlecode.lanterna.TextColor;
 
@@ -23,8 +28,13 @@ public class SceneLoader {
         scene.setParticles(createParticles(40,scene));
         scene.setPlayer(createPlayer());
         scene.setTiles(createWalls());
-        scene.setTrees(createTree());
+        scene.setSmallTrees(createSmallTrees());
+        scene.setMediumTrees(createMediumTrees());
         scene.setBigRocks(createBigRocks());
+        scene.setSmallRocks(createSmallRocks());
+        scene.setSwordMonsters(createSwordMonsters());
+        scene.setPurpleMonsters(createPurpleMonsters());
+        scene.setMinhoteMonsters(createMinhoteMonsters());
         return scene;
     }
 
@@ -78,31 +88,102 @@ public class SceneLoader {
         return null;
     }
 
-    protected List<Tree> createTree() {
-        List<Tree> trees = new ArrayList<>();
+    protected List<SmallTree> createSmallTrees() {
+        List<SmallTree> trees = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 't') {
+                    System.out.println("Found small Tree " + x + " - "+ y);
+                    trees.add(new SmallTree(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return trees;
+    }
+
+    protected List<MediumTree> createMediumTrees() {
+        List<MediumTree> trees = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++)
                 if (line.charAt(x) == 'T') {
-                    System.out.println("Found Tree " + x + " - "+ y);
-                    trees.add(new Tree(x * TILE_SIZE, y * TILE_SIZE + 4));
+                    System.out.println("Found MediumTree " + x + " - "+ y);
+                    trees.add(new MediumTree(x * TILE_SIZE, y * TILE_SIZE + 4));
                 }
         }
         return trees;
     }
+
     protected List<BigRock> createBigRocks() {
-        List<BigRock> trees = new ArrayList<>();
+        List<BigRock> rocks = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++)
                 if (line.charAt(x) == 'R') {
                     System.out.println("Found BigRock " + x + " - "+ y);
-                    trees.add(new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4));
+                    rocks.add(new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4));
                 }
         }
-        return trees;
+        return rocks;
+    }
+
+    protected List<SmallRock> createSmallRocks() {
+        List<SmallRock> rocks = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'r') {
+                    System.out.println("Found SmallRock " + x + " - "+ y);
+                    rocks.add(new SmallRock(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return rocks;
+    }
+
+    protected List<SwordMonster> createSwordMonsters() {
+        List<SwordMonster> enemies = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'E') {
+                    System.out.println("Found Enemy  " + x + " - "+ y);
+                    enemies.add(new SwordMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return enemies;
+    }
+
+    protected List<PurpleMonster> createPurpleMonsters() {
+        List<PurpleMonster> enemies = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'l') {
+                    System.out.println("Found PurpleMonster  " + x + " - "+ y);
+                    enemies.add(new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return enemies;
+    }
+
+    protected List<MinhoteMonster> createMinhoteMonsters() {
+        List<MinhoteMonster> enemies = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'M') {
+                    System.out.println("Found MinhoteMonster  " + x + " - "+ y);
+                    enemies.add(new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return enemies;
     }
 
     private List<Particle> createParticles(int size, Scene scene){
