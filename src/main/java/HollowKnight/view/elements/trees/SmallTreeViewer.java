@@ -14,7 +14,7 @@ public class SmallTreeViewer implements ElementViewer<SmallTree> {
         TreeSprite = new Sprite("sprites/Ambient/SmallTree.png");
     }
     @Override
-    public void draw(SmallTree model, GUI gui) throws IOException {
+    public void draw(SmallTree model, GUI gui, long time) throws IOException {
         TreeSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
 }

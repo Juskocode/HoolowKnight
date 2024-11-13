@@ -3,7 +3,6 @@ package HollowKnight.view.states;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Option;
-import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.menu.OptionViewer;
 import com.googlecode.lanterna.TextColor;
 
@@ -16,7 +15,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     }
 
     @Override
-    public void draw(GUI gui) throws IOException {
+    public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         drawBackGround(gui);
         this.drawOptions(gui, getModel().getOptions(), new OptionViewer());

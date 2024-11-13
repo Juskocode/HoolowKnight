@@ -51,27 +51,26 @@ public class GameViewer extends ScreenViewer<Scene> {
     }
 
     @Override
-    public void draw(GUI gui) throws IOException {
+    public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         gradientLoader(gui);
-        drawElements(gui, getModel().getTiles(), new TileViewer());
-        drawElement(gui, getModel().getPlayer(), this.knightViewer);
-        drawElements(gui, getModel().getParticles(), this.particleViewer);
+        drawElements(gui, getModel().getTiles(), new TileViewer(), time);
+        drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
+        drawElements(gui, getModel().getParticles(), this.particleViewer, time);
 
-        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer);
-        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer);
+        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
+        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
 
-        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer);
-        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer);
+        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time);
+        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time);
 
-        drawElements(gui, getModel().getSwordMonstersEnemies(), this.swordMonsterViewer);
-        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer);
-        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer);
+        drawElements(gui, getModel().getSwordMonstersEnemies(), this.swordMonsterViewer, time);
+        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
+        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
 
 
         gui.flush();
     }
-
 
     private void setBackgroundColor(GUI gui, TextColor.RGB color) {
         // BACKGROUND (NOT SCENE RELATED)
@@ -80,17 +79,17 @@ public class GameViewer extends ScreenViewer<Scene> {
                 gui.drawPixel(w, h, color);
             }
         }
-
-
     }
 
-    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
+    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
         for (T element : elements)
-            drawElement(gui, element, viewer);
+            drawElement(gui, element, viewer, time);
     }
-    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) throws IOException {
-        viewer.draw(element, gui);
+
+    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
+        viewer.draw(element, gui, time);
     }
+
     private void gradientLoader(GUI gui) {
         int width = getModel().getWidth();
         int height = getModel().getHeight();
@@ -183,5 +182,4 @@ public class GameViewer extends ScreenViewer<Scene> {
             gui.drawPixel(innerWidthEnd - 1, h, current);
         }
     }
-
 }
