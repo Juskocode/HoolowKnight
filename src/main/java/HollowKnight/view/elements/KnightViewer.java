@@ -9,9 +9,9 @@ import java.io.IOException;
 
 
 public class KnightViewer implements ElementViewer<Knight>{
-    private Sprite knightSprite;
+    private final Sprite knightSprite;
     public KnightViewer() throws IOException {
-        knightSprite = new SpriteLoader().createSprite("sprites/Knight/Idle/pixil-frame-0.png");
+        knightSprite = new Sprite("sprites/Knight/Idle/pixil-frame-0.png");
 
     }
     @Override
