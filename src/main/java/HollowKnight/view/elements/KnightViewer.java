@@ -26,10 +26,14 @@ public class KnightViewer implements ElementViewer<Knight>{
         sprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
 
-    private Sprite getSprite(long frameCount) {
-        System.out.println((frameCount) + " frame");
-        return idleSprite.get((int) (frameCount % idleSprite.size()));
+    private Sprite getSprite(long tick) {
+        int animationFPS = 8; // Animation updates at 10 FPS
+        int animationFrameTime = 30 / animationFPS; // Frames per tick at game FPS = 30
+
+        int frameIndex = (int) ((tick / animationFrameTime) % idleSprite.size());
+        return idleSprite.get(frameIndex);
     }
+
     /*
         gui.drawPixel(model.getPosition().x(), model.getPosition().y(), new TextColor.RGB(0, 0, 255));
         gui.drawPixel(model.getPosition().x() + 1, model.getPosition().y(), new TextColor.RGB(0, 0, 255));
