@@ -6,6 +6,13 @@ import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
+import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
+import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
+import HollowKnight.view.elements.monsters.SwordMonsterViewer;
+import HollowKnight.view.elements.rocks.BigRockViewer;
+import HollowKnight.view.elements.rocks.SmallRockViewer;
+import HollowKnight.view.elements.trees.MediumTreeViewer;
+import HollowKnight.view.elements.trees.SmallTreeViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
@@ -14,16 +21,33 @@ import java.util.List;
 public class GameViewer extends ScreenViewer<Scene> {
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
-    private final TreeViewer treeViewer;
+
+    private final MediumTreeViewer mediumTreeViewer;
+    private final SmallTreeViewer smallTreeViewer;
+
     private final BigRockViewer bigRockViewer;
+    private final SmallRockViewer smallRockViewer;
+
+    private final SwordMonsterViewer swordMonsterViewer;
+    private final PurpleMonsterViewer purpleMonsterViewer;
+    private final MinhoteMonsterViewer minhoteMonsterViewer;
 
 
     public GameViewer(Scene model) throws IOException {
         super(model);
         this.particleViewer = new ParticleViewer();
+
         this.knightViewer = new KnightViewer();
-        this.treeViewer = new TreeViewer();
+
+        this.mediumTreeViewer = new MediumTreeViewer();
+        this.smallTreeViewer = new SmallTreeViewer();
+
         this.bigRockViewer = new BigRockViewer();
+        this.smallRockViewer = new SmallRockViewer();
+
+        this.swordMonsterViewer = new SwordMonsterViewer();
+        this.purpleMonsterViewer = new PurpleMonsterViewer();
+        this.minhoteMonsterViewer = new MinhoteMonsterViewer();
     }
 
     @Override
@@ -33,8 +57,17 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getTiles(), new TileViewer());
         drawElement(gui, getModel().getPlayer(), this.knightViewer);
         drawElements(gui, getModel().getParticles(), this.particleViewer);
-        drawElements(gui, getModel().getTrees(), this.treeViewer);
+
+        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer);
+        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer);
+
         drawElements(gui, getModel().getBigRocks(), this.bigRockViewer);
+        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer);
+
+        drawElements(gui, getModel().getSwordMonstersEnemies(), this.swordMonsterViewer);
+        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer);
+        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer);
+
 
         gui.flush();
     }

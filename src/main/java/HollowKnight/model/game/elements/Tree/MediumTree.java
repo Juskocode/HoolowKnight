@@ -2,8 +2,8 @@ package HollowKnight.model.game.elements.Tree;
 
 import HollowKnight.model.game.elements.Element;
 
-public class Tree extends Element {
-    public Tree(int x, int y) {
+public class MediumTree extends Element {
+    public MediumTree(int x, int y) {
         super(x, y);
     }
 }
