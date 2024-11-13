@@ -2,6 +2,8 @@ package HollowKnight.model.game.scene;
 
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.model.game.elements.Tree.Tree;
+import HollowKnight.model.game.elements.rocks.BigRock;
 import HollowKnight.model.game.elements.tile.Tile;
 import com.googlecode.lanterna.TextColor;
 
@@ -15,18 +17,20 @@ import java.util.Random;
 
 public class SceneLoader {
     private final List<String> lines;
-
+    private final int TILE_SIZE = 8;
     public Scene createScene() {
         Scene scene = new Scene(160, 90);
         scene.setParticles(createParticles(40,scene));
         scene.setPlayer(createPlayer());
         scene.setTiles(createWalls());
-
+        scene.setTrees(createTree());
+        scene.setBigRocks(createBigRocks());
         return scene;
     }
 
     public SceneLoader() throws IOException {
         URL resource = getClass().getClassLoader().getResource("levels/level0.lvl");
+        assert resource != null;
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
         lines = readLines(br);
@@ -56,7 +60,7 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == '#') walls.add(new Tile(x, y));
+                if (line.charAt(x) == 'x') walls.add(new Tile(x * TILE_SIZE, y * TILE_SIZE));
         }
 
         return walls;
@@ -68,10 +72,37 @@ public class SceneLoader {
             for (int x = 0; x < line.length(); x++)
                 if (line.charAt(x) == 'P') {
                     System.out.println("Found Player " + x + " - "+ y);
-                    return new Knight(x, y, 50, 10, 5);
+                    return new Knight(x * TILE_SIZE + 4, y * TILE_SIZE + 4, 50, 10, 5);
                 }
         }
         return null;
+    }
+
+    protected List<Tree> createTree() {
+        List<Tree> trees = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'T') {
+                    System.out.println("Found Tree " + x + " - "+ y);
+                    trees.add(new Tree(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return trees;
+    }
+    protected List<BigRock> createBigRocks() {
+        List<BigRock> trees = new ArrayList<>();
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == 'R') {
+                    System.out.println("Found BigRock " + x + " - "+ y);
+                    trees.add(new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4));
+                }
+        }
+        return trees;
     }
 
     private List<Particle> createParticles(int size, Scene scene){
