@@ -11,10 +11,14 @@ import java.io.IOException;
 
 
 public class KnightViewer implements ElementViewer<Knight>{
+    private Sprite knightSprite;
+    public KnightViewer() throws IOException {
+        knightSprite = new SpriteLoader().createSprite("sprites/Knight/Idle/pixil-frame-0.png");
+
+    }
     @Override
     public void draw(Knight model, GUI gui) throws IOException {
-        Sprite sprite = new SpriteLoader().createSprite("sprites/Knight/Idle/pixil-frame-0.png");
-        sprite.draw(gui, model.getPosition().x(), model.getPosition().y());
+        knightSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
     /*
         gui.drawPixel(model.getPosition().x(), model.getPosition().y(), new TextColor.RGB(0, 0, 255));
