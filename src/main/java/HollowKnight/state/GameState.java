@@ -8,8 +8,10 @@ import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.states.GameViewer;
 import HollowKnight.view.states.ScreenViewer;
 
+import java.io.IOException;
+
 public class GameState extends State<Scene> {
-    public GameState(Scene model) {
+    public GameState(Scene model) throws IOException {
         super(model);
     }
 

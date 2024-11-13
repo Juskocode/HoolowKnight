@@ -8,6 +8,8 @@ public class TileViewer implements ElementViewer<Tile>  {
 
     @Override
     public void draw(Tile model, GUI gui) {
-        gui.drawPixel(model.getPosition().x(), model.getPosition().y(), new TextColor.RGB(255, 0, 0));
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                    gui.drawPixel(model.getPosition().x() + i + 4, model.getPosition().y() + j + 5, new TextColor.RGB(102, 51, 0));
     }
 }
