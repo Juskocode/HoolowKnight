@@ -6,9 +6,11 @@ import HollowKnight.model.menu.Menu;
 import HollowKnight.view.states.MenuViewer;
 import HollowKnight.view.states.ScreenViewer;
 
+import java.io.IOException;
+
 public class MenuState extends State<Menu> {
 
-    public MenuState(Menu model) {
+    public MenuState(Menu model) throws IOException {
         super(model);
     }
 
