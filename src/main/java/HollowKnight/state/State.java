@@ -28,6 +28,6 @@ public abstract class State<T> {
     public void move(Game game, GUI gui, long time) throws IOException {
         GUI.ACTION action = gui.getACTION();
         controller.move(game, action, time);
-        screenViewer.draw(gui);
+        screenViewer.draw(gui, time);
     }
 }
