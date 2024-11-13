@@ -4,10 +4,7 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.scene.Scene;
-import HollowKnight.view.elements.ElementViewer;
-import HollowKnight.view.elements.KnightViewer;
-import HollowKnight.view.elements.ParticleViewer;
-import HollowKnight.view.elements.TileViewer;
+import HollowKnight.view.elements.*;
 import HollowKnight.view.sprites.Sprite;
 import HollowKnight.view.sprites.SpriteLoader;
 import com.googlecode.lanterna.TextColor;
@@ -18,20 +15,28 @@ import java.util.List;
 public class GameViewer extends ScreenViewer<Scene> {
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
-    public GameViewer(Scene model) {
+    private final TreeViewer treeViewer;
+    private final BigRockViewer bigRockViewer;
+
+
+    public GameViewer(Scene model) throws IOException {
         super(model);
         this.particleViewer = new ParticleViewer();
         this.knightViewer = new KnightViewer();
+        this.treeViewer = new TreeViewer();
+        this.bigRockViewer = new BigRockViewer();
     }
 
     @Override
     public void draw(GUI gui) throws IOException {
         gui.cls();
         gradientLoader(gui);
-
-        //drawElements(gui, getModel().getTiles(), new TileViewer());
+        drawElements(gui, getModel().getTiles(), new TileViewer());
         drawElement(gui, getModel().getPlayer(), this.knightViewer);
         drawElements(gui, getModel().getParticles(), this.particleViewer);
+        drawElements(gui, getModel().getTrees(), this.treeViewer);
+        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer);
+
         gui.flush();
     }
 
@@ -70,15 +75,15 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
 
         // Inner rectangle with gradient (proportional dimensions)
-        int innerPadding = 5;
-        int innerWidthStart = innerPadding;
-        int innerWidthEnd = width - innerPadding;
+        int innerPadding = 4;
+        int innerWidthStart = innerPadding - 1;
+        int innerWidthEnd = width - innerPadding + 1;
         int innerHeightStart = innerPadding;
         int innerHeightEnd = height - innerPadding;
 
         for (int w = innerWidthStart; w < innerWidthEnd; w++) {
             for (int h = innerHeightStart; h < innerHeightEnd; h++) {
-                gui.drawPixel(w, h, new TextColor.RGB(55, 55, 55));
+                gui.drawPixel(w, h, new TextColor.RGB(12, 12, 12));
             }
         }
 
