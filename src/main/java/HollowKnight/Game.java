@@ -49,16 +49,17 @@ public class Game {
     private void start() throws IOException, InterruptedException {
         int FPS = 30;
         int frameTime = 1000 / FPS;
-
+        int tick = 0;
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
 
-            state.move(this, gui, startTime);
+            state.move(this, gui, tick);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = frameTime - elapsedTime;
 
             if (sleepTime > 0) Thread.sleep(sleepTime);
+            tick++;
         }
 
         gui.close();
