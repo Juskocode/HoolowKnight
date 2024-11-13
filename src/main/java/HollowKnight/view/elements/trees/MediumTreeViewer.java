@@ -1,15 +1,16 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.trees;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Tree.MediumTree;
+import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;
 
-public class MediumTreeViewer implements ElementViewer<MediumTree>{
+public class MediumTreeViewer implements ElementViewer<MediumTree> {
     private final Sprite mediumTreeSprite;
     public MediumTreeViewer() throws IOException {
-        this.mediumTreeSprite = new Sprite("sprites/Ambient/tree1.png");
+        this.mediumTreeSprite = new Sprite("sprites/Ambient/MediumTree.png");
     }
 
     @Override

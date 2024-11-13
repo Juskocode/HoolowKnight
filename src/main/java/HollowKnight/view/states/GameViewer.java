@@ -6,6 +6,13 @@ import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
+import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
+import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
+import HollowKnight.view.elements.monsters.SwordMonsterViewer;
+import HollowKnight.view.elements.rocks.BigRockViewer;
+import HollowKnight.view.elements.rocks.SmallRockViewer;
+import HollowKnight.view.elements.trees.MediumTreeViewer;
+import HollowKnight.view.elements.trees.SmallTreeViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;

@@ -1,7 +1,8 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.rocks;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.rocks.SmallRock;
+import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;

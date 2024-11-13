@@ -1,7 +1,8 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.monsters;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
+import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;
