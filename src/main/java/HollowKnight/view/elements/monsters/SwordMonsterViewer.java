@@ -14,7 +14,7 @@ public class SwordMonsterViewer implements ElementViewer<SwordMonster> {
         EnemySprite = new Sprite("sprites/Enemies/enemy1-swordup.png");
     }
     @Override
-    public void draw(SwordMonster model, GUI gui) throws IOException {
+    public void draw(SwordMonster model, GUI gui, long time) throws IOException {
         EnemySprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
 }

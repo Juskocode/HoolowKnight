@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ParticleViewer implements ElementViewer<Particle>{
     @Override
-    public void draw(Particle model, GUI gui) throws IOException {
+    public void draw(Particle model, GUI gui, long time) throws IOException {
         gui.drawPixel(model.getPosition().x(), model.getPosition().y(), model.getColor());
     }
 }

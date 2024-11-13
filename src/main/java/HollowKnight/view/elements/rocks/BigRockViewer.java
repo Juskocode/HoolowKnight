@@ -14,7 +14,7 @@ public class BigRockViewer implements ElementViewer<BigRock> {
         bigRockSprite = new Sprite("sprites/Ambient/Bigrock.png");
     }
     @Override
-    public void draw(BigRock model, GUI gui) throws IOException {
+    public void draw(BigRock model, GUI gui, long time) throws IOException {
         bigRockSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
 }

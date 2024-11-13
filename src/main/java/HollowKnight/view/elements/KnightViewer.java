@@ -6,17 +6,29 @@ import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class KnightViewer implements ElementViewer<Knight>{
-    private final Sprite knightSprite;
+    private final List<Sprite> idleSprite;
     public KnightViewer() throws IOException {
-        knightSprite = new Sprite("sprites/Knight/Idle/pixil-frame-0.png");
+        idleSprite = new ArrayList<>();
+
+        for (int i = 0; i < 16; i++) {
+            idleSprite.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + ".png"));
+        }
 
     }
     @Override
-    public void draw(Knight model, GUI gui) throws IOException {
-        knightSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
+    public void draw(Knight model, GUI gui, long time) throws IOException {
+        Sprite sprite = getSprite(time);
+        sprite.draw(gui, model.getPosition().x(), model.getPosition().y());
+    }
+
+    private Sprite getSprite(long frameCount) {
+        System.out.println((frameCount) + " frame");
+        return idleSprite.get((int) (frameCount % idleSprite.size()));
     }
     /*
         gui.drawPixel(model.getPosition().x(), model.getPosition().y(), new TextColor.RGB(0, 0, 255));
