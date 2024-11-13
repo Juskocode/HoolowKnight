@@ -3,6 +3,8 @@ package HollowKnight.model.game.scene;
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.model.game.elements.Tree.Tree;
+import HollowKnight.model.game.elements.rocks.BigRock;
 import HollowKnight.model.game.elements.tile.Tile;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public class Scene {
     private Knight player;
 
     private List<Tile> tiles;
+    private List<Tree> trees;
+    private List<BigRock> bigRocks;
 
     public Scene(int width, int height) {
         this.width = width;
@@ -45,6 +49,22 @@ public class Scene {
 
     public void setTiles(List<Tile> tiles) {
         this.tiles = tiles;
+    }
+
+    public List<Tree> getTrees() {
+        return trees;
+    }
+
+    public void setTrees(List<Tree> trees) {
+        this.trees = trees;
+    }
+
+    public List<BigRock> getBigRocks() {
+        return bigRocks;
+    }
+
+    public void setBigRocks(List<BigRock> bigRocks) {
+        this.bigRocks = bigRocks;
     }
 
     public boolean isEmpty(Position position) {
