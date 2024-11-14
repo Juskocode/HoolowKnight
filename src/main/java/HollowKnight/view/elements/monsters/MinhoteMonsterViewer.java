@@ -16,6 +16,6 @@ public class MinhoteMonsterViewer implements ElementViewer<MinhoteMonster> {
 
     @Override
     public void draw(MinhoteMonster model, GUI gui, long time) throws IOException {
-        minhoteMonsterSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
+        minhoteMonsterSprite.draw(gui, (int)model.getPosition().x(),(int) model.getPosition().y());
     }
 }

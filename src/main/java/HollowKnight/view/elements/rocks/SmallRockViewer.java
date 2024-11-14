@@ -16,6 +16,6 @@ public class SmallRockViewer implements ElementViewer<SmallRock> {
 
     @Override
     public void draw(SmallRock model, GUI gui, long time) throws IOException {
-        smallRockSprite.draw(gui, model.getPosition().x(), model.getPosition().y());
+        smallRockSprite.draw(gui, (int)model.getPosition().x(), (int)model.getPosition().y());
     }
 }
