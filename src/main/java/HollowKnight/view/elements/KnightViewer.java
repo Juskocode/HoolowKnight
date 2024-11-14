@@ -23,6 +23,7 @@ public class KnightViewer implements ElementViewer<Knight>{
     @Override
     public void draw(Knight model, GUI gui, long time) throws IOException {
         Sprite sprite = getSprite(time);
+        System.out.println(model.getPosition().x() + " " + model.getPosition().y());
         sprite.draw(gui, model.getPosition().x(), model.getPosition().y());
     }
 

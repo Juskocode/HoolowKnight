@@ -1,10 +1,12 @@
 package HollowKnight.model.game.elements.Knight;
 
+import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
 
 public class Knight extends Element {
+    private KnightState state;
     private int HP;
     private float Damage_multiplier;
     private int Energy;
@@ -19,6 +21,7 @@ public class Knight extends Element {
         this.velocity = new Vector(0,0);
         this.maxVelocity = new Vector(2.0,3.0);
         this.acceleration = 0.75;
+        this.state = new IdleState(this);
     }
 
     public void setHP(int HP) {
@@ -73,7 +76,22 @@ public class Knight extends Element {
         this.velocity = velocity;
     }
 
+    public Vector updateVelocity(){
+        return state.updateVelocity(velocity);
+    }
+
     public boolean isOverMaxXVelocity() {
         return Math.abs(velocity.x()) > maxVelocity.x();
+    }
+
+    public Vector moveLeft(){
+        return state.moveKnightLeft();
+    }
+
+    public Vector moveRight(){
+        return state.moveKnightRight();
+    }
+    public Position updatePosition() {
+        return new Position(getPosition().x() + (int)velocity.x(), getPosition().y() + (int)velocity.y());
     }
 }

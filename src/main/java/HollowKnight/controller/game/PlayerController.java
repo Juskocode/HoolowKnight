@@ -4,6 +4,8 @@ import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
+import HollowKnight.model.Vector;
+import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
 
 public class PlayerController extends Controller<Scene> {
@@ -11,43 +13,20 @@ public class PlayerController extends Controller<Scene> {
         super(scene);
     }
 
-    private void movePlayerLeft() {
-        movePlayer(this.getModel().getPlayer().getPosition().getLeft());
-    }
-
-    private void movePlayerRight() {
-        movePlayer(this.getModel().getPlayer().getPosition().getRight());
-    }
-
-    private void movePlayer(Position position) {
-        // Set player hitbox relative to the center position
-        Position topRight = new Position(position.x() + 4, position.y() - 4);
-        Position topLeft = new Position(position.x() - 4, position.y() - 4);
-        Position bottomRight = new Position(position.x() + 4, position.y() + 3);
-        Position bottomLeft = new Position(position.x() - 4, position.y() + 3);
-
-        // Check if all corners of the hitbox are within empty space
-        if (this.getModel().isEmpty(position) &&
-                this.getModel().isEmpty(topLeft) &&
-                this.getModel().isEmpty(topRight) &&
-                this.getModel().isEmpty(bottomLeft) &&
-                this.getModel().isEmpty(bottomRight)) {
-            // Move the player to the new position
-            this.getModel().getPlayer().setPosition(position);
-        }
-    }
-
-
     @Override
     public void move(Game game, GUI.ACTION action, long time) {
+        Knight knight = getModel().getPlayer();
+
         switch (action){
             case LEFT:
-                movePlayerLeft();
+                knight.setVelocity(knight.moveLeft());
                 break;
             case RIGHT:
-                movePlayerRight();
+                knight.setVelocity(knight.moveRight());
                 break;
             default:
+                getModel().getPlayer().setVelocity(knight.updateVelocity());
         }
+        knight.setPosition(knight.updatePosition());
     }
 }
