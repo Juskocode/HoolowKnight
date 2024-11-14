@@ -33,7 +33,7 @@ public class Scene {
     private List<SwordMonster> swordMonsters;
     private List<PurpleMonster> purpleMonsters;
     private List<MinhoteMonster> minhoteMonsters;
-
+    private double gravity = 0.9;
 
     public Scene(int width, int height) {
         this.width = width;
@@ -148,9 +148,13 @@ public class Scene {
         return particles;
     }
 
+    public double getGravity() {
+        return gravity;
+    }
+
     public boolean checkColisionDown(){
         for(Tile tile: tiles){
-            if(tile.getPosition().equals(player.getPosition())){
+            if(tile.getPosition().getDown().equals(player.getPosition())){
                 return true;
             }
         }

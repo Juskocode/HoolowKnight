@@ -22,7 +22,7 @@ public class Knight extends Element {
         this.Energy = Energy;
         this.velocity = new Vector(0,0);
         this.maxVelocity = new Vector(2.0,3.0);
-        this.acceleration = 0.75;
+        this.acceleration =0.99;
         this.state = new IdleState(this);
     }
 
@@ -95,10 +95,15 @@ public class Knight extends Element {
     }
   
     public Position updatePosition() {
-        return new Position(getPosition().x() + (int)velocity.x(), getPosition().y() + (int)velocity.y());
+        return new Position(getPosition().x() + velocity.x(), getPosition().y() + velocity.y());
     }
   
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
+    public Scene getScene() {
+        return scene;
+    }
+
 }

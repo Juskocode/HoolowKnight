@@ -29,5 +29,13 @@ public abstract class KnightState {
         return updateVelocity(newVelocity);
     }
 
+    protected Vector limitVelocity(Vector velocity) {
+        double vx = Math.min(knight.getMaxVelocity().x(), Math.max(-knight.getMaxVelocity().x(), velocity.x()));
+        double vy = Math.min(knight.getMaxVelocity().y(), velocity.y());
+        if (Math.abs(vx) < 0.2)
+            vx = 0;
+        return new Vector(vx, vy);
+    }
+
     public abstract Vector updateVelocity(Vector newVelocity);
 }

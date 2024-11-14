@@ -28,5 +28,6 @@ public class PlayerController extends Controller<Scene> {
                 getModel().getPlayer().setVelocity(knight.updateVelocity());
         }
         knight.setPosition(knight.updatePosition());
+        knight.setScene(getModel());
     }
 }
