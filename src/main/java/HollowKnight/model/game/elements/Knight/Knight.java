@@ -4,6 +4,7 @@ import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.scene.Scene;
 
 public class Knight extends Element {
     private KnightState state;
@@ -13,6 +14,7 @@ public class Knight extends Element {
     private Vector velocity;
     private Vector maxVelocity;
     private double acceleration;
+    private Scene scene;
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
         super(x,y);
         this.HP=HP;
@@ -91,7 +93,12 @@ public class Knight extends Element {
     public Vector moveRight(){
         return state.moveKnightRight();
     }
+  
     public Position updatePosition() {
         return new Position(getPosition().x() + (int)velocity.x(), getPosition().y() + (int)velocity.y());
+    }
+  
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

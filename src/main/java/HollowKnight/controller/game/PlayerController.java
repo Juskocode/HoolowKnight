@@ -12,7 +12,7 @@ public class PlayerController extends Controller<Scene> {
     public PlayerController(Scene scene) {
         super(scene);
     }
-
+  
     @Override
     public void move(Game game, GUI.ACTION action, long time) {
         Knight knight = getModel().getPlayer();
