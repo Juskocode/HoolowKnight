@@ -19,14 +19,6 @@ public class PlayerController extends Controller<Scene> {
         movePlayer(this.getModel().getPlayer().getPosition().getRight());
     }
 
-    private void movePlayerUp() {
-        movePlayer(this.getModel().getPlayer().getPosition().getUp());
-    } // nao testar
-
-    private void movePlayerDown() {
-        movePlayer(this.getModel().getPlayer().getPosition().getDown());
-    } //não testar
-
     private void movePlayer(Position position) {
         // Set player hitbox relative to the center position
         Position topRight = new Position(position.x() + 4, position.y() - 4);
@@ -49,12 +41,6 @@ public class PlayerController extends Controller<Scene> {
     @Override
     public void move(Game game, GUI.ACTION action, long time) {
         switch (action){
-            case UP:
-                movePlayerUp();
-                break;
-            case DOWN:
-                movePlayerDown();
-                break;
             case LEFT:
                 movePlayerLeft();
                 break;
