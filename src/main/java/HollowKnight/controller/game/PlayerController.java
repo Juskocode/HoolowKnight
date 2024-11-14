@@ -19,6 +19,7 @@ public class PlayerController extends Controller<Scene> {
         movePlayer(this.getModel().getPlayer().getPosition().getRight());
     }
 
+    private void movePlayerDown(){movePlayer(this.getModel().getPlayer().getPosition().getDown());}
     private void movePlayer(Position position) {
         // Set player hitbox relative to the center position
         Position topRight = new Position(position.x() + 4, position.y() - 4);
