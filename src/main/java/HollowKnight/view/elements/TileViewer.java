@@ -10,6 +10,6 @@ public class TileViewer implements ElementViewer<Tile>  {
     public void draw(Tile model, GUI gui, long time) {
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
-                    gui.drawPixel(model.getPosition().x() + i + 4, model.getPosition().y() + j + 5, new TextColor.RGB(102, 51, 0));
+                    gui.drawPixel((int)model.getPosition().x() + i + 4, (int)model.getPosition().y() + j + 5, new TextColor.RGB(102, 51, 0));
     }
 }

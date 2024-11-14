@@ -24,8 +24,8 @@ public class ParticleController extends Controller<Scene>{
     }
     public Position ParticleMove(Particle particle){
         Random random = new Random();
-        int new_x = particle.getPosition().x() + 2;
-        int new_y = particle.getPosition().y() + 2;
+        int new_x = (int)particle.getPosition().x() + 2;
+        int new_y = (int)particle.getPosition().y() + 2;
         if (new_x < 0)
             new_x = getModel().getWidth() - 1;
         else if (new_x >= getModel().getWidth()) {
