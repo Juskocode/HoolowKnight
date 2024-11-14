@@ -147,4 +147,14 @@ public class Scene {
     public List<Particle> getParticles() {
         return particles;
     }
+
+    public boolean checkColisionDown(){
+        for(Tile tile: tiles){
+            if(tile.getPosition().equals(player.getPosition())){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
