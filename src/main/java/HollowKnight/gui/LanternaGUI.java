@@ -11,16 +11,26 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_RIGHT;
 
 public class LanternaGUI implements GUI{
     private final Screen screen;
+    private boolean keySpam;
+    private KeyEvent priorityKeyPressed;
+    private static final List<Integer> SPAM_KEYS = List.of(VK_LEFT, VK_RIGHT);
+
     public LanternaGUI(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
         Terminal terminal = createTerminal(width, height, fontSize);
         this.screen = createScreen(terminal);
+        this.keySpam = false;
+        this.priorityKeyPressed = null;
     }
 
     private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
@@ -96,4 +106,10 @@ public class LanternaGUI implements GUI{
     public void close() throws IOException {
         screen.close();
     }
+    public void setKeySpam(boolean keySpam) {
+        if (!keySpam)
+            priorityKeyPressed = null;
+        this.keySpam = keySpam;
+    }
+
 }
