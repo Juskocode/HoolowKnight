@@ -21,6 +21,7 @@ import java.util.List;
 public class GameViewer extends ScreenViewer<Scene> {
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
+    private final TileViewer tileViewer;
 
     private final MediumTreeViewer mediumTreeViewer;
     private final SmallTreeViewer smallTreeViewer;
@@ -39,6 +40,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         this.knightViewer = new KnightViewer();
 
+        this.tileViewer = new TileViewer();
+
         this.mediumTreeViewer = new MediumTreeViewer();
         this.smallTreeViewer = new SmallTreeViewer();
 
@@ -54,7 +57,7 @@ public class GameViewer extends ScreenViewer<Scene> {
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         gradientLoader(gui);
-        drawElements(gui, getModel().getTiles(), new TileViewer(), time);
+        drawElements(gui, getModel().getTiles(), this.tileViewer, time);
         drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
 

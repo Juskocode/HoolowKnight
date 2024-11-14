@@ -10,15 +10,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class MenuViewer extends ScreenViewer<Menu> {
+    private final OptionViewer optionViewer;
     public MenuViewer(Menu model) {
         super(model);
+        this.optionViewer = new OptionViewer();
     }
 
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         drawBackGround(gui);
-        this.drawOptions(gui, getModel().getOptions(), new OptionViewer());
+        this.drawOptions(gui, getModel().getOptions(), optionViewer);
         gui.flush();
     }
 
