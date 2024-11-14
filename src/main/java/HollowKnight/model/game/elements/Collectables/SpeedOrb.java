@@ -1,5 +1,6 @@
 package HollowKnight.model.game.elements.Collectables;
 
+import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Knight.Knight;
 
 public class SpeedOrb extends Collectables{
@@ -11,6 +12,7 @@ public class SpeedOrb extends Collectables{
 
     @Override
     public void benefit(Knight knight){
-        knight.setVelocity(knight.getVelocity()*this.speed_boost);
+        knight.setMaxVelocity(new Vector(knight.getMaxVelocity().x()*speed_boost,
+                knight.getMaxVelocity().y()*speed_boost));
     }
 }
