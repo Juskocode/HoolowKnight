@@ -13,8 +13,10 @@ import java.io.IOException;
 
 public class MenuController extends Controller<Menu> {
 
-    public MenuController(Menu menu) {
+    private final ParticleMenuController particleMenuController;
+    public MenuController(Menu menu, ParticleMenuController particleMenuController) {
         super(menu);
+        this.particleMenuController = particleMenuController;
     }
 
     @Override
@@ -35,5 +37,6 @@ public class MenuController extends Controller<Menu> {
                 break;
             default:
         }
+        particleMenuController.move(game, action, time);
     }
 }

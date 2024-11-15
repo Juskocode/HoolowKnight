@@ -11,7 +11,7 @@ public class SmallRockViewer implements ElementViewer<SmallRock> {
     private final Sprite smallRockSprite;
 
     public SmallRockViewer() throws IOException {
-        this.smallRockSprite = new Sprite("sprites/Ambient/smallRock.png");
+        this.smallRockSprite = new Sprite("sprites/Ambient/Smallrock.png");
     }
 
     @Override
