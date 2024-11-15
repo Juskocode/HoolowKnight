@@ -2,6 +2,7 @@ package HollowKnight.state;
 
 import HollowKnight.controller.Controller;
 import HollowKnight.controller.menu.MenuController;
+import HollowKnight.controller.menu.ParticleMenuController;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.view.states.MenuViewer;
 import HollowKnight.view.states.ScreenViewer;
@@ -15,13 +16,13 @@ public class MenuState extends State<Menu> {
     }
 
     @Override
-    protected ScreenViewer<Menu> getScreenViewer() {
+    protected ScreenViewer<Menu> getScreenViewer() throws IOException {
         return new MenuViewer(getModel());
     }
 
     @Override
     protected Controller<Menu> getController() {
-        return new MenuController(getModel());
+        return new MenuController(getModel(), new ParticleMenuController(getModel()));
     }
 
 }
