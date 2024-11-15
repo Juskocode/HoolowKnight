@@ -22,13 +22,25 @@ import static java.awt.event.KeyEvent.VK_RIGHT;
 
 public class LanternaGUI implements GUI{
     private final Screen screen;
+
+    private final int width;
+
+    private final int height;
+
     private boolean keySpam;
     private KeyEvent priorityKeyPressed;
     private static final List<Integer> SPAM_KEYS = List.of(VK_LEFT, VK_RIGHT);
 
+    public LanternaGUI(Screen screen) {
+        this.screen = screen;
+        this.width = screen.getTerminalSize().getColumns();
+        this.height = screen.getTerminalSize().getRows();
+    }
     public LanternaGUI(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
         Terminal terminal = createTerminal(width, height, fontSize);
         this.screen = createScreen(terminal);
+        this.height = height;
+        this.width = width;
         this.keySpam = false;
         this.priorityKeyPressed = null;
     }
@@ -62,6 +74,16 @@ public class LanternaGUI implements GUI{
     }
 
     @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
     public void cls() {
         screen.clear();
     }
@@ -76,6 +98,17 @@ public class LanternaGUI implements GUI{
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
         tg.putString(x, y, " ");
+    }
+
+    @Override
+    public void drawRectangle(int x, int y, int width, int height, TextColor.RGB color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+        for (int dy = 0; dy < height; dy++) {
+            for (int dx = 0; dx < width; dx++) {
+                tg.putString(x + dx, y + dy, " ");
+            }
+        }
     }
 
     @Override
