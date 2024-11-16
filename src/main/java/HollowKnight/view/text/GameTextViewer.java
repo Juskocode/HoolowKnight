@@ -5,10 +5,9 @@ import com.googlecode.lanterna.TextColor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -27,26 +26,33 @@ public class GameTextViewer implements TextViewer {
     private final Map<Character, CharPosition> charMap;
 
     public GameTextViewer() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("fonts/font.png");
-        assert resource != null;
-        this.fontImage = ImageIO.read(new File(resource.getFile()));
-        this.charMap = parseCharMap();
-    }
+        URL fontImageResource = getClass().getClassLoader().getResource("fonts/font.png");
+        if (fontImageResource == null) {
+            throw new FileNotFoundException("Font image file not found in resources!");
+        }
+        this.fontImage = ImageIO.read(fontImageResource);
 
-    private Map<Character, CharPosition> parseCharMap() throws IOException {
-        Map<Character, CharPosition> charMap = new HashMap<>();
-        URL resource = getClass().getClassLoader().getResource("fonts/font-map.txt");
-        assert resource != null;
-        BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(resource.getFile()), UTF_8);
-
-        int y = 0;
-        for (String line; (line = bufferedReader.readLine()) != null; y++) {
-            for (int x = 0; x < line.length(); x++)
-                charMap.put(line.charAt(x), new CharPosition(x, y));
+        URL fontMapResource = getClass().getClassLoader().getResource("fonts/font-map.txt");
+        if (fontMapResource == null) {
+            throw new FileNotFoundException("Font map file not found in resources!");
         }
 
+        this.charMap = parseCharMap(fontMapResource);
+    }
+
+    private Map<Character, CharPosition> parseCharMap(URL resource) throws IOException {
+        Map<Character, CharPosition> charMap = new HashMap<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resource.openStream(), StandardCharsets.UTF_8))) {
+            int y = 0;
+            for (String line; (line = bufferedReader.readLine()) != null; y++) {
+                for (int x = 0; x < line.length(); x++) {
+                    charMap.put(line.charAt(x), new CharPosition(x, y));
+                }
+            }
+        }
         return charMap;
     }
+
 
     @Override
     public void draw(char character, int x, int y, TextColor.RGB foregroundColor, GUI gui) {
