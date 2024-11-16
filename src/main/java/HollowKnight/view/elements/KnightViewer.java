@@ -14,16 +14,17 @@ import java.util.Map;
 
 
 public class KnightViewer implements ElementViewer<Knight>{
-    private final List<Sprite> idleSprite;
-    private final Map<Class<?>, List<Sprite>> spriteMap;
+    private final List<Sprite> idleSpriteRight;
+    private final Map<Class<?>, PairList<Sprite>> spriteMap;
     public KnightViewer() throws IOException {
         this.spriteMap = new HashMap<>();
-        idleSprite = new ArrayList<>();
+        idleSpriteRight = new ArrayList<>();
 
         for (int i = 0; i < 16; i++) {
-            idleSprite.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + ".png"));
+            idleSpriteRight.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + ".png"));
         }
-        spriteMap.put(IdleState.class, idleSprite);
+
+        //spriteMap.put(IdleState.class, idleSprite);
     }
     @Override
     public void draw(Knight model, GUI gui, long time) throws IOException {
@@ -35,7 +36,8 @@ public class KnightViewer implements ElementViewer<Knight>{
     private Sprite getSprite(long tick, Knight model) {
         int animationFPS = 8; // Animation updates at 10 FPS
         int animationFrameTime = 30 / animationFPS; // Frames per tick at game FPS = 30
-        List<Sprite> animations = spriteMap.get(model.getState().getClass());
+
+        PairList<Sprite> animations = spriteMap.get(model.getState().getClass());
         int frameIndex = (int) ((tick / animationFrameTime) % animations.size());
         return animations.get(frameIndex);
     }
