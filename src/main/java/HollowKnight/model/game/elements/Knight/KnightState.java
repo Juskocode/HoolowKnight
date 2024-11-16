@@ -26,6 +26,7 @@ public abstract class KnightState {
                 knight.getVelocity().x() + knight.getAcceleration(),
                 knight.getVelocity().y()
         );
+
         return updateVelocity(newVelocity);
     }
 

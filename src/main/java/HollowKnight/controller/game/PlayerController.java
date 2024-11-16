@@ -20,13 +20,17 @@ public class PlayerController extends Controller<Scene> {
         switch (action){
             case LEFT:
                 knight.setVelocity(knight.moveLeft());
+                knight.setFacingRight(false);
                 break;
             case RIGHT:
                 knight.setVelocity(knight.moveRight());
+                knight.setFacingRight(true);
                 break;
             default:
                 getModel().getPlayer().setVelocity(knight.updateVelocity());
         }
+
+        System.out.println( "Velocidade :"+knight.getVelocity().x() +" "+  knight.getVelocity().y());
         knight.setPosition(knight.updatePosition());
         knight.setScene(getModel());
     }
