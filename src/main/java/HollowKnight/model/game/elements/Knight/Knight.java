@@ -15,6 +15,7 @@ public class Knight extends Element {
     private Vector maxVelocity;
     private double acceleration;
     private Scene scene;
+    private boolean isFacingRight;
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
         super(x,y);
         this.HP=HP;
@@ -24,6 +25,7 @@ public class Knight extends Element {
         this.maxVelocity = new Vector(2.0,3.0);
         this.acceleration =0.99;
         this.state = new IdleState(this);
+        this.isFacingRight = true;
     }
 
     public void setHP(int HP) {
@@ -33,6 +35,15 @@ public class Knight extends Element {
     public int getHP() {
         return HP;
     }
+
+    public boolean isFacingRight() {
+        return isFacingRight;
+    }
+
+    public void setFacingRight(boolean facingRight) {
+        isFacingRight = facingRight;
+    }
+
 
     public void setDamage(float damage) {
         this.Damage_multiplier = damage;
@@ -106,4 +117,11 @@ public class Knight extends Element {
         return scene;
     }
 
+    public void setState(KnightState state) {
+        this.state = state;
+    }
+
+    public KnightState getState() {
+        return state;
+    }
 }
