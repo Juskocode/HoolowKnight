@@ -4,6 +4,7 @@ import HollowKnight.gui.GUI;
 
 import HollowKnight.model.game.elements.Knight.IdleState;
 import HollowKnight.model.game.elements.Knight.Knight;
+import HollowKnight.model.game.elements.Knight.RunningState;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;
@@ -15,16 +16,27 @@ import java.util.Map;
 
 public class KnightViewer implements ElementViewer<Knight>{
     private final List<Sprite> idleSpriteRight;
+    private final List<Sprite> idleSpriteLeft;
+    private final List<Sprite> runningSpriteRight;
+    private final List<Sprite> runningSpriteLeft;
     private final Map<Class<?>, PairList<Sprite>> spriteMap;
     public KnightViewer() throws IOException {
         this.spriteMap = new HashMap<>();
         idleSpriteRight = new ArrayList<>();
-
+        idleSpriteLeft = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
             idleSpriteRight.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + ".png"));
+            idleSpriteLeft.add(new Sprite("sprites/Knight/Idle/pixil-frame-"+i+"-reversed.png"));
         }
+        spriteMap.put(IdleState.class, new PairList<>(idleSpriteRight,idleSpriteLeft));
+        runningSpriteRight = new ArrayList<>();
+        runningSpriteLeft = new ArrayList<>();
 
-        //spriteMap.put(IdleState.class, idleSprite);
+        for (int i = 1; i < 6; i++) {
+            runningSpriteRight.add(new Sprite("sprites/Knight/movement/running-final-" + i + ".png"));
+            runningSpriteLeft.add(new Sprite("sprites/Knight/movement/running-final-"+i+"-reversed.png"));
+        }
+        spriteMap.put(RunningState.class, new PairList<>(runningSpriteRight,runningSpriteLeft));
     }
     @Override
     public void draw(Knight model, GUI gui, long time) throws IOException {
@@ -38,8 +50,9 @@ public class KnightViewer implements ElementViewer<Knight>{
         int animationFrameTime = 30 / animationFPS; // Frames per tick at game FPS = 30
 
         PairList<Sprite> animations = spriteMap.get(model.getState().getClass());
-        int frameIndex = (int) ((tick / animationFrameTime) % animations.size());
-        return animations.get(frameIndex);
+        List<Sprite> animationsDirection = (model.isFacingRight()) ? animations.getFirstList() : animations.getSecondList() ;
+        int frameIndex = (int) ((tick / animationFrameTime) % animationsDirection.size());
+        return animationsDirection.get(frameIndex);
     }
 
     /*
