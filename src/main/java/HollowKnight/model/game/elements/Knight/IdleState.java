@@ -14,7 +14,6 @@ public class IdleState extends KnightState {
                 velocity.x() * getKnight().getAcceleration(),
                 velocity.y()
         );
-        return limitVelocity(newVelocity);
+        return newVelocity;
     }
-
 }

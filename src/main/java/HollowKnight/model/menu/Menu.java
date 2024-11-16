@@ -18,7 +18,7 @@ public class Menu {
         Option exit = new Option(30, 30, "Exit");
         this.options = Arrays.asList(start, settings, scoreboard, exit);
         this.particles = new ArrayList<>();
-        setParticles(createParticles(60));
+        setParticles(createParticles(200));
 
     }
 
@@ -58,15 +58,24 @@ public class Menu {
         this.particles = particles;
     }
 
-    public List<Particle> createParticles(int size){
+    public List<Particle> createParticles(int size) {
         List<Particle> particles = new ArrayList<>();
         Random random = new Random();
-        for(int i =0; i < size; i++){
-                    Particle new_particle = new Particle(
-                    random.nextInt(160),
-                    random.nextInt(90),
-                    new TextColor.RGB(0, 0, random.nextInt(100, 255))
+        int width = 160; // Assuming screen width is 160
+
+        for (int i = 0; i < size; i++) {
+            int x = random.nextInt(width);
+            int y = random.nextInt(90); // Assuming screen height is 90
+
+            // Calculate green intensity based on the x position
+            int greenIntensity = (int) ((x / (float) width) * 255); // Map x to range [0, 255]
+
+            Particle new_particle = new Particle(
+                    x,
+                    y,
+                    new TextColor.RGB(0, greenIntensity, 0) // Shades of green
             );
+
             particles.add(new_particle);
         }
         return particles;
