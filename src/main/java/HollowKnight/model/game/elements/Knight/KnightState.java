@@ -38,5 +38,14 @@ public abstract class KnightState {
         return new Vector(vx, vy);
     }
 
+    protected KnightState getNextGroundState() {
+        if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MIN_Velocity)
+            return new RunningState(getKnight());
+        if (Math.abs(getKnight().getVelocity().x()) >= WalkingState.MIN_Velocity)
+            return new WalkingState(getKnight());
+        return new IdleState(getKnight());
+    }
+
     public abstract Vector updateVelocity(Vector newVelocity);
+    public abstract KnightState getNextState();
 }

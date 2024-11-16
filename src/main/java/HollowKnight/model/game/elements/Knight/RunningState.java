@@ -1,10 +1,10 @@
 package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Vector;
-import HollowKnight.state.GameState;
 
-public class IdleState extends KnightState {
-    public IdleState(Knight knight) {
+public class RunningState extends KnightState{
+    public static double MIN_Velocity = 1.0;
+    public RunningState(Knight knight){
         super(knight);
     }
 

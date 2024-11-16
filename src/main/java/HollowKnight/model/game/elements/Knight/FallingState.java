@@ -15,4 +15,9 @@ public class FallingState extends KnightState{
         return limitVelocity(newVelocity);
     }
 
+    @Override
+    public KnightState getNextState() {
+        return null;
+    }
+
 }
