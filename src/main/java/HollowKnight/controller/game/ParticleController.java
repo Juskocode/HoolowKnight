@@ -23,7 +23,6 @@ public class ParticleController extends Controller<Scene>{
         }
     }
     public Position ParticleMove(Particle particle){
-        Random random = new Random();
         int new_x = (int)particle.getPosition().x() + 2;
         int new_y = (int)particle.getPosition().y() + 2;
         if (new_x < 0)
