@@ -7,6 +7,8 @@ import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 
 public class Knight extends Element {
+    private static final int WIDTH = 7;
+    private static final int HEIGHT = 4;
     private KnightState state;
     private int HP;
     private float Damage_multiplier;
@@ -65,6 +67,14 @@ public class Knight extends Element {
 
     public KnightState getState() {
         return state;
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
     }
 
     //SETTERS
@@ -135,6 +145,15 @@ public class Knight extends Element {
 
     public boolean isOverMaxXVelocity() {
         return Math.abs(velocity.x()) > maxVelocity.x();
+    }
+
+    public boolean isOnGround() {
+        Position positionBelow = new Position(
+                getPosition().x(),
+                getPosition().y() + 1
+        );
+        Position playerSize = new Position(WIDTH, HEIGHT);
+        return scene.collidesDown(positionBelow, playerSize);
     }
 
 }
