@@ -69,10 +69,11 @@ public class KnightViewer implements ElementViewer<Knight>{
         System.out.println(model.getPosition().x() + " " + model.getPosition().y());
         sprite.draw(gui, (int) model.getPosition().x(), (int)model.getPosition().y());
     }
-
+    //TODO map animationFPS for each animation
+    //TODO fix FPS sync
     private Sprite getSprite(long tick, Knight model) {
-        int animationFPS = 8; // Animation updates at 10 FPS
-        int animationFrameTime = 30 / animationFPS; // Frames per tick at game FPS = 30
+        int animationFPS = 12; // Animation updates at 10 FPS
+        int animationFrameTime = 60 / animationFPS; // Frames per tick at game FPS = 30
         System.out.println("Current state : " + model.getState().getClass().getSimpleName());
         PairList<Sprite> animations = spriteMap.get(model.getState().getClass());
         List<Sprite> animationsDirection = (model.isFacingRight()) ? animations.getFirstList() : animations.getSecondList() ;

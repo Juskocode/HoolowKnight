@@ -24,7 +24,7 @@ public class Knight extends Element {
         this.Energy = Energy;
         this.velocity = new Vector(0,0);
         this.maxVelocity = new Vector(2.0,3.0);
-        this.acceleration =0.75;
+        this.acceleration =0.85;
         this.state = new IdleState(this);
         this.isFacingRight = true;
         //assigns the supplied values (and some other default values) to the Knight's attributes
