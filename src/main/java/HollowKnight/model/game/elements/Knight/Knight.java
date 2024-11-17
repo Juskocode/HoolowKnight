@@ -101,6 +101,7 @@ public class Knight extends Element {
         this.scene = scene;
     }
 
+
     public void setState(KnightState state) {
         this.state = state;
     }
