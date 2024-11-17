@@ -1,11 +1,11 @@
 package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Vector;
+import HollowKnight.state.GameState;
 
-public class WalkingState extends KnightState{
-    public static double MIN_VELOCITY = 0.75;
+public class MaxVelocityState extends KnightState {
 
-    public WalkingState(Knight knight) {
+    public MaxVelocityState(Knight knight) {
         super(knight);
     }
 
@@ -20,10 +20,8 @@ public class WalkingState extends KnightState{
 
     @Override
     public KnightState getNextState() {
-        if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MIN_VELOCITY)
+        if (Math.abs(getKnight().getVelocity().x()) < RunningState.MAX_VELOCITY)
             return new RunningState(getKnight());
-        if (Math.abs(getKnight().getVelocity().x()) < WalkingState.MIN_VELOCITY)
-            return new IdleState(getKnight());
         return this;
     }
 }

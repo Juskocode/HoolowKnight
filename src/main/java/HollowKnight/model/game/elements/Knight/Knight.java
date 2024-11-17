@@ -118,7 +118,9 @@ public class Knight extends Element {
     }
 
     //ACTIONS
-
+    public KnightState getNextState() {
+        return state.getNextState();
+    }
 
     public Vector moveLeft() {
         return state.moveKnightLeft();

@@ -39,9 +39,9 @@ public abstract class KnightState {
     }
 
     protected KnightState getNextGroundState() {
-        if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MIN_Velocity)
+        if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MIN_VELOCITY)
             return new RunningState(getKnight());
-        if (Math.abs(getKnight().getVelocity().x()) >= WalkingState.MIN_Velocity)
+        if (Math.abs(getKnight().getVelocity().x()) >= WalkingState.MIN_VELOCITY)
             return new WalkingState(getKnight());
         return new IdleState(getKnight());
     }

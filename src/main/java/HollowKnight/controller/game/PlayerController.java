@@ -5,6 +5,7 @@ import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
+import HollowKnight.model.game.elements.Knight.IdleState;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
 
@@ -33,5 +34,10 @@ public class PlayerController extends Controller<Scene> {
         System.out.println( "Velocidade :"+knight.getVelocity().x() +" "+  knight.getVelocity().y());
         knight.setPosition(knight.updatePosition());
         knight.setScene(getModel());
+        knight.setState(knight.getNextState());
+
+        if (knight.getState() == null) {
+            knight.setState(new IdleState(knight));
+        }
     }
 }
