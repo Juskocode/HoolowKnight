@@ -43,7 +43,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     }
 
     private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
-        int animationDuration = 40; // Number of ticks for the animation
+        int animationDuration = 20; // Number of ticks for the animation
         int maxOffsetX = 40; // Maximum horizontal movement (how far right to start the animation)
 
         // Calculate the start time for drawing to begin (when the first option reaches its initial position)
