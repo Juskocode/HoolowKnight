@@ -15,11 +15,13 @@ public class MaxVelocityState extends KnightState {
                 velocity.x() * getKnight().getAcceleration(),
                 velocity.y()
         );
-        return limitVelocity(newVelocity);
+        return limitVelocity(applyCollisions(newVelocity));
     }
 
     @Override
     public KnightState getNextState() {
+        if (!getKnight().isOnGround())
+            return getNextOnAirState();
         if (Math.abs(getKnight().getVelocity().x()) < RunningState.MAX_VELOCITY)
             return new RunningState(getKnight());
         return this;

@@ -22,6 +22,8 @@ public class KnightViewer implements ElementViewer<Knight>{
     private final List<Sprite> runningSpriteLeft;
     private final List<Sprite> walkingSpriteRight;
     private final List<Sprite> walkingSpriteLeft;
+    private final List<Sprite> fallingSpriteRight;
+    private final List<Sprite> fallingSpriteLeft;
     private final Map<Class<?>, PairList<Sprite>> spriteMap;
     private final Map<Class<?>, Integer> animationFPSMap;
 
@@ -64,6 +66,15 @@ public class KnightViewer implements ElementViewer<Knight>{
         }
         spriteMap.put(WalkingState.class, new PairList<>(walkingSpriteLeft, walkingSpriteRight));
         animationFPSMap.put(WalkingState.class, 4); // 6 FPS for walking animation
+
+        fallingSpriteRight = new ArrayList<>();
+        fallingSpriteLeft = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            fallingSpriteLeft.add(new Sprite("sprites/Knight/movement/falling/pixil-frame-" + i +".png"));
+            fallingSpriteRight.add(new Sprite("sprites/Knight/movement/falling/pixil-frame-"+ i + "-reversed.png"));
+        }
+        spriteMap.put(FallingState.class, new PairList<>(fallingSpriteLeft, fallingSpriteRight));
+        animationFPSMap.put(FallingState.class, 8);
     }
 
     @Override
@@ -73,6 +84,8 @@ public class KnightViewer implements ElementViewer<Knight>{
     }
 
     private Sprite getSprite(long tick, Knight model) {
+        System.out.println("Knight current state: " + model.getState().getClass().getSimpleName());
+        System.out.println("Knight position: " + model.getPosition());
         int animationFPS = animationFPSMap.get(model.getState().getClass());
         int animationFrameTime = 30 / animationFPS; // Assuming 60 ticks per second
         PairList<Sprite> animations = spriteMap.get(model.getState().getClass());

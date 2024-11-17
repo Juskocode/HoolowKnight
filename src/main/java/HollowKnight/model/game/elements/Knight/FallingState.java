@@ -8,16 +8,18 @@ public class FallingState extends KnightState{
     }
     @Override
     public Vector updateVelocity(Vector newVelocity) {
-        Vector Velocity = new Vector(
-                 newVelocity.x(),
-                newVelocity.y() * getKnight().getScene().getGravity()
+        Vector velocity = new Vector(
+                 newVelocity.x() * getKnight().getAcceleration(),
+                newVelocity.y() + getKnight().getScene().getGravity()
         );
-        return limitVelocity(newVelocity);
+        return limitVelocity(velocity);
     }
 
     @Override
     public KnightState getNextState() {
-        return null;
+        if (getKnight().isOnGround())
+            return getNextGroundState();
+        return this;
     }
 
 }

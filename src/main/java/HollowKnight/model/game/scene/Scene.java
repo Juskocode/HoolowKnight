@@ -1,6 +1,7 @@
 package HollowKnight.model.game.scene;
 
 import HollowKnight.model.Position;
+import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
@@ -19,27 +20,38 @@ import java.util.List;
 public class Scene {
     private final int width;
     private final int height;
-    private List<Particle> particles;
+
+    private Tile[][] tiles;
+
+    private SmallTree[][] smallTrees;
+    private MediumTree[][] mediumTrees;
+
+    private BigRock[][] bigRocks;
+    private SmallRock[][] smallRocks;
+
+    private SwordMonster[][] swordMonsters;
+    private PurpleMonster[][] purpleMonsters;
+    private MinhoteMonster[][] minhoteMonsters;
+
+    private double gravity = 0.1;
+
     private Knight player;
-
-    private List<Tile> tiles;
-
-    private List<SmallTree> smallTrees;
-    private List<MediumTree> mediumTrees;
-
-    private List<BigRock> bigRocks;
-    private List<SmallRock> SmallRocks;
-
-    private List<SwordMonster> swordMonsters;
-    private List<PurpleMonster> purpleMonsters;
-    private List<MinhoteMonster> minhoteMonsters;
-    private double gravity = 0.9;
+    private List<Particle> particles;
 
     public Scene(int width, int height) {
         this.width = width;
         this.height = height;
-        this.player = new Knight(width / 2, height / 2, 100, 10, 5);
+
         this.particles = new ArrayList<>();
+
+        this.tiles = new Tile[height][width];
+        this.smallTrees = new SmallTree[height][width];
+        this.mediumTrees = new MediumTree[height][width];
+        this.bigRocks = new BigRock[height][width];
+        this.smallRocks = new SmallRock[height][width];
+        this.swordMonsters = new SwordMonster[height][width];
+        this.purpleMonsters = new PurpleMonster[height][width];
+        this.minhoteMonsters = new MinhoteMonster[height][width];
     }
 
     public int getWidth() {
@@ -58,107 +70,124 @@ public class Scene {
         this.player = player;
     }
 
-    public List<Tile> getTiles() {
+    public Tile[][] getTiles() {
         return tiles;
     }
 
-    public void setTiles(List<Tile> tiles) {
+    public void setTiles(Tile[][] tiles) {
         this.tiles = tiles;
     }
 
-    public List<SmallTree> getSmallTrees() {
+    public SmallTree[][] getSmallTrees() {
         return smallTrees;
     }
 
-    public void setSmallTrees(List<SmallTree> trees) {
-        this.smallTrees = trees;
+    public void setSmallTrees(SmallTree[][] smallTrees) {
+        this.smallTrees = smallTrees;
     }
 
-    public List<MediumTree> getMediumTrees() {
+    public MediumTree[][] getMediumTrees() {
         return mediumTrees;
     }
-    public void setMediumTrees(List<MediumTree> trees) {
-        this.mediumTrees = trees;
+
+    public void setMediumTrees(MediumTree[][] mediumTrees) {
+        this.mediumTrees = mediumTrees;
     }
 
-    public List<BigRock> getBigRocks() {
+    public BigRock[][] getBigRocks() {
         return bigRocks;
     }
 
-    public void setBigRocks(List<BigRock> bigRocks) {
+    public void setBigRocks(BigRock[][] bigRocks) {
         this.bigRocks = bigRocks;
     }
 
-    public List<SmallRock> getSmallRocks() {
-        return SmallRocks;
-    }
-    public void setSmallRocks(List<SmallRock> smallRocks) {
-        this.SmallRocks = smallRocks;
+    public SmallRock[][] getSmallRocks() {
+        return smallRocks;
     }
 
-    public List<SwordMonster> getSwordMonstersEnemies() {
+    public void setSmallRocks(SmallRock[][] smallRocks) {
+        this.smallRocks = smallRocks;
+    }
+
+    public SwordMonster[][] getSwordMonsters() {
         return swordMonsters;
     }
 
-    public void setSwordMonsters(List<SwordMonster> enemies) {
-        this.swordMonsters = enemies;
+    public void setSwordMonsters(SwordMonster[][] swordMonsters) {
+        this.swordMonsters = swordMonsters;
     }
 
-    public List<PurpleMonster> getPurpleMonsters() {
+    public PurpleMonster[][] getPurpleMonsters() {
         return purpleMonsters;
     }
 
-    public void setPurpleMonsters(List<PurpleMonster> purpleMonsters) {
+    public void setPurpleMonsters(PurpleMonster[][] purpleMonsters) {
         this.purpleMonsters = purpleMonsters;
     }
 
-    public List<MinhoteMonster> getMinhoteMonsters() {
+    public MinhoteMonster[][] getMinhoteMonsters() {
         return minhoteMonsters;
     }
 
-    public void setMinhoteMonsters(List<MinhoteMonster> minhoteMonsters) {
+    public void setMinhoteMonsters(MinhoteMonster[][] minhoteMonsters) {
         this.minhoteMonsters = minhoteMonsters;
-    }
-
-    public boolean isEmpty(Position position) {
-        for (Tile tile : tiles) {
-            int tileX = (int)tile.getPosition().x();
-            int tileY = (int)tile.getPosition().y();
-
-            // Check if the position is within the bounds of the 8x8 tile
-            if (position.x() >= tileX && position.x() < tileX + 8 &&
-                    position.y() >= tileY && position.y() < tileY + 8) {
-                return false; // Position is within the tile, so it's not empty
-            }
-        }
-        return true; // Position is not within any tile
-    }
-
-    public boolean isTile(Position position) {
-        for (Tile tile : tiles)
-            if (tile.getPosition().equals(position))
-                return true;
-        return false;
-    }
-    public void setParticles(List<Particle> particles) {
-        this.particles = particles;
     }
 
     public List<Particle> getParticles() {
         return particles;
     }
 
+    public void setParticles(List<Particle> particles) {
+        this.particles = particles;
+    }
+
     public double getGravity() {
         return gravity;
     }
 
-    public boolean checkColisionDown(){
-        for(Tile tile: tiles){
-            if(tile.getPosition().getDown().equals(player.getPosition())){
-                return true;
+    private boolean isInsideScene(double x1, double x2, double y1, double y2) {
+        return x1 < 0 || x2 >= this.width * Tile.SIZE || y1 < 0 || y2 >= this.height * Tile.SIZE;
+    }
+
+    private boolean checkCollision(double x1, double x2, double y1, double y2, Element[][] elementMap) {
+        if (isInsideScene(x1, x2, y1, y2))
+            return true;
+
+        int startX = (int) Math.floor(x1 / Tile.SIZE);
+        int endX = (int) Math.floor(x2 / Tile.SIZE);
+        int startY = (int) Math.floor(y1 / Tile.SIZE);
+        int endY = (int) Math.floor(y2 / Tile.SIZE);
+
+        for (int tileY = startY; tileY <= endY; tileY++) {
+            for (int tileX = startX; tileX <= endX; tileX++) {
+                if (tileY >= 0 && tileY < elementMap.length && tileX >= 0 && tileX < elementMap[tileY].length) {
+                    if (elementMap[tileY][tileX] != null) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
     }
 
+    public boolean collidesLeft(Position position, Position size) {
+        double x = position.x(), y = position.y();
+        return checkCollision(x, x + 1, y, y + size.y() - 1, tiles);
+    }
+
+    public boolean collidesRight(Position position, Position size) {
+        double x = position.x(), y = position.y();
+        return checkCollision(x + size.x() - 1, x + size.x() - 1, y, y + size.y() - 1, tiles);
+    }
+
+    public boolean collidesUp(Position position, Position size) {
+        double x = position.x(), y = position.y();
+        return checkCollision(x, x + size.x() - 1, y, y + 1, tiles);
+    }
+
+    public boolean collidesDown(Position position, Position size) {
+        double x = position.x(), y = position.y();
+        return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
+    }
 }
