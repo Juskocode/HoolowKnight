@@ -39,7 +39,7 @@ public class SceneLoader {
     }
 
     public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/level0.lvl");
+        URL resource = getClass().getClassLoader().getResource("levels/level1.lvl");
         assert resource != null;
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
