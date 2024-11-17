@@ -13,9 +13,9 @@ public class Menu {
     private int currentOption = 0;
     public Menu() {
         Option start = new Option(30, 15, "Start");
-        Option settings = new Option(30, 20, "Settings");
-        Option scoreboard = new Option(30, 25, "ScoreBoard");
-        Option exit = new Option(30, 30, "Exit");
+        Option settings = new Option(30, 21, "Settings");
+        Option scoreboard = new Option(30, 27, "ScoreBoard");
+        Option exit = new Option(30, 33, "Exit");
         this.options = Arrays.asList(start, settings, scoreboard, exit);
         this.particles = new ArrayList<>();
         setParticles(createParticles(200));
