@@ -47,7 +47,7 @@ public class Game {
     }
 
     private void start() throws IOException, InterruptedException {
-        int FPS = 30;
+        int FPS = 60;
         int frameTime = 1000 / FPS;
         int tick = 0;
         while (this.state != null) {
