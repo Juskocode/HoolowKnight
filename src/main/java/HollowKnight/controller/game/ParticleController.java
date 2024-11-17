@@ -23,7 +23,10 @@ public class ParticleController extends Controller<Scene>{
         }
     }
     public Position ParticleMove(Particle particle){
-        Random random = new Random();
+        Position currentPos = particle.getPosition();
+        if (currentPos == null) {
+            throw new IllegalStateException("Particle position is null");
+        }
         int new_x = (int)particle.getPosition().x() + 2;
         int new_y = (int)particle.getPosition().y() + 2;
         if (new_x < 0)
