@@ -19,6 +19,9 @@ public class IdleState extends KnightState {
 
     @Override
     public KnightState getNextState() {
-        return null;
+
+        if (Math.abs(getKnight().getVelocity().x()) >= WalkingState.MIN_VELOCITY)
+            return new WalkingState(getKnight());
+        return this;
     }
 }
