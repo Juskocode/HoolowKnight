@@ -23,20 +23,6 @@ import java.util.Random;
 public class SceneLoader {
     private final List<String> lines;
     private final int TILE_SIZE = 8;
-    public Scene createScene() {
-        Scene scene = new Scene(160, 90);
-        scene.setParticles(createParticles(60,scene));
-        scene.setPlayer(createPlayer());
-        scene.setTiles(createWalls());
-        scene.setSmallTrees(createSmallTrees());
-        scene.setMediumTrees(createMediumTrees());
-        scene.setBigRocks(createBigRocks());
-        scene.setSmallRocks(createSmallRocks());
-        scene.setSwordMonsters(createSwordMonsters());
-        scene.setPurpleMonsters(createPurpleMonsters());
-        scene.setMinhoteMonsters(createMinhoteMonsters());
-        return scene;
-    }
 
     public SceneLoader() throws IOException {
         URL resource = getClass().getClassLoader().getResource("levels/level1.lvl");
@@ -53,6 +39,23 @@ public class SceneLoader {
         return lines;
     }
 
+    public Scene createScene() {
+        Scene scene = new Scene(160, 90);
+
+        scene.setTiles(createWalls(scene));
+        scene.setSmallTrees(createSmallTrees(scene));
+        scene.setMediumTrees(createMediumTrees(scene));
+        scene.setBigRocks(createBigRocks(scene));
+        scene.setSmallRocks(createSmallRocks(scene));
+        scene.setSwordMonsters(createSwordMonsters(scene));
+        scene.setPurpleMonsters(createPurpleMonsters(scene));
+        scene.setMinhoteMonsters(createMinhoteMonsters(scene));
+        scene.setPlayer(createPlayer());
+        scene.setParticles(createParticles(60, scene));
+
+        return scene;
+    }
+
     protected int getWidth() {
         int width = 0;
         for (String line : lines)
@@ -64,138 +67,147 @@ public class SceneLoader {
         return lines.size();
     }
 
-    protected List<Tile> createWalls() {
-        List<Tile> walls = new ArrayList<>();
+    private Tile[][] createWalls(Scene scene) {
+        Tile[][] walls = new Tile[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'x') walls.add(new Tile(x * TILE_SIZE, y * TILE_SIZE));
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'x') {
+                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                }
+            }
         }
 
         return walls;
     }
 
-    protected Knight createPlayer() {
+    private SmallTree[][] createSmallTrees(Scene scene) {
+        SmallTree[][] trees = new SmallTree[scene.getHeight()][scene.getWidth()];
+
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 't') {
+                    trees[y][x] = new SmallTree(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return trees;
+    }
+
+    private MediumTree[][] createMediumTrees(Scene scene) {
+        MediumTree[][] trees = new MediumTree[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'T') {
+                    trees[y][x] = new MediumTree(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return trees;
+    }
+
+    private BigRock[][] createBigRocks(Scene scene) {
+        BigRock[][] rocks = new BigRock[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'R') {
+                    rocks[y][x] = new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return rocks;
+    }
+
+    private SmallRock[][] createSmallRocks(Scene scene) {
+        SmallRock[][] rocks = new SmallRock[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'r') {
+                    rocks[y][x] = new SmallRock(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return rocks;
+    }
+
+    private SwordMonster[][] createSwordMonsters(Scene scene) {
+        SwordMonster[][] monsters = new SwordMonster[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'E') {
+                    monsters[y][x] = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return monsters;
+    }
+
+    private PurpleMonster[][] createPurpleMonsters(Scene scene) {
+        PurpleMonster[][] monsters = new PurpleMonster[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'l') {
+                    monsters[y][x] = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return monsters;
+    }
+
+    private MinhoteMonster[][] createMinhoteMonsters(Scene scene) {
+        MinhoteMonster[][] monsters = new MinhoteMonster[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'M') {
+                    monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                }
+            }
+        }
+
+        return monsters;
+    }
+
+    private Knight createPlayer() {
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'P') {
-                    System.out.println("Found Player " + x + " - "+ y);
                     return new Knight(x * TILE_SIZE + 4, y * TILE_SIZE + 4, 50, 10, 5);
                 }
+            }
         }
         return null;
     }
 
-    protected List<SmallTree> createSmallTrees() {
-        List<SmallTree> trees = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 't') {
-                    System.out.println("Found small Tree " + x + " - "+ y);
-                    trees.add(new SmallTree(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return trees;
-    }
-
-    protected List<MediumTree> createMediumTrees() {
-        List<MediumTree> trees = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'T') {
-                    System.out.println("Found MediumTree " + x + " - "+ y);
-                    trees.add(new MediumTree(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return trees;
-    }
-
-    protected List<BigRock> createBigRocks() {
-        List<BigRock> rocks = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'R') {
-                    System.out.println("Found BigRock " + x + " - "+ y);
-                    rocks.add(new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return rocks;
-    }
-
-    protected List<SmallRock> createSmallRocks() {
-        List<SmallRock> rocks = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'r') {
-                    System.out.println("Found SmallRock " + x + " - "+ y);
-                    rocks.add(new SmallRock(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return rocks;
-    }
-
-    protected List<SwordMonster> createSwordMonsters() {
-        List<SwordMonster> enemies = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'E') {
-                    System.out.println("Found Enemy  " + x + " - "+ y);
-                    enemies.add(new SwordMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return enemies;
-    }
-
-    protected List<PurpleMonster> createPurpleMonsters() {
-        List<PurpleMonster> enemies = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'l') {
-                    System.out.println("Found PurpleMonster  " + x + " - "+ y);
-                    enemies.add(new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return enemies;
-    }
-
-    protected List<MinhoteMonster> createMinhoteMonsters() {
-        List<MinhoteMonster> enemies = new ArrayList<>();
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == 'M') {
-                    System.out.println("Found MinhoteMonster  " + x + " - "+ y);
-                    enemies.add(new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE + 4));
-                }
-        }
-        return enemies;
-    }
-
-    private List<Particle> createParticles(int size, Scene scene){
+    private List<Particle> createParticles(int size, Scene scene) {
         List<Particle> particles = new ArrayList<>();
         Random random = new Random();
-        for(int i =0; i < size; i++){
-            Particle new_particle = new Particle(
+        for (int i = 0; i < size; i++) {
+            particles.add(new Particle(
                     random.nextInt(scene.getWidth()),
                     random.nextInt(scene.getHeight()),
                     new TextColor.RGB(0, 0, random.nextInt(100, 255))
-            );
-            particles.add(new_particle);
+            ));
         }
         return particles;
     }
