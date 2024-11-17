@@ -57,6 +57,7 @@ public class GameViewer extends ScreenViewer<Scene> {
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         gradientLoader(gui);
+
         drawElements(gui, getModel().getTiles(), this.tileViewer, time);
         drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
@@ -67,7 +68,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time);
         drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time);
 
-        drawElements(gui, getModel().getSwordMonstersEnemies(), this.swordMonsterViewer, time);
+        drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
 
@@ -91,6 +92,15 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
         viewer.draw(element, gui, time);
+    }
+
+    private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount) throws IOException {
+        for (T[] elementLine : elements) {
+            for (T element : elementLine) {
+                if (element != null)
+                    drawElement(gui, element, viewer, frameCount);
+            }
+        }
     }
 
     private void gradientLoader(GUI gui) {
