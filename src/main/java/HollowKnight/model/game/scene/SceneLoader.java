@@ -89,7 +89,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 't') {
-                    trees[y][x] = new SmallTree(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    trees[y][x] = new SmallTree(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -104,7 +104,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'T') {
-                    trees[y][x] = new MediumTree(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    trees[y][x] = new MediumTree(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'R') {
-                    rocks[y][x] = new BigRock(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    rocks[y][x] = new BigRock(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -134,7 +134,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'r') {
-                    rocks[y][x] = new SmallRock(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    rocks[y][x] = new SmallRock(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -149,7 +149,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'E') {
-                    monsters[y][x] = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    monsters[y][x] = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -164,7 +164,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'l') {
-                    monsters[y][x] = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    monsters[y][x] = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
@@ -179,7 +179,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'M') {
-                    monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE + 4);
+                    monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }
