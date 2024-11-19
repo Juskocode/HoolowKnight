@@ -24,6 +24,7 @@ class IdleStateTest {
         idleState = new IdleState(knight);
         knight.setState(idleState);
         knight.setVelocity(new Vector(0, 0));
+        knight.setScene(mockedScene);
     }
 
     @Test
@@ -36,6 +37,7 @@ class IdleStateTest {
 
     @Test
     void getNextStateWalking() {
+        when(mockedScene.collidesDown(Mockito.any(), Mockito.any())).thenReturn(true);
         knight.setVelocity(new Vector(1, 0));
 
         KnightState nextState = idleState.getNextState();
@@ -45,6 +47,8 @@ class IdleStateTest {
 
     @Test
     void getNextStateStay() {
+        when(mockedScene.collidesDown(Mockito.any(), Mockito.any())).thenReturn(true);
+
         KnightState nextState = idleState.getNextState();
 
         assertSame(idleState, nextState);
