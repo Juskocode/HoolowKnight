@@ -7,8 +7,9 @@ import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 
 public class Knight extends Element {
+
     private static final int WIDTH = 7;
-    private static final int HEIGHT = 4;
+    private static final int HEIGHT = 9;
     private KnightState state;
     private int HP;
     private float Damage_multiplier;
@@ -18,21 +19,35 @@ public class Knight extends Element {
     private double acceleration;
     private Scene scene;
     private boolean isFacingRight;
+    private final double jumpBoost;
+    private final int offSetX = 4;
+    private final int offSetY = 1;
+
     //General Knight's attributes
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
-        super(x,y); //calls the constructor of the Element class, supplying the position in coordinates
+        super(x, y); //calls the constructor of the Element class, supplying the position in coordinates
+        this.setPosition(new Position(x + offSetX, y + offSetY));
         this.HP=HP;
         this.Damage_multiplier = Damage_multiplier;
         this.Energy = Energy;
         this.velocity = new Vector(0,0);
         this.maxVelocity = new Vector(2.0,3.0);
-        this.acceleration =0.85;
+        this.jumpBoost = 3.5;
+        this.acceleration = 0.75;
         this.state = new IdleState(this);
         this.isFacingRight = true;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
     //GETTERS
+    public KnightState getNextState() {
+        return state.getNextState();
+    }
+
+    public double getJumpBoost() {
+        return jumpBoost;
+    }
+
     public int getHP() {
         return HP;
     }
@@ -129,9 +144,6 @@ public class Knight extends Element {
     }
 
     //ACTIONS
-    public KnightState getNextState() {
-        return state.getNextState();
-    }
 
     public Vector moveLeft() {
         return state.moveKnightLeft();
@@ -139,6 +151,10 @@ public class Knight extends Element {
 
     public Vector moveRight() {
         return state.moveKnightRight();
+    }
+
+    public Vector jump() {
+        return state.jump();
     }
 
     //BOOLS
@@ -155,5 +171,4 @@ public class Knight extends Element {
         Position playerSize = new Position(WIDTH, HEIGHT);
         return scene.collidesDown(positionBelow, playerSize);
     }
-
 }
