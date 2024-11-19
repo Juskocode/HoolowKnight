@@ -4,46 +4,61 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
-import static java.awt.event.KeyEvent.VK_LEFT;
-import static java.awt.event.KeyEvent.VK_RIGHT;
+import java.util.Set;
+
+import static java.awt.event.KeyEvent.*;
+import static java.awt.event.KeyEvent.VK_X;
 
 public class LanternaGUI implements GUI{
     private final Screen screen;
 
     private final int width;
-
     private final int height;
 
+    // Track active keys
+    private final Set<Integer> activeKeys;
     private boolean keySpam;
-    private KeyEvent priorityKeyPressed;
+    private int priorityKeyPressed;
     private static final List<Integer> SPAM_KEYS = List.of(VK_LEFT, VK_RIGHT);
 
     public LanternaGUI(Screen screen) {
         this.screen = screen;
         this.width = screen.getTerminalSize().getColumns();
         this.height = screen.getTerminalSize().getRows();
+        this.activeKeys = new HashSet<>();
+        this.priorityKeyPressed = 0;
     }
+
     public LanternaGUI(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
         Terminal terminal = createTerminal(width, height, fontSize);
         this.screen = createScreen(terminal);
         this.height = height;
         this.width = width;
         this.keySpam = false;
-        this.priorityKeyPressed = null;
+        this.priorityKeyPressed = 0;
+        this.activeKeys = new HashSet<>();
+
+        // Add KeyAdapter to handle multiple key presses
+        setupKeyAdapter();
     }
+
 
     private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
         TerminalSize size = new TerminalSize(width, height);
@@ -70,6 +85,7 @@ public class LanternaGUI implements GUI{
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
+
         return screen;
     }
 
@@ -112,37 +128,97 @@ public class LanternaGUI implements GUI{
     }
 
     @Override
+    public void drawHitBox(int x, int y, int width, int height, TextColor.RGB color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+
+        // Draw the top and bottom edges
+        for (int dx = 0; dx < width; dx++) {
+            tg.putString(x + dx, y, " "); // Top edge
+            tg.putString(x + dx, y + height - 1, " "); // Bottom edge
+        }
+
+        // Draw the left and right edges
+        for (int dy = 0; dy < height; dy++) {
+            tg.putString(x, y + dy, " "); // Left edge
+            tg.putString(x + width - 1, y + dy, " "); // Right edge
+        }
+    }
+
+    @Override
     public void drawText(int x, int y, TextColor.RGB color, String Text) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
         tg.putString(x, y, Text);
     }
 
+    private void setupKeyAdapter() {
+        Toolkit.getDefaultToolkit().addAWTEventListener(event -> {
+            if (event instanceof KeyEvent keyEvent) {
+                synchronized (activeKeys) {
+                    if (keyEvent.getID() == KeyEvent.KEY_PRESSED) {
+                        handleKeyPressed(keyEvent);
+                    } else if (keyEvent.getID() == KeyEvent.KEY_RELEASED) {
+                        handleKeyReleased(keyEvent);
+                    }
+                }
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
+    }
+
+    private void handleKeyPressed(KeyEvent keyEvent) {
+        int keyCode = keyEvent.getKeyCode();
+        if (SPAM_KEYS.contains(keyCode)) {
+            activeKeys.add(keyCode);
+            priorityKeyPressed = keyCode;
+        }
+    }
+
+    private void handleKeyReleased(KeyEvent keyEvent) {
+        int keyCode = keyEvent.getKeyCode();
+        activeKeys.remove(keyCode);
+        if (priorityKeyPressed == keyCode) {
+            // If the released key was the priority, update to another active key
+            priorityKeyPressed = activeKeys.isEmpty() ? 0 : activeKeys.iterator().next();
+        }
+    }
+
     @Override
     public ACTION getACTION() throws IOException {
         KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke == null)
+        if (keyStroke == null && priorityKeyPressed != 0) {
+            return priorityKeyPressed == VK_LEFT ? ACTION.LEFT : ACTION.RIGHT;
+        } else if (keyStroke == null) {
             return ACTION.NULL;
+        }
 
+        // Handle non-priority keys as usual
         return switch (keyStroke.getKeyType()) {
             case ArrowUp -> ACTION.UP;
             case ArrowDown -> ACTION.DOWN;
-            case ArrowLeft -> ACTION.LEFT;
-            case ArrowRight -> ACTION.RIGHT;
-            case Character ->  keyStroke.getCharacter() == 'q' ? ACTION.QUIT : ACTION.NULL;
+            case Character -> {
+                char character = keyStroke.getCharacter();
+                if (character == ' ') {
+                    yield ACTION.JUMP;
+                } else if (character == 'q') {
+                    yield ACTION.QUIT;
+                } else {
+                    yield ACTION.NULL;
+                }
+            }
             case Enter -> ACTION.SELECT;
             case EOF -> ACTION.QUIT;
             default -> ACTION.NULL;
         };
     }
+
     @Override
     public void close() throws IOException {
         screen.close();
     }
+
     public void setKeySpam(boolean keySpam) {
-        if (!keySpam)
-            priorityKeyPressed = null;
+        if (!keySpam) priorityKeyPressed = 0;
         this.keySpam = keySpam;
     }
-
 }
