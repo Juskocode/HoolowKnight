@@ -5,7 +5,7 @@ import com.googlecode.lanterna.TextColor;
 import java.io.IOException;
 
 public interface GUI {
-    enum ACTION{UP, DOWN, RIGHT, LEFT, QUIT, SELECT, NULL};
+    enum ACTION{UP, DOWN, RIGHT, LEFT, JUMP, QUIT, SELECT, NULL};
 
     int getWidth();
     int getHeight();
@@ -15,6 +15,7 @@ public interface GUI {
     ACTION getACTION() throws IOException;
     void drawPixel(int x, int y, TextColor.RGB color);
     void drawRectangle(int x, int y, int width, int height, TextColor.RGB color);
+    void drawHitBox(int x, int y, int width, int height, TextColor.RGB color);
 
     void drawText(int x, int y, TextColor.RGB color, String Text);
 

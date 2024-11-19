@@ -27,10 +27,12 @@ public class PlayerController extends Controller<Scene> {
                 knight.setVelocity(knight.moveRight());
                 knight.setFacingRight(true);
                 break;
+            case JUMP:
+                knight.setVelocity(knight.jump());
+                break;
             default:
-                getModel().getPlayer().setVelocity(knight.updateVelocity());
+                knight.setVelocity(knight.updateVelocity());
         }
-
 
         knight.setPosition(knight.updatePosition());
         knight.setScene(getModel());

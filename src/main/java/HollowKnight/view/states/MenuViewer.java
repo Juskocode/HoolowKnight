@@ -36,7 +36,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-        drawBackGround(gui);
+        drawRetroDynamicBackground(gui, time);
         this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
         gui.flush();
@@ -88,21 +88,21 @@ public class MenuViewer extends ScreenViewer<Menu> {
         return new TextColor.RGB(r, g, 0);
     }
 
-    private void drawBackGround(GUI gui) throws IOException {
+    private void drawRetroDynamicBackground(GUI gui, long time) throws IOException {
         int screenWidth = 160;
         int screenHeight = 90;
-
-        // Background gradient color (Black to White)
+        double changeRate = 0.01;
+        // Generate a retro gradient background
         for (int w = 0; w < screenWidth; w++) {
-            int colorValue = (int) (255 * w / (screenWidth - 1.0)); // Same for R, G, and B
-            TextColor.RGB color = new TextColor.RGB(colorValue, colorValue, colorValue);
+            int colorValue = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate)); // Oscillating gray shades
+            TextColor.RGB gradientColor = new TextColor.RGB(colorValue, colorValue, colorValue);
 
             for (int h = 0; h < screenHeight; h++) {
-                gui.drawPixel(w, h, color);
+                gui.drawPixel(w, h, gradientColor);
             }
         }
 
-        // Border color
+        // Add a retro-style border
         TextColor.RGB borderColor = new TextColor.RGB(25, 25, 25);
         for (int w = 0; w < screenWidth; w++) {
             gui.drawPixel(w, 0, borderColor);
@@ -113,6 +113,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
             gui.drawPixel(screenWidth - 1, h, borderColor);
         }
     }
+
 
     private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
         for (T element : elements)

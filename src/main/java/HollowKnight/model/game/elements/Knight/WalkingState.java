@@ -10,6 +10,15 @@ public class WalkingState extends KnightState{
     }
 
     @Override
+    public Vector jump() {
+        Vector newVelocity = new Vector(
+                getKnight().getVelocity().x(),
+                getKnight().getVelocity().y() - getKnight().getJumpBoost()
+        );
+        return updateVelocity(newVelocity);
+    }
+
+    @Override
     public Vector updateVelocity(Vector velocity) {
         Vector newVelocity = new Vector(
                 velocity.x() * getKnight().getAcceleration(),

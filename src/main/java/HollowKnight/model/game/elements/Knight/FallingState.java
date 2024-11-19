@@ -6,6 +6,12 @@ public class FallingState extends KnightState{
     public FallingState(Knight knight){
         super(knight);
     }
+
+    @Override
+    public Vector jump() {
+        return updateVelocity(getKnight().getVelocity());
+    }
+
     @Override
     public Vector updateVelocity(Vector newVelocity) {
         Vector velocity = new Vector(

@@ -4,8 +4,18 @@ import HollowKnight.model.Vector;
 import HollowKnight.state.GameState;
 
 public class IdleState extends KnightState {
+
     public IdleState(Knight knight) {
         super(knight);
+    }
+
+    @Override
+    public Vector jump() {
+        Vector newVelocity = new Vector(
+                getKnight().getVelocity().x(),
+                getKnight().getVelocity().y() - getKnight().getJumpBoost()
+        );
+        return updateVelocity(newVelocity);
     }
 
     @Override

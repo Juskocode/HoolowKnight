@@ -23,7 +23,7 @@ public class SwordMonsterViewer implements ElementViewer<SwordMonster> {
     @Override
     public void draw(SwordMonster model, GUI gui, long time) throws IOException {
         Sprite sprite = getSprite(time);
-        sprite.draw(gui, (int)model.getPosition().x(), (int)model.getPosition().y());
+        sprite.draw(gui, (int)model.getPosition().x() - 4, (int)model.getPosition().y());
     }
 
     private Sprite getSprite(long tick) {

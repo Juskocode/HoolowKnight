@@ -69,9 +69,12 @@ public abstract class KnightState {
     }
 
     protected KnightState getNextOnAirState() {
+        if (getKnight().getVelocity().y() < 0)
+            return new JumpState(getKnight());
         return new FallingState(getKnight());
     }
 
+    public abstract Vector jump();
     public abstract Vector updateVelocity(Vector newVelocity);
     public abstract KnightState getNextState();
 }

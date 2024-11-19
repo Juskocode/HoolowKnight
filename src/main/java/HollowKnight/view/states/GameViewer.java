@@ -56,8 +56,8 @@ public class GameViewer extends ScreenViewer<Scene> {
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-        gradientLoader(gui);
 
+        dynamicGradientBackground(gui, time);
         drawElements(gui, getModel().getTiles(), this.tileViewer, time);
         drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
@@ -76,14 +76,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         gui.flush();
     }
 
-    private void setBackgroundColor(GUI gui, TextColor.RGB color) {
-        // BACKGROUND (NOT SCENE RELATED)
-        for (int w = 0; w < 160; w++) {
-            for (int h = 0; h < 90; h++) {
-                gui.drawPixel(w, h, color);
-            }
-        }
-    }
 
     private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
         for (T element : elements)
@@ -103,96 +95,36 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
     }
 
-    private void gradientLoader(GUI gui) {
+    private void dynamicGradientBackground(GUI gui, long time) {
         int width = getModel().getWidth();
         int height = getModel().getHeight();
 
-        // Define colors
-        TextColor.RGB color1 = new TextColor.RGB(34, 87, 122);
-        TextColor.RGB color2 = new TextColor.RGB(128, 237, 153);
+        double changeRate = 0.02;
+        // Calculate dynamic colors based on time
+        int baseRed1 = (int) (128 + 127 * Math.sin(time * changeRate));
+        int baseGreen1 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI / 3));
+        int baseBlue1 = (int) (128 + 127 * Math.sin(time * changeRate + 2 * Math.PI / 3));
 
-        // Outer background
+        int baseRed2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI));
+        int baseGreen2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI + Math.PI / 3));
+        int baseBlue2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI + 2 * Math.PI / 3));
+
+        TextColor.RGB color1 = new TextColor.RGB(baseRed1, baseGreen1, baseBlue1);
+        TextColor.RGB color2 = new TextColor.RGB(baseRed2, baseGreen2, baseBlue2);
+
+        // Draw dynamic gradient background
         for (int w = 0; w < width; w++) {
             for (int h = 0; h < height; h++) {
-                gui.drawPixel(w, h, new TextColor.RGB(28, 28, 28));
+                double interpolationX = (double) w / (width - 1);
+                double interpolationY = (double) h / (height - 1);
+
+                int red = (int) ((1 - interpolationX) * color1.getRed() + interpolationX * color2.getRed());
+                int green = (int) ((1 - interpolationY) * color1.getGreen() + interpolationY * color2.getGreen());
+                int blue = (int) ((1 - interpolationX) * color1.getBlue() + interpolationX * color2.getBlue());
+
+                gui.drawPixel(w, h, new TextColor.RGB(red, green, blue));
             }
-        }
-
-        // Inner rectangle with gradient (proportional dimensions)
-        int innerPadding = 4;
-        int innerWidthStart = innerPadding - 1;
-        int innerWidthEnd = width - innerPadding + 1;
-        int innerHeightStart = innerPadding;
-        int innerHeightEnd = height - innerPadding;
-
-        for (int w = innerWidthStart; w < innerWidthEnd; w++) {
-            for (int h = innerHeightStart; h < innerHeightEnd; h++) {
-                gui.drawPixel(w, h, new TextColor.RGB(12, 12, 12));
-            }
-        }
-
-        // Top and bottom gradients
-        for (int w = 0; w < width; w++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * w / width,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * w / width,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * w / width
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * w / width,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * w / width,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * w / width
-            );
-            gui.drawPixel(w, 0, current);
-            gui.drawPixel(w, height - 1, opposite);
-        }
-
-        // Inner top and bottom gradients
-        for (int w = innerWidthStart; w < innerWidthEnd; w++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart),
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart),
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart)
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart),
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart),
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * (w - innerWidthStart) / (innerWidthEnd - innerWidthStart)
-            );
-            gui.drawPixel(w, innerHeightStart, opposite);
-            gui.drawPixel(w, innerHeightEnd - 1, current);
-        }
-
-        // Left and right gradients
-        for (int h = 1; h < height - 1; h++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * h / height,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * h / height,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * h / height
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * h / height,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * h / height,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * h / height
-            );
-            gui.drawPixel(0, h, current);
-            gui.drawPixel(width - 1, h, opposite);
-        }
-
-        // Inner left and right gradients
-        for (int h = innerHeightStart; h < innerHeightEnd; h++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart),
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart),
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart)
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart),
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart),
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * (h - innerHeightStart) / (innerHeightEnd - innerHeightStart)
-            );
-            gui.drawPixel(innerWidthStart, h, opposite);
-            gui.drawPixel(innerWidthEnd - 1, h, current);
         }
     }
+
 }
