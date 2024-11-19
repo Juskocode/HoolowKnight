@@ -33,7 +33,7 @@ public class Scene {
     private PurpleMonster[][] purpleMonsters;
     private MinhoteMonster[][] minhoteMonsters;
 
-    private double gravity = 0.1;
+    private double gravity = 0.2;
 
     private Knight player;
     private List<Particle> particles;
@@ -146,30 +146,22 @@ public class Scene {
         return gravity;
     }
 
-    private boolean isInsideScene(double x1, double x2, double y1, double y2) {
-        return x1 < 0 || x2 >= this.width * Tile.SIZE || y1 < 0 || y2 >= this.height * Tile.SIZE;
+    private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
+        return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
     }
 
-    private boolean checkCollision(double x1, double x2, double y1, double y2, Element[][] elementMap) {
-        if (isInsideScene(x1, x2, y1, y2))
+    private boolean checkCollision(double x1, double x2, double y1, double y2, Element[][] layer) {
+        if (isOutSideScene(x1, x2, y1, y2))
             return true;
-
-        int startX = (int) Math.floor(x1 / Tile.SIZE);
-        int endX = (int) Math.floor(x2 / Tile.SIZE);
-        int startY = (int) Math.floor(y1 / Tile.SIZE);
-        int endY = (int) Math.floor(y2 / Tile.SIZE);
-
-        for (int tileY = startY; tileY <= endY; tileY++) {
-            for (int tileX = startX; tileX <= endX; tileX++) {
-                if (tileY >= 0 && tileY < elementMap.length && tileX >= 0 && tileX < elementMap[tileY].length) {
-                    if (elementMap[tileY][tileX] != null) {
-                        return true;
-                    }
-                }
+        for (int tileY: List.of((int)y1 / Tile.SIZE, (int)y2 / Tile.SIZE)) {
+            for (int tileX: List.of((int)x1 / Tile.SIZE, (int)x2 / Tile.SIZE)) {
+                if (layer[tileY][tileX] != null)
+                    return true;
             }
         }
         return false;
     }
+
 
     public boolean collidesLeft(Position position, Position size) {
         double x = position.x(), y = position.y();
@@ -188,6 +180,9 @@ public class Scene {
 
     public boolean collidesDown(Position position, Position size) {
         double x = position.x(), y = position.y();
-        return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
+
+        // Check only the bottom edge of the player to detect ground collision
+        return checkCollision(x, x + size.x() - 1, y + size.y(), y + size.y() + 1, tiles);
     }
+
 }
