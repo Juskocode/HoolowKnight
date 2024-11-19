@@ -3,11 +3,21 @@ package HollowKnight.model.game.elements.Knight;
 import HollowKnight.model.Vector;
 
 public class RunningState extends KnightState{
+
     public static double MIN_VELOCITY = 1.75;
     public static double MAX_VELOCITY = 2.00;
 
     public RunningState(Knight knight){
         super(knight);
+    }
+
+    @Override
+    public Vector jump() {
+        Vector newVelocity = new Vector(
+                getKnight().getVelocity().x(),
+                getKnight().getVelocity().y() - getKnight().getJumpBoost()
+        );
+        return updateVelocity(newVelocity);
     }
 
     @Override
