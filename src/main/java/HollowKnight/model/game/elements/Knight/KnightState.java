@@ -11,6 +11,7 @@ public abstract class KnightState {
     public KnightState(Knight knight){
         this.knight = knight;
     }
+
     public Knight getKnight() {
         return knight;
     }
