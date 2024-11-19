@@ -9,8 +9,17 @@ public class EnergyOrb extends Collectables{
         this.energy = energy;
     }
 
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     @Override
     public void benefit(Knight knight){
         knight.setEnergy(knight.getEnergy()+ this.energy);
     }
+
 }
