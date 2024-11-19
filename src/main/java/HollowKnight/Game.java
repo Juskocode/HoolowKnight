@@ -19,8 +19,8 @@ public class Game {
     private State state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        int SCREEN_WIDTH = 202;
-        int SCREEN_HEIGHT = 90;
+        int SCREEN_WIDTH = 200;
+        int SCREEN_HEIGHT = 88;
 
         Rectangle screenSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         double width = screenSize.getWidth();
