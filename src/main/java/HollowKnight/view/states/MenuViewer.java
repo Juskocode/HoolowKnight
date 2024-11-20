@@ -24,9 +24,10 @@ import java.util.List;
 public class MenuViewer extends ScreenViewer<Menu> {
 
     private final ParticleViewer particleViewer;
-    private static final TextColor.RGB unselectedColor = new TextColor.RGB(234,234,234);
-    private static final TextColor.RGB selectedColor = new TextColor.RGB(255,234,69);
+    private static final TextColor.RGB unselectedColor = new TextColor.RGB(26, 62, 108);
+    private static final TextColor.RGB selectedColor = new TextColor.RGB(219, 219, 48);
     private final OptionViewer optionViewer;
+
     public MenuViewer(Menu model) throws IOException {
         super(model);
         this.optionViewer = new OptionViewer();
