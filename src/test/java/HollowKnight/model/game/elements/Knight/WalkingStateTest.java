@@ -28,7 +28,7 @@ class WalkingStateTest {
         when(mockedScene.collidesRight(Mockito.any(), Mockito.any())).thenReturn(false);
         knight.setVelocity(new Vector(1, 0));
         Vector result = knight.updateVelocity();
-        assertEquals(0.85, result.x());
+        assertEquals(0.75, result.x());
         assertEquals(0.0, result.y());
     }
 

@@ -8,6 +8,15 @@ public class HealthOrb extends Collectables{
         super(x,y,"Health");
         this.health = health;
     }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     @Override
     public void benefit(Knight knight){
         knight.setHP(knight.getHP()+ this.health);

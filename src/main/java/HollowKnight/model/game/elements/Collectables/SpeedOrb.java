@@ -10,6 +10,14 @@ public class SpeedOrb extends Collectables{
         this.speed_boost = boost;
     }
 
+    public double getSpeed_boost() {
+        return speed_boost;
+    }
+
+    public void setSpeed_boost(double speed_boost) {
+        this.speed_boost = speed_boost;
+    }
+
     @Override
     public void benefit(Knight knight){
         knight.setMaxVelocity(new Vector(knight.getMaxVelocity().x()*speed_boost,
