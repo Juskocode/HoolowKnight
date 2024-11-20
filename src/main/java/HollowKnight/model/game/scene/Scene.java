@@ -153,7 +153,8 @@ public class Scene {
     private boolean checkCollision(double x1, double x2, double y1, double y2, Element[][] layer) {
         if (isOutSideScene(x1, x2, y1, y2))
             return true;
-        for (int tileY: List.of((int)y1 / Tile.SIZE, (int)y2 / Tile.SIZE)) {
+
+        for (int tileY: List.of(((int)y1 / Tile.SIZE), ((int)y2 / Tile.SIZE))) {
             for (int tileX: List.of((int)x1 / Tile.SIZE, (int)x2 / Tile.SIZE)) {
                 if (layer[tileY][tileX] != null)
                     return true;
@@ -161,7 +162,6 @@ public class Scene {
         }
         return false;
     }
-
 
     public boolean collidesLeft(Position position, Position size) {
         double x = position.x(), y = position.y();
@@ -180,9 +180,8 @@ public class Scene {
 
     public boolean collidesDown(Position position, Position size) {
         double x = position.x(), y = position.y();
-
-        // Check only the bottom edge of the player to detect ground collision
-        return checkCollision(x, x + size.x() - 1, y + size.y(), y + size.y() + 1, tiles);
+        return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
     }
+
 
 }
