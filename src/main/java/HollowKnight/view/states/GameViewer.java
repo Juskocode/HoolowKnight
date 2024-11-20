@@ -13,12 +13,19 @@ import HollowKnight.view.elements.rocks.BigRockViewer;
 import HollowKnight.view.elements.rocks.SmallRockViewer;
 import HollowKnight.view.elements.trees.MediumTreeViewer;
 import HollowKnight.view.elements.trees.SmallTreeViewer;
+import HollowKnight.view.text.GameTextViewer;
+import HollowKnight.view.text.TextViewer;
 import com.googlecode.lanterna.TextColor;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
 public class GameViewer extends ScreenViewer<Scene> {
+
+    private final TextViewer textViewer;
+
+
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
     private final TileViewer tileViewer;
@@ -35,7 +42,11 @@ public class GameViewer extends ScreenViewer<Scene> {
 
 
     public GameViewer(Scene model) throws IOException {
+
         super(model);
+
+        this.textViewer = new GameTextViewer();
+
         this.particleViewer = new ParticleViewer();
 
         this.knightViewer = new KnightViewer();
@@ -72,6 +83,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
 
+        drawPlayerStats(gui, time);
 
         gui.flush();
     }
@@ -95,11 +107,12 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
     }
 
+
     private void dynamicGradientBackground(GUI gui, long time) {
         int width = getModel().getWidth();
         int height = getModel().getHeight();
 
-        double changeRate = 0.02;
+        double changeRate = 0.04;
         // Calculate dynamic colors based on time
         int baseRed1 = (int) (128 + 127 * Math.sin(time * changeRate));
         int baseGreen1 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI / 3));
@@ -127,4 +140,35 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
     }
 
+    private void drawPlayerStats(GUI gui, long time) throws IOException {
+        // Fetch the player details
+        var player = getModel().getPlayer();
+
+        // Format position and velocity strings
+        String pos = formatVector("pos", player.getPosition().x(), player.getPosition().y());
+        String vel = formatVector("vel", player.getVelocity().x(), player.getVelocity().y());
+
+        // Fetch the player's state class name
+        String state = "state " + player.getState().getClass().getSimpleName();
+
+        // Fetch player collision
+        String colides = "ground " + player.isOnGround();
+
+
+        // Define a common color for all text
+        TextColor.RGB color = new TextColor.RGB(0, 25, 25);
+
+        // Draw each piece of information
+        this.textViewer.draw(pos, 4, 0, color, gui);
+        this.textViewer.draw(vel, 4, 8, color, gui);
+        this.textViewer.draw(state, 4, 16, color, gui);
+        this.textViewer.draw(colides, 4, 24, color, gui);
+
+    }
+
+
+    // Helper method to format position or velocity with truncated decimal values
+    String formatVector(String label, double x, double y) {
+        return String.format("%s %.2fx%.2fy", label, x, y);
+    }
 }
