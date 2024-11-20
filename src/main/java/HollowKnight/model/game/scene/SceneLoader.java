@@ -1,5 +1,8 @@
 package HollowKnight.model.game.scene;
 
+import HollowKnight.model.game.elements.Collectables.Collectables;
+import HollowKnight.model.game.elements.Collectables.EnergyOrb;
+import HollowKnight.model.game.elements.Collectables.HealthOrb;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
@@ -52,6 +55,7 @@ public class SceneLoader {
         scene.setMinhoteMonsters(createMinhoteMonsters(scene));
         scene.setPlayer(createPlayer());
         scene.setParticles(createParticles(60, scene));
+        scene.setCollectables(createCollectables(scene));
 
         return scene;
     }
@@ -144,6 +148,23 @@ public class SceneLoader {
         return rocks;
     }
 
+    private Collectables[][] createCollectables(Scene scene){
+        Collectables[][] collectables = new Collectables[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'e') {
+                    collectables[y][x] = new EnergyOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
+                }
+                else if(line.charAt(x)=='h'){
+                    collectables[y][x] = new HealthOrb(x * TILE_SIZE, y * TILE_SIZE, 50);
+                }
+            }
+        }
+        return collectables;
+    }
+
     private SwordMonster[][] createSwordMonsters(Scene scene) {
         SwordMonster[][] monsters = new SwordMonster[scene.getHeight()][scene.getWidth()];
 
@@ -213,4 +234,6 @@ public class SceneLoader {
         }
         return particles;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package HollowKnight.model.game.scene;
 
 import HollowKnight.model.Position;
+import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
@@ -22,9 +23,10 @@ public class Scene {
     private final int height;
 
     private Tile[][] tiles;
-
     private SmallTree[][] smallTrees;
     private MediumTree[][] mediumTrees;
+
+    private Collectables[][] collectables;
 
     private BigRock[][] bigRocks;
     private SmallRock[][] smallRocks;
@@ -52,6 +54,7 @@ public class Scene {
         this.swordMonsters = new SwordMonster[height][width];
         this.purpleMonsters = new PurpleMonster[height][width];
         this.minhoteMonsters = new MinhoteMonster[height][width];
+        this.collectables = new Collectables[height][width];
     }
 
     public int getWidth() {
@@ -144,6 +147,14 @@ public class Scene {
 
     public double getGravity() {
         return gravity;
+    }
+
+    public Collectables[][] getCollectables() {
+        return collectables;
+    }
+
+    public void setCollectables(Collectables[][] collectables) {
+        this.collectables = collectables;
     }
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
