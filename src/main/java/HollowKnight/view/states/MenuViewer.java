@@ -37,8 +37,8 @@ public class MenuViewer extends ScreenViewer<Menu> {
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         drawRetroDynamicBackground(gui, time);
-        this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
+        this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
         gui.flush();
     }
 
