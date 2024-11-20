@@ -40,7 +40,7 @@ public class SceneLoader {
     }
 
     public Scene createScene() {
-        Scene scene = new Scene(160, 90);
+        Scene scene = new Scene(160, 88);
 
         scene.setTiles(createWalls(scene));
         scene.setSmallTrees(createSmallTrees(scene));
@@ -76,6 +76,8 @@ public class SceneLoader {
                 if (line.charAt(x) == 'x') {
                     walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
                 }
+                else
+                    walls[y][x] = null;
             }
         }
 
@@ -192,7 +194,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'P') {
-                    return new Knight(x * TILE_SIZE + 4, y * TILE_SIZE + 4, 50, 10, 5);
+                    return new Knight(x * TILE_SIZE, y * TILE_SIZE - 2, 50, 10, 5);
                 }
             }
         }

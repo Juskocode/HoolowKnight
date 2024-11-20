@@ -65,7 +65,7 @@ public class KnightViewer implements ElementViewer<Knight>{
             runningSpriteLeft.add(new Sprite("sprites/Knight/movement/running/running-final-" + i + "-reversed.png"));
         }
         spriteMap.put(RunningState.class, new PairList<>(runningSpriteRight, runningSpriteLeft));
-        animationFPSMap.put(RunningState.class, 6); // 10 FPS for running animation
+        animationFPSMap.put(RunningState.class, 5); // 10 FPS for running animation
 
         // WALKING
 
@@ -76,7 +76,7 @@ public class KnightViewer implements ElementViewer<Knight>{
             walkingSpriteRight.add(new Sprite("sprites/Knight/movement/walking/running-intermediate-" + i + "-reversed.png"));
         }
         spriteMap.put(WalkingState.class, new PairList<>(walkingSpriteLeft, walkingSpriteRight));
-        animationFPSMap.put(WalkingState.class, 4); // 6 FPS for walking animation
+        animationFPSMap.put(WalkingState.class, 5); // 6 FPS for walking animation
 
         // FALLING
 
@@ -87,7 +87,7 @@ public class KnightViewer implements ElementViewer<Knight>{
             fallingSpriteRight.add(new Sprite("sprites/Knight/movement/falling/pixil-frame-"+ i + "-reversed.png"));
         }
         spriteMap.put(FallingState.class, new PairList<>(fallingSpriteLeft, fallingSpriteRight));
-        animationFPSMap.put(FallingState.class, 15);
+        animationFPSMap.put(FallingState.class, 10);
 
         // JUMPING
 
