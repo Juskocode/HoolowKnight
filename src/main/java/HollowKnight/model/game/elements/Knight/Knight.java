@@ -140,7 +140,16 @@ public class Knight extends Element {
     }
 
     public Position updatePosition() {
-        return new Position(getPosition().x() + velocity.x(), getPosition().y() + velocity.y());
+        Vector resolvedVelocity = state.applyCollisions(velocity);
+
+        // Update position with resolved velocity
+        double newX = getPosition().x() + resolvedVelocity.x();
+        double newY = getPosition().y() + resolvedVelocity.y();
+
+        //Position newPosition = new Position(newX, newY);
+
+
+        return new Position(newX, newY);
     }
 
     //ACTIONS
@@ -166,7 +175,7 @@ public class Knight extends Element {
     public boolean isOnGround() {
         Position positionBelow = new Position(
                 getPosition().x(),
-                getPosition().y() + 1
+                 getPosition().y() + 1
         );
         Position playerSize = new Position(WIDTH, HEIGHT);
         return scene.collidesDown(positionBelow, playerSize);
