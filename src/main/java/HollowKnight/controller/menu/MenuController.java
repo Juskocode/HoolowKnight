@@ -29,10 +29,14 @@ public class MenuController extends Controller<Menu> {
                 this.getModel().nextOption();
                 break;
             case SELECT:
-                if (this.getModel().isSelectedExit()) {
-                    game.setState(null);
-                } else if (this.getModel().isSelectedStart()) {
-                    game.setState(new GameState(new SceneLoader().createScene()));
+                if (time >= 80) {
+                    if (this.getModel().isSelectedExit()) {
+                        game.setState(null);
+                    } else if (this.getModel().isSelectedStart()) {
+                        this.getModel().setInGame(true); //signal the transition state
+
+                        game.setState(new GameState(new SceneLoader().createScene()));
+                    }
                 }
                 break;
             default:

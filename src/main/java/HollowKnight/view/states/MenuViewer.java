@@ -64,7 +64,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
             }
 
             // Calculate the new x position for the animation (moving from right to left)
-            int startPositionX = (int)option.getPosition().x(); // Initial x position
+            int startPositionX = (int) option.getPosition().x(); // Initial x position
             int currentPositionX = startPositionX;
 
             if (time >= optionStartTime && time < optionStartTime + animationDuration) {
@@ -74,13 +74,35 @@ public class MenuViewer extends ScreenViewer<Menu> {
             }
 
             // Update the option's position with the new x value
-            Option updatedOption = new Option(currentPositionX, (int)option.getPosition().y(), option.getText());
-            System.out.println("Option pos : " + currentPositionX + ", " + (int)option.getPosition().y() + " " + option.getText());
+            Option updatedOption = new Option(currentPositionX, (int) option.getPosition().y(), option.getText());
 
-            // Draw the option with the appropriate color (selected or unselected)
-            viewer.draw(updatedOption, gui, getModel().isSelected(idx) ? selectedColor : unselectedColor);
+            // Determine if the option is selected
+            boolean isSelected = getModel().isSelected(idx);
+            boolean isSelectedStart = getModel().isSelectedStart(); // New method to determine if transition is happening
+
+            // Apply blink effect for the selected option
+            if (isSelected && time >= 80) {
+                boolean isVisible = (time / 8) % 2 == 0; // Toggle visibility every 10 ticks
+                if (getModel().getInGame()) {
+                    isVisible = (time / 4) % 2 == 0;
+                }
+                if (isVisible) {
+                    viewer.draw(updatedOption, gui, selectedColor); // Draw when visible
+                }
+            }
+            else if (time < 80) {
+                viewer.draw(updatedOption, gui, unselectedColor);
+            }
+            else {
+                // Draw normally for unselected or non-blinking options
+                viewer.draw(updatedOption, gui, isSelected ? selectedColor : unselectedColor);
+            }
+
+            // Debug output for option position
+            System.out.println("Option pos : " + currentPositionX + ", " + (int) option.getPosition().y() + " " + option.getText());
         }
     }
+
 
     // Gradient calculation for the selected option (from green to red)
     private TextColor.RGB calculateGradient(int idx, int totalOptions) {
@@ -92,7 +114,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
     private void drawRetroDynamicBackground(GUI gui, long time) throws IOException {
         int screenWidth = 160;
         int screenHeight = 90;
-        double changeRate = 0.01;
+        double changeRate = 0.05;
         // Generate a retro gradient background
         for (int w = 0; w < screenWidth; w++) {
             int colorValue = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate)); // Oscillating gray shades

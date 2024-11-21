@@ -10,6 +10,7 @@ import java.util.Random;
 public class Menu {
     private final List<Option> options;
     private List<Particle> particles;
+    private Boolean inGame = false;
     private int currentOption = 0;
     public Menu() {
         Option start = new Option(30, 15, "Start");
@@ -79,5 +80,13 @@ public class Menu {
             particles.add(new_particle);
         }
         return particles;
+    }
+
+    public Boolean getInGame() {
+        return inGame;
+    }
+
+    public void setInGame(Boolean inGame) {
+        this.inGame = inGame;
     }
 }

@@ -111,8 +111,8 @@ public class KnightViewer implements ElementViewer<Knight>{
         int offSetX = 4;
         int offSetY = 1;
         sprite.draw(gui, (int) model.getPosition().x() - offSetX, (int) model.getPosition().y() - offSetY);
-        gui.drawHitBox((int) model.getPosition().x(), (int) model.getPosition().y(), 7, 9, new TextColor.RGB(50, 200, 50));
-        gui.drawPixel((int) model.getPosition().x(), (int) model.getPosition().y(), new TextColor.RGB(200, 200, 200));
+        //gui.drawHitBox((int) model.getPosition().x(), (int) model.getPosition().y(), 7, 9, new TextColor.RGB(50, 200, 50));
+        //gui.drawPixel((int) model.getPosition().x(), (int) model.getPosition().y(), new TextColor.RGB(200, 200, 200));
     }
 
     private Sprite getSprite(long tick, Knight model) {
