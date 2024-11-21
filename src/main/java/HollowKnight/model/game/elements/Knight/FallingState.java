@@ -1,6 +1,9 @@
 package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Vector;
+import HollowKnight.model.game.elements.Particle.Particle;
+
+import java.util.List;
 
 public class FallingState extends KnightState{
     public FallingState(Knight knight){
@@ -9,11 +12,26 @@ public class FallingState extends KnightState{
 
     @Override
     public Vector jump() {
+        if (getKnight().getVelocity().y() >= 0 &&  getKnight().getVelocity().y() <= 1.0) {
+            if (getKnight().getJumpCounter() < 2) {
+                getKnight().setJumpCounter(getKnight().getJumpCounter() + 1);
+                Vector newVelocity = new Vector(
+                        getKnight().getVelocity().x(),
+                        getKnight().getVelocity().y() - (getKnight().getJumpBoost())
+                );
+                getKnight().getScene().setJumpParticles(getKnight().createParticlesDoubleJump(20, getKnight().getScene()));
+                //System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
+
+                return updateVelocity(newVelocity);
+            }
+        }
         return updateVelocity(getKnight().getVelocity());
     }
 
     @Override
     public Vector updateVelocity(Vector newVelocity) {
+        System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
+
         Vector velocity = new Vector(
                  newVelocity.x() * getKnight().getAcceleration(),
                 newVelocity.y() + getKnight().getScene().getGravity()
@@ -25,6 +43,8 @@ public class FallingState extends KnightState{
     public KnightState getNextState() {
         if (getKnight().isOnGround())
             return getNextGroundState();
+        if (getKnight().getJumpCounter() == 2)
+            return getNextOnAirState();
         return this;
     }
 
