@@ -59,99 +59,6 @@ public class LanternaGUI implements GUI{
         setupKeyAdapter();
     }
 
-
-    private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
-        TerminalSize size = new TerminalSize(width, height);
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
-                .setInitialTerminalSize(size);
-
-        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
-        terminalFactory.setForceAWTOverSwing(true);
-        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
-        return terminalFactory.createTerminal();
-    }
-
-    private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
-        URL resource = getClass().getClassLoader().getResource("fonts/pixel.ttf");
-        assert resource != null;
-        File fontFile = new File(resource.toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
-        return AWTTerminalFontConfiguration.newInstance(font);
-    }
-
-    private Screen createScreen(Terminal terminal) throws IOException {
-        final Screen screen = new TerminalScreen(terminal);
-
-        screen.setCursorPosition(null);
-        screen.startScreen();
-        screen.doResizeIfNecessary();
-
-        return screen;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void cls() {
-        screen.clear();
-    }
-
-    @Override
-    public void flush() throws IOException {
-        screen.refresh();
-    }
-
-    @Override
-    public void drawPixel(int x, int y, TextColor.RGB color) {
-        TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(color);
-        tg.putString(x, y, " ");
-    }
-
-    @Override
-    public void drawRectangle(int x, int y, int width, int height, TextColor.RGB color) {
-        TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(color);
-        for (int dy = 0; dy < height; dy++) {
-            for (int dx = 0; dx < width; dx++) {
-                tg.putString(x + dx, y + dy, " ");
-            }
-        }
-    }
-
-    @Override
-    public void drawHitBox(int x, int y, int width, int height, TextColor.RGB color) {
-        TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(color);
-
-        // Draw the top and bottom edges
-        for (int dx = 0; dx < width; dx++) {
-            tg.putString(x + dx, y, " "); // Top edge
-            tg.putString(x + dx, y + height - 1, " "); // Bottom edge
-        }
-
-        // Draw the left and right edges
-        for (int dy = 0; dy < height; dy++) {
-            tg.putString(x, y + dy, " "); // Left edge
-            tg.putString(x + width - 1, y + dy, " "); // Right edge
-        }
-    }
-
-    @Override
-    public void drawText(int x, int y, TextColor.RGB color, String Text) {
-        TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(color);
-        tg.putString(x, y, Text);
-    }
-
     private void setupKeyAdapter() {
         Toolkit.getDefaultToolkit().addAWTEventListener(event -> {
             if (event instanceof KeyEvent keyEvent) {
@@ -212,13 +119,135 @@ public class LanternaGUI implements GUI{
         };
     }
 
+    public void setKeySpam(boolean keySpam) {
+        if (!keySpam) priorityKeyPressed = 0;
+        this.keySpam = keySpam;
+    }
+
+    /*
+    public double getJumpBoost() {
+        synchronized (this) {
+            // Ensure both times are valid
+            if (jumpKeyPressedTime == 0 || jumpKeyReleasedTime == 0) {
+                resetJumpTiming();
+                return 2.0; // Default minimum boost
+            }
+
+            long holdDuration = jumpKeyReleasedTime - jumpKeyPressedTime;
+
+            if (holdDuration < 0) { // Handle invalid timing
+                resetJumpTiming();
+                return 2.0; // Default boost
+            }
+
+            // Scale duration to range [2.0, 4.0], clamped at 350ms
+            double boost = 2.0 + (Math.min(holdDuration, 350) / 350.0) * (4.0 - 2.0);
+
+            resetJumpTiming(); // Reset after use
+            return boost;
+        }
+    }
+    // Reset method to clear timing variables
+    private void resetJumpTiming() {
+        jumpKeyPressedTime = 0;
+        jumpKeyReleasedTime = 0;
+    }
+*/
+
+    private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
+        TerminalSize size = new TerminalSize(width, height);
+        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
+                .setInitialTerminalSize(size);
+
+        AWTTerminalFontConfiguration fontConfig = loadFont(fontSize);
+        terminalFactory.setForceAWTOverSwing(true);
+        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);
+        return terminalFactory.createTerminal();
+    }
+
+    private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
+        URL resource = getClass().getClassLoader().getResource("fonts/pixel.ttf");
+        assert resource != null;
+        File fontFile = new File(resource.toURI());
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
+        return AWTTerminalFontConfiguration.newInstance(font);
+    }
+
+    private Screen createScreen(Terminal terminal) throws IOException {
+        final Screen screen = new TerminalScreen(terminal);
+
+        screen.setCursorPosition(null);
+        screen.startScreen();
+        screen.doResizeIfNecessary();
+
+        return screen;
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public void cls() {
+        screen.clear();
+    }
+
+    @Override
+    public void flush() throws IOException {
+        screen.refresh();
+    }
+
     @Override
     public void close() throws IOException {
         screen.close();
     }
 
-    public void setKeySpam(boolean keySpam) {
-        if (!keySpam) priorityKeyPressed = 0;
-        this.keySpam = keySpam;
+    @Override
+    public void drawPixel(int x, int y, TextColor.RGB color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+        tg.putString(x, y, " ");
+    }
+
+    @Override
+    public void drawRectangle(int x, int y, int width, int height, TextColor.RGB color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+        for (int dy = 0; dy < height; dy++) {
+            for (int dx = 0; dx < width; dx++) {
+                tg.putString(x + dx, y + dy, " ");
+            }
+        }
+    }
+
+    @Override
+    public void drawHitBox(int x, int y, int width, int height, TextColor.RGB color) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+
+        // Draw the top and bottom edges
+        for (int dx = 0; dx < width; dx++) {
+            tg.putString(x + dx, y, " "); // Top edge
+            tg.putString(x + dx, y + height - 1, " "); // Bottom edge
+        }
+
+        // Draw the left and right edges
+        for (int dy = 0; dy < height; dy++) {
+            tg.putString(x, y + dy, " "); // Left edge
+            tg.putString(x + width - 1, y + dy, " "); // Right edge
+        }
+    }
+
+    @Override
+    public void drawText(int x, int y, TextColor.RGB color, String Text) {
+        TextGraphics tg = screen.newTextGraphics();
+        tg.setBackgroundColor(color);
+        tg.putString(x, y, Text);
     }
 }
