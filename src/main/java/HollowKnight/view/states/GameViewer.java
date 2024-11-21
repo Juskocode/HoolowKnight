@@ -1,11 +1,14 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
+import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
 import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
+import HollowKnight.view.elements.collectables.EnergyOrbViewer;
+import HollowKnight.view.elements.collectables.HealthOrbViewer;
 import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
 import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
 import HollowKnight.view.elements.monsters.SwordMonsterViewer;
@@ -25,7 +28,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private final TextViewer textViewer;
 
-
+    private final EnergyOrbViewer energyOrbViewer;
+    private final HealthOrbViewer healthOrbViewer;
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
     private final TileViewer tileViewer;
@@ -62,6 +66,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.swordMonsterViewer = new SwordMonsterViewer();
         this.purpleMonsterViewer = new PurpleMonsterViewer();
         this.minhoteMonsterViewer = new MinhoteMonsterViewer();
+        this.energyOrbViewer = new EnergyOrbViewer();
+        this.healthOrbViewer = new HealthOrbViewer();
     }
 
     @Override

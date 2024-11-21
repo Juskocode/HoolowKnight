@@ -53,7 +53,7 @@ class ParticleControllerTest {
     public void ParticleMove(){
         TextColor.RGB color =Mockito.mock(TextColor.RGB.class);
         Particle particle = new Particle(10,10,color);
-        Position distinct = particleController.ParticleMove(particle);
+        Position distinct = particleController.ParticleMove(particle,0);
         Assertions.assertNotEquals(particle.getPosition(), distinct);
     }
 
