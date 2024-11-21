@@ -4,13 +4,21 @@ import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.elements.Particle.JumpParticle;
+import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.scene.Scene;
+import com.googlecode.lanterna.TextColor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Knight extends Element {
 
     private static final int WIDTH = 7;
     private static final int HEIGHT = 9;
     private KnightState state;
+    private int jumpCounter;
     private int HP;
     private float Damage_multiplier;
     private int Energy;
@@ -19,7 +27,7 @@ public class Knight extends Element {
     private double acceleration;
     private Scene scene;
     private boolean isFacingRight;
-    private final double jumpBoost;
+    private double jumpBoost;
     private final int offSetX = 4;
     private final int offSetY = 1;
 
@@ -32,10 +40,11 @@ public class Knight extends Element {
         this.Energy = Energy;
         this.velocity = new Vector(0,0);
         this.maxVelocity = new Vector(2.0,3.0);
-        this.jumpBoost = 3.5;
+        this.jumpBoost = 4.0;
         this.acceleration = 0.75;
         this.state = new IdleState(this);
         this.isFacingRight = true;
+        this.jumpCounter = 0;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -92,6 +101,10 @@ public class Knight extends Element {
         return HEIGHT;
     }
 
+    public int getJumpCounter() {
+        return jumpCounter;
+    }
+
     //SETTERS
 
     public void setHP(int HP) {
@@ -108,6 +121,10 @@ public class Knight extends Element {
 
     public void setEnergy(int energy) {
         Energy = energy;
+    }
+
+    public void setJumpCounter(int jumpCounter) {
+        this.jumpCounter = jumpCounter;
     }
 
     public void setAcceleration(double acceleration) {
@@ -166,6 +183,41 @@ public class Knight extends Element {
         return state.jump();
     }
 
+    public List<Particle> createParticlesDoubleJump(int size, Scene scene) {
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+
+        for (int i = 0; i < size; i++) {
+            double angle;
+            if (random.nextBoolean()) {
+                // Generate angle in the range [180°, 225°] (converted to radians)
+                angle = Math.toRadians(155 + random.nextDouble() * 45);
+            } else if (random.nextBoolean()) {
+                // Generate angle in the range [315°, 360°] (converted to radians)
+                angle = Math.toRadians(345 + random.nextDouble() * 45);
+            }
+            else
+                angle = Math.toRadians(45 + random.nextDouble() * 90);
+
+
+            double speed = random.nextDouble() + 1; // Narrowed speed range [1.5, 2.5]
+            Position velocity = new Position(
+                    Math.cos(angle) * speed,  // Horizontal velocity
+                    Math.sin(angle) * speed   // Ensure Y velocity is positive (downward)
+            );
+
+            particles.add(new JumpParticle(
+                    random.nextInt((int) this.getPosition().x(), (int) this.getPosition().x() + getWidth()),
+                    random.nextInt((int) this.getPosition().y() - 4 + getHeight(), (int) this.getPosition().y() + getHeight()),
+                    velocity,
+                    new TextColor.RGB(150, 150, 225) // Default black color for now
+            ));
+        }
+
+        return particles;
+    }
+
+
     //BOOLS
 
     public boolean isOverMaxXVelocity() {
@@ -179,5 +231,9 @@ public class Knight extends Element {
         );
         Position playerSize = new Position(WIDTH, HEIGHT);
         return scene.collidesDown(positionBelow, playerSize);
+    }
+
+    public void setJumpBoost(double jumpBoost) {
+        this.jumpBoost = jumpBoost;
     }
 }
