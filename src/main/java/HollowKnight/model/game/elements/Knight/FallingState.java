@@ -30,7 +30,7 @@ public class FallingState extends KnightState{
 
     @Override
     public Vector updateVelocity(Vector newVelocity) {
-        System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
+        //System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
 
         Vector velocity = new Vector(
                  newVelocity.x() * getKnight().getAcceleration(),

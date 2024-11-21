@@ -65,10 +65,6 @@ public class Game {
         gui.close();
     }
 
-    public void setKeySpam(boolean keySpam) {
-        gui.setKeySpam(keySpam);
-    }
-
     public Object getGUI() {
         return this.gui;
     }
