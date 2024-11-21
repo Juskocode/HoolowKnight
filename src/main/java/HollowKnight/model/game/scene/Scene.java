@@ -33,15 +33,17 @@ public class Scene {
     private PurpleMonster[][] purpleMonsters;
     private MinhoteMonster[][] minhoteMonsters;
 
-    private double gravity = 0.2;
+    private double gravity = 0.25;
 
     private Knight player;
     private List<Particle> particles;
+    private List<Particle> jumpParticles;
 
     public Scene(int width, int height) {
         this.width = width;
         this.height = height;
 
+        this.jumpParticles = new ArrayList<>();
         this.particles = new ArrayList<>();
 
         this.tiles = new Tile[height][width];
@@ -183,5 +185,11 @@ public class Scene {
         return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
     }
 
+    public List<Particle> getJumpParticles() {
+        return jumpParticles;
+    }
 
+    public void setJumpParticles(List<Particle> jumpParticles) {
+        this.jumpParticles = jumpParticles;
+    }
 }
