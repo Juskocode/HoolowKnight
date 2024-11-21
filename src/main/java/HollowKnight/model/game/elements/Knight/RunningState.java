@@ -13,10 +13,12 @@ public class RunningState extends KnightState{
 
     @Override
     public Vector jump() {
+        getKnight().setJumpCounter(getKnight().getJumpCounter() + 1);
         Vector newVelocity = new Vector(
                 getKnight().getVelocity().x(),
                 getKnight().getVelocity().y() - getKnight().getJumpBoost()
         );
+
         return updateVelocity(newVelocity);
     }
 
@@ -33,6 +35,7 @@ public class RunningState extends KnightState{
     public KnightState getNextState() {
         if (!getKnight().isOnGround())
             return getNextOnAirState();
+        getKnight().setJumpCounter(0);
         if (Math.abs(getKnight().getVelocity().x()) == RunningState.MAX_VELOCITY)
             return new MaxVelocityState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) < RunningState.MIN_VELOCITY)

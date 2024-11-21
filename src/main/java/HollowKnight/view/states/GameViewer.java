@@ -78,6 +78,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getTiles(), this.tileViewer, time);
         drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
+
 
         drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
         drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
@@ -160,6 +162,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         // Fetch player collision
         String colides = "ground " + player.isOnGround();
 
+        // Fetch player jumpBoost
+        String jumpBoost = "jumpBoost " + String.format("%.2f", player.getJumpBoost());
 
         // Define a common color for all text
         TextColor.RGB color = new TextColor.RGB(0, 25, 25);
@@ -169,6 +173,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.textViewer.draw(vel, 4, 8, color, gui);
         this.textViewer.draw(state, 4, 16, color, gui);
         this.textViewer.draw(colides, 4, 24, color, gui);
+        this.textViewer.draw(jumpBoost, 4, 32, color, gui);
+
 
     }
 

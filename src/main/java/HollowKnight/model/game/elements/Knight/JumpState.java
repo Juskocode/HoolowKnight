@@ -10,6 +10,18 @@ public class JumpState extends KnightState {
 
     @Override
     public Vector jump() {
+        if (getKnight().getJumpCounter() < 2) {
+            getKnight().setJumpCounter(getKnight().getJumpCounter() + 1);
+            Vector newVelocity = new Vector(
+                    getKnight().getVelocity().x(),
+                    getKnight().getVelocity().y() - (getKnight().getJumpBoost() / 3)
+            );
+            //getKnight().setVelocity();
+            getKnight().getScene().setJumpParticles(getKnight().createParticlesDoubleJump(5, getKnight().getScene()));
+
+            return updateVelocity(newVelocity);
+        }
+
         return updateVelocity(getKnight().getVelocity());
     }
 
