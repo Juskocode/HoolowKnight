@@ -16,7 +16,7 @@ import java.util.Random;
 public class Knight extends Element {
 
     private static final int WIDTH = 7;
-    private static final int HEIGHT = 9;
+    private static final int HEIGHT = 8;
     private KnightState state;
     private int jumpCounter;
     private int HP;
