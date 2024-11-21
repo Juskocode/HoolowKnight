@@ -29,10 +29,13 @@ public class KnightViewer implements ElementViewer<Knight>{
     private final List<Sprite> jumpingSpriteLeft;
     private final Map<Class<?>, PairList<Sprite>> spriteMap;
     private final Map<Class<?>, Integer> animationFPSMap;
+    private final ParticleViewer particleViewer;
 
     public KnightViewer() throws IOException {
         this.spriteMap = new HashMap<>();
         this.animationFPSMap = new HashMap<>();
+
+        this.particleViewer = new ParticleViewer();
 
         //IDLE
 
@@ -113,11 +116,11 @@ public class KnightViewer implements ElementViewer<Knight>{
     }
 
     private Sprite getSprite(long tick, Knight model) {
-        if (model.getState().getClass() != IdleState.class) {
+       /* if (model.getState().getClass() != IdleState.class) {
             System.out.println("Knight current state: " + model.getState().getClass().getSimpleName());
             System.out.println("Knight position: " + model.getPosition());
             System.out.println("Knight velocity: " + model.getVelocity());
-        }
+        }*/
 
         int animationFPS = animationFPSMap.get(model.getState().getClass());
         int animationFrameTime = 30 / animationFPS; // Assuming 60 ticks per second
