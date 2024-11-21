@@ -18,7 +18,7 @@ public class Game {
     private final LanternaGUI gui;
     private State state;
 
-    public Game() throws IOException, URISyntaxException, FontFormatException {
+    private Game() throws IOException, URISyntaxException, FontFormatException {
         int SCREEN_WIDTH = 200;
         int SCREEN_HEIGHT = 88;
 
@@ -67,5 +67,9 @@ public class Game {
 
     public void setKeySpam(boolean keySpam) {
         gui.setKeySpam(keySpam);
+    }
+
+    public Object getGUI() {
+        return this.gui;
     }
 }
