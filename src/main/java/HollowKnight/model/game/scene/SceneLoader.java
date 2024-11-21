@@ -1,7 +1,9 @@
 package HollowKnight.model.game.scene;
 
+import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.model.game.elements.Particle.RainParticle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
 import HollowKnight.model.game.elements.enemies.MinhoteMonster;
@@ -25,7 +27,7 @@ public class SceneLoader {
     private final int TILE_SIZE = 8;
 
     public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/level1.lvl");
+        URL resource = getClass().getClassLoader().getResource("levels/levelJumpTest.lvl");
         assert resource != null;
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
@@ -51,7 +53,7 @@ public class SceneLoader {
         scene.setPurpleMonsters(createPurpleMonsters(scene));
         scene.setMinhoteMonsters(createMinhoteMonsters(scene));
         scene.setPlayer(createPlayer());
-        scene.setParticles(createParticles(60, scene));
+        scene.setParticles(createParticles(0, scene));
 
         return scene;
     }
@@ -205,9 +207,11 @@ public class SceneLoader {
         List<Particle> particles = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < size; i++) {
-            particles.add(new Particle(
+
+            particles.add(new RainParticle(
                     random.nextInt(scene.getWidth()),
                     random.nextInt(scene.getHeight()),
+                    new Position(0, 0),
                     new TextColor.RGB(0, 0, random.nextInt(100, 255))
             ));
         }
