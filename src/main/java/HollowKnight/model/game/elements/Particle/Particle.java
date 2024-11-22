@@ -47,6 +47,10 @@ public abstract class Particle extends Element {
         return lifetime;
     }
 
+    public void setVelocity(Position velocity) {
+        this.velocity = velocity;
+    }
+
     public void setLastRegenerationTime(long lastRegenerationTime) {
         this.lastRegenerationTime = lastRegenerationTime;
     }
