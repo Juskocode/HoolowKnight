@@ -17,7 +17,7 @@ public class JumpState extends KnightState {
                     getKnight().getVelocity().y() - (getKnight().getJumpBoost() / 3)
             );
             //getKnight().setVelocity();
-            getKnight().getScene().setJumpParticles(getKnight().createParticlesDoubleJump(5, getKnight().getScene()));
+            getKnight().getScene().setDoubleJumpParticles(getKnight().createParticlesDoubleJump(5, getKnight().getScene()));
 
             return updateVelocity(newVelocity);
         }

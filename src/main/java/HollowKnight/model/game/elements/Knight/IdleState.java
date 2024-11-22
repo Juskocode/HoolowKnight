@@ -16,7 +16,7 @@ public class IdleState extends KnightState {
                 getKnight().getVelocity().x(),
                 getKnight().getVelocity().y() - getKnight().getJumpBoost()
         );
-
+        getKnight().getScene().setJumpParticles(getKnight().createParticlesJump(10));
         return updateVelocity(newVelocity);
     }
 

@@ -1,9 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Vector;
-import HollowKnight.model.game.elements.Particle.Particle;
-
-import java.util.List;
 
 public class FallingState extends KnightState{
     public FallingState(Knight knight){
@@ -19,8 +16,8 @@ public class FallingState extends KnightState{
                         getKnight().getVelocity().x(),
                         getKnight().getVelocity().y() - (getKnight().getJumpBoost())
                 );
-                getKnight().getScene().setJumpParticles(getKnight().createParticlesDoubleJump(20, getKnight().getScene()));
-                //System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
+                getKnight().getScene().setDoubleJumpParticles(getKnight().createParticlesDoubleJump(20, getKnight().getScene()));
+                //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");
 
                 return updateVelocity(newVelocity);
             }
@@ -30,7 +27,7 @@ public class FallingState extends KnightState{
 
     @Override
     public Vector updateVelocity(Vector newVelocity) {
-        //System.out.println(getKnight().getScene().getJumpParticles().size() + " jump particles");
+        //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");
 
         Vector velocity = new Vector(
                  newVelocity.x() * getKnight().getAcceleration(),
