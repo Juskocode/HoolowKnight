@@ -13,7 +13,6 @@ import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.rocks.BigRock;
 import HollowKnight.model.game.elements.rocks.SmallRock;
 import HollowKnight.model.game.elements.tile.Tile;
-import com.sun.source.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +38,14 @@ public class Scene {
 
     private Knight player;
     private List<Particle> particles;
+    private List<Particle> doubleJumpParticles;
     private List<Particle> jumpParticles;
 
     public Scene(int width, int height) {
         this.width = width;
         this.height = height;
 
+        this.doubleJumpParticles = new ArrayList<>();
         this.jumpParticles = new ArrayList<>();
         this.particles = new ArrayList<>();
 
@@ -194,6 +195,14 @@ public class Scene {
     public boolean collidesDown(Position position, Position size) {
         double x = position.x(), y = position.y();
         return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
+    }
+
+    public List<Particle> getDoubleJumpParticles() {
+        return doubleJumpParticles;
+    }
+
+    public void setDoubleJumpParticles(List<Particle> jumpParticles) {
+        this.doubleJumpParticles = jumpParticles;
     }
 
     public List<Particle> getJumpParticles() {
