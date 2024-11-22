@@ -2,8 +2,8 @@ package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
-import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.elements.Particle.DoubleJumpParticle;
 import HollowKnight.model.game.elements.Particle.JumpParticle;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.scene.Scene;
@@ -206,7 +206,7 @@ public class Knight extends Element {
                     Math.sin(angle) * speed   // Ensure Y velocity is positive (downward)
             );
 
-            particles.add(new JumpParticle(
+            particles.add(new DoubleJumpParticle(
                     random.nextInt((int) this.getPosition().x(), (int) this.getPosition().x() + getWidth()),
                     random.nextInt((int) this.getPosition().y() - 4 + getHeight(), (int) this.getPosition().y() + getHeight()),
                     velocity,
@@ -214,6 +214,38 @@ public class Knight extends Element {
             ));
         }
 
+        return particles;
+    }
+
+    public List<Particle> createParticlesJump(int size) {
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+
+        double coneAngle = Math.toRadians(90); // Total cone spread (45 degrees)
+        double baseSpeed = -jumpBoost / 2.0;     // Base speed magnitude
+
+        // Starting position (centered at the entity's position)
+        double startX = this.getPosition().x() + getWidth() / 2.0;
+        double startY = this.getPosition().y() + getHeight();
+
+        for (int i = 0; i < size; i++) {
+            // Randomize a position within the cone
+            double factor = random.nextDouble(); // 0.0 to 1.0 (distance from the center)
+            double angle = (random.nextDouble() - 0.5) * coneAngle; // Random angle within the cone
+
+            // Calculate speedX and speedY based on the ^ shape
+            double speedX = baseSpeed * factor * Math.sin(angle) - (getVelocity().x() / 1.10); // Increases with factor
+            double speedY = baseSpeed * (1 - factor); // High upward speed at the center, reduces outward
+
+            Position velocity = new Position(speedX, speedY);
+
+            // Add the particle with calculated properties
+            particles.add(new JumpParticle(
+                    (int)startX, // All particles start from the same X position
+                    (int)startY, // All particles start from the same Y position
+                    velocity,
+                    new TextColor.RGB(150, 150, 225))); // Adjust color as needed
+        }
         return particles;
     }
 
@@ -236,4 +268,5 @@ public class Knight extends Element {
     public void setJumpBoost(double jumpBoost) {
         this.jumpBoost = jumpBoost;
     }
+
 }
