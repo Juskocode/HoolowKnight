@@ -1,7 +1,6 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
-import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
@@ -20,7 +19,6 @@ import HollowKnight.view.text.GameTextViewer;
 import HollowKnight.view.text.TextViewer;
 import com.googlecode.lanterna.TextColor;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,7 +76,9 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getTiles(), this.tileViewer, time);
         drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
+
 
 
         drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
