@@ -1,5 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rUa5vdmg)
 
+## Descrição do Projeto
+O nosso projeto têm em vista extender o projeto do Hero e torná-lo num Platformer em 2D. O jogo inclui mecânicas
+que geralmente encontram-se neste tipo de jogo como Dash e Jump. O objetivo é apenas atravessar diversos mapas
+sem morrer, face aos diversos inimigos e obstáculos que existem, e chegar ao final.
+
 # Funcionalidades a Implementar no Jogo
 
 ## Mecânicas do Jogo
@@ -26,3 +31,11 @@
 
 ## Gráficos
 - **Ajuste de Resolução**: melhoria e optimização da resolução do jogo.
+
+## Documentação
+- **Problemas/Funcionalidades e Padrões**:
+  - As funcionalidades implementadas ou que irão ser, como o Dash ou o Jump foram escolhidas para dar uma movimentação avançada ao jogador.
+  - Alguns padrões de Design de Software usados foram:
+    - o Singleton, usado na Game class;
+    - o MCV (Model-View-Controller);
+    
