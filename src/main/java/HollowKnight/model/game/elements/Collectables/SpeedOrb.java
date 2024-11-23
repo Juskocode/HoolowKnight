@@ -4,7 +4,7 @@ import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Knight.Knight;
 
 public class SpeedOrb extends Collectables{
-    private double speed_boost;
+    private double speed_boost = 1.1;
     public SpeedOrb(int x, int y, double boost){
         super(x,y,"Speed");
         this.speed_boost = boost;

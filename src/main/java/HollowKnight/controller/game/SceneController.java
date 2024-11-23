@@ -21,10 +21,14 @@ public class SceneController extends Controller<Scene> {
         if (action == GUI.ACTION.QUIT)
             game.setState(null);
         else {
+
             playerController.move(game, action, time);
+
             getModel().collectOrbs(getModel().getEnergyOrbs());
             getModel().collectOrbs(getModel().getHealthOrbs());
-            particleController.move(game,action,time);
+            getModel().collectOrbs(getModel().getSpeedOrbs());
+
+            particleController.move(game, action,time);
         }
     }
 }
