@@ -103,6 +103,9 @@ public class KnightViewer implements ElementViewer<Knight>{
         }
         spriteMap.put(JumpState.class, new PairList<>(jumpingSpriteLeft, jumpingSpriteRight));
         animationFPSMap.put(JumpState.class, 6);
+
+        spriteMap.put(RespawnState.class, new PairList<>(null, null));
+        animationFPSMap.put(RespawnState.class, 0);
     }
 
     @Override
@@ -110,7 +113,10 @@ public class KnightViewer implements ElementViewer<Knight>{
         Sprite sprite = getSprite(time, model);
         int offSetX = 4;
         int offSetY = 1;
-        sprite.draw(gui, (int) model.getPosition().x() - offSetX, (int) model.getPosition().y() - offSetY);
+        if (sprite != null)
+            sprite.draw(gui, (int) model.getPosition().x() - offSetX, (int) model.getPosition().y() - offSetY);
+        //gui.drawPixel((int)model.getPosition().x(), (int)model.getPosition().y(), new TextColor.RGB(0, 0, 0));
+
         //gui.drawHitBox((int) model.getPosition().x(), (int) model.getPosition().y(), 7, 9, new TextColor.RGB(50, 200, 50));
         //gui.drawPixel((int) model.getPosition().x(), (int) model.getPosition().y(), new TextColor.RGB(200, 200, 200));
     }
@@ -121,7 +127,8 @@ public class KnightViewer implements ElementViewer<Knight>{
             System.out.println("Knight position: " + model.getPosition());
             System.out.println("Knight velocity: " + model.getVelocity());
         }*/
-
+        if (animationFPSMap.get(model.getState().getClass()) == 0)
+            return null;
         int animationFPS = animationFPSMap.get(model.getState().getClass());
         int animationFrameTime = 30 / animationFPS; // Assuming 60 ticks per second
         PairList<Sprite> animations = spriteMap.get(model.getState().getClass());
