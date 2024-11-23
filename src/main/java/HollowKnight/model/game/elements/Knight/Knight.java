@@ -6,6 +6,7 @@ import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Particle.DoubleJumpParticle;
 import HollowKnight.model.game.elements.Particle.JumpParticle;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.model.game.elements.Particle.RespawnParticle;
 import HollowKnight.model.game.scene.Scene;
 import com.googlecode.lanterna.TextColor;
 
@@ -39,8 +40,8 @@ public class Knight extends Element {
         this.Damage_multiplier = Damage_multiplier;
         this.Energy = Energy;
         this.velocity = new Vector(0,0);
-        this.maxVelocity = new Vector(2.0,3.0);
-        this.jumpBoost = 4.0;
+        this.maxVelocity = new Vector(2.0,4.0);
+        this.jumpBoost = Math.PI;
         this.acceleration = 0.75;
         this.state = new IdleState(this);
         this.isFacingRight = true;
@@ -249,6 +250,34 @@ public class Knight extends Element {
         return particles;
     }
 
+    public List<Particle> createRespawnParticles(int size) {
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+
+        for (int i = 0; i < size; i++) {
+            double angle;
+            angle = Math.toRadians(180 + random.nextDouble() * 180);
+            double speed = random.nextDouble() + 1; // Narrowed speed range [1.5, 2.5]
+            Position velocity = new Position(
+                    Math.cos(angle) * (speed / 2.5),  // Horizontal velocity
+                    Math.sin(angle) * speed - jumpBoost / 4  // Ensure Y velocity is positive (downward)
+            );
+
+            particles.add(new RespawnParticle(
+                    random.nextInt((int) this.getPosition().x(), (int) this.getPosition().x() + getWidth()),
+                    random.nextInt((int) this.getPosition().y() - 8 + getHeight(), (int) this.getPosition().y() + getHeight()),
+                    velocity,
+                    new TextColor.RGB(255, 0, 0) // Default black color for now
+            ));
+        }
+
+        return particles;
+    }
+
+    public void resetValues(){
+        this.isFacingRight = true;
+        this.state = new FallingState(this);
+    }
 
     //BOOLS
 
