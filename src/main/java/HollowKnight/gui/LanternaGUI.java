@@ -3,7 +3,6 @@ package HollowKnight.gui;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -16,22 +15,26 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 import static java.awt.event.KeyEvent.*;
 
-public class LanternaGUI implements GUI{
+public class LanternaGUI implements GUI {
     private final Screen screen;
 
     private final int width;
     private final int height;
 
+    private long duration;
+
     // Track active keys
     private final Set<Integer> activeKeys;
     private boolean keySpam;
-    private int priorityKeyPressed;
+    private final Map<Integer, Long> keyPressTimestamps = new HashMap<>();
+    private Long jumpPressStartTime = null; // Tracks when the jump key was pressed
+    private KeyEvent priorityKeyPressed;
+    private KeyEvent keyPressed;
     private static final List<Integer> SPAM_KEYS = List.of(VK_LEFT, VK_RIGHT);
 
     public LanternaGUI(Screen screen) {
@@ -39,7 +42,8 @@ public class LanternaGUI implements GUI{
         this.width = screen.getTerminalSize().getColumns();
         this.height = screen.getTerminalSize().getRows();
         this.activeKeys = new HashSet<>();
-        this.priorityKeyPressed = 0;
+        this.priorityKeyPressed = null;
+        this.keyPressed = null;
     }
 
     public LanternaGUI(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
@@ -48,7 +52,8 @@ public class LanternaGUI implements GUI{
         this.height = height;
         this.width = width;
         this.keySpam = false;
-        this.priorityKeyPressed = 0;
+        this.priorityKeyPressed = null;
+        this.keyPressed = null;
         this.activeKeys = new HashSet<>();
 
         // Add KeyAdapter to handle multiple key presses
@@ -58,7 +63,7 @@ public class LanternaGUI implements GUI{
     private void setupKeyAdapter() {
         Toolkit.getDefaultToolkit().addAWTEventListener(event -> {
             if (event instanceof KeyEvent keyEvent) {
-                synchronized (activeKeys) {
+                synchronized (SPAM_KEYS) {
                     if (keyEvent.getID() == KeyEvent.KEY_PRESSED) {
                         handleKeyPressed(keyEvent);
                     } else if (keyEvent.getID() == KeyEvent.KEY_RELEASED) {
@@ -69,54 +74,132 @@ public class LanternaGUI implements GUI{
         }, AWTEvent.KEY_EVENT_MASK);
     }
 
+    private boolean isJumpKeyHeld = false; // Tracks if the jump key is currently held
+    private long lastJumpEndTime = 0;
+
     private void handleKeyPressed(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
-        if (SPAM_KEYS.contains(keyCode)) {
-            activeKeys.add(keyCode);
-            priorityKeyPressed = keyCode;
+
+        if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime == null) {
+            long currentTime = System.currentTimeMillis();
+
+            if (currentTime - lastJumpEndTime < 50) {
+                System.out.println("Jump ignored due to cooldown");
+                return;
+            }
+
+            jumpPressStartTime = currentTime;
+            isJumpKeyHeld = true; // Mark jump key as held
+            System.out.println("Jump key pressed");
         }
+
+        if (SPAM_KEYS.contains(keyCode))
+            keyPressed = priorityKeyPressed = keyEvent;
+        else
+            keyPressed = keyEvent;
     }
 
     private void handleKeyReleased(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
-        activeKeys.remove(keyCode);
-        if (priorityKeyPressed == keyCode) {
-            // If the released key was the priority, update to another active key
-            priorityKeyPressed = activeKeys.isEmpty() ? 0 : activeKeys.iterator().next();
+
+        if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime != null) {
+            long currentTime = System.currentTimeMillis();
+
+            long duration = currentTime - jumpPressStartTime;
+            jumpPressStartTime = null;
+            lastJumpEndTime = currentTime;
+            isJumpKeyHeld = false; // Mark jump key as no longer held
+
+            System.out.println("Jump key released (Duration: " + duration + " ms)");
+            handleJump(duration);
+            setDuration(duration);
+        }
+
+        if (SPAM_KEYS.contains(keyCode))
+            keyPressed = priorityKeyPressed = null;
+        else
+            keyPressed = priorityKeyPressed;
+    }
+
+    public boolean isJumpHeld() {
+        return isJumpKeyHeld;
+    }
+
+    private void handleJump(long duration) {
+        // Example: Adjust jump height or gravity based on duration
+        if (duration < 140) {
+            System.out.println("Small jump");
+            // Apply small jump logic (e.g., low gravity or small boost)
+        } else if (duration < 200) {
+            System.out.println("Medium jump");
+            // Apply medium jump logic
+        } else {
+            System.out.println("Big jump");
+            // Apply big jump logic (e.g., high boost or stronger gravity reduction)
         }
     }
 
     @Override
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    @Override
     public ACTION getACTION() throws IOException {
-        KeyStroke keyStroke = screen.pollInput();
-        if (keyStroke == null && priorityKeyPressed != 0) {
-            return priorityKeyPressed == VK_LEFT ? ACTION.LEFT : ACTION.RIGHT;
-        } else if (keyStroke == null) {
+        if (keyPressed == null)
+            return ACTION.NULL;
+        int keyCode = keyPressed.getKeyCode();
+
+        /*
+        if (keyStroke == null) {
+            System.out.println("null key");
+            System.out.println(priorityKeyPressed);
+        }
+        else {
+            System.out.println(keyStroke.getKeyType().toString());
+            System.out.println(priorityKeyPressed);
+        }
+        */
+        /*
+        if (keyStroke == null) {
+            if (priorityKeyPressed != 0) {
+                return priorityKeyPressed == KeyEvent.VK_LEFT ? ACTION.LEFT : ACTION.RIGHT;
+            }
             return ACTION.NULL;
         }
 
-        // Handle non-priority keys as usual
-        return switch (keyStroke.getKeyType()) {
-            case ArrowUp -> ACTION.UP;
-            case ArrowDown -> ACTION.DOWN;
-            case Character -> {
-                char character = keyStroke.getCharacter();
-                if (character == ' ') {
-                    yield ACTION.JUMP;
-                } else if (character == 'q') {
-                    yield ACTION.QUIT;
-                } else {
-                    yield ACTION.NULL;
-                }
-            }
-            case Enter -> ACTION.SELECT;
-            case EOF -> ACTION.QUIT;
+        // Update priority based on Lanterna inputs
+        if (keyStroke.getKeyType() == KeyType.ArrowLeft) {
+            priorityKeyPressed = KeyEvent.VK_LEFT;
+            return ACTION.LEFT;
+        } else if (keyStroke.getKeyType() == KeyType.ArrowRight) {
+            priorityKeyPressed = KeyEvent.VK_RIGHT;
+            return ACTION.RIGHT;
+        }
+        */
+        keyPressed = priorityKeyPressed;
+        // Handle other keys
+        return switch (keyCode) {
+            case VK_LEFT -> ACTION.LEFT;
+            case VK_RIGHT -> ACTION.RIGHT;
+            case VK_UP -> ACTION.UP;
+            case VK_DOWN -> ACTION.DOWN;
+            case VK_ESCAPE -> ACTION.QUIT;
+            case VK_Q -> ACTION.KILL;
+            case VK_ENTER -> ACTION.SELECT;
+            case VK_SPACE -> ACTION.JUMP;
             default -> ACTION.NULL;
         };
     }
 
+
+
     public void setKeySpam(boolean keySpam) {
-        if (!keySpam) priorityKeyPressed = 0;
+        if (!keySpam) priorityKeyPressed = null;
         this.keySpam = keySpam;
     }
 
@@ -241,9 +324,15 @@ public class LanternaGUI implements GUI{
     }
 
     @Override
+    public GUI getGUI() {
+        return this;
+    }
+
+    @Override
     public void drawText(int x, int y, TextColor.RGB color, String Text) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
         tg.putString(x, y, Text);
     }
+
 }
