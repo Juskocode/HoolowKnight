@@ -28,11 +28,22 @@ public class FallingState extends KnightState{
     @Override
     public Vector updateVelocity(Vector newVelocity) {
         //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");
+        if (getKnight().getVelocity().y() >= 0 && getKnight().getVelocity().y() <= 0.5) {
+
+            Vector velocity = new Vector(
+                    newVelocity.x() * getKnight().getAcceleration(),
+                    newVelocity.y() + getKnight().getScene().getGravity() * 0.5
+            );
+
+            return limitVelocity(velocity);
+
+        }
 
         Vector velocity = new Vector(
                  newVelocity.x() * getKnight().getAcceleration(),
-                newVelocity.y() + getKnight().getScene().getGravity()
+                newVelocity.y() + getKnight().getScene().getGravity() * 1.75
         );
+
         return limitVelocity(velocity);
     }
 
