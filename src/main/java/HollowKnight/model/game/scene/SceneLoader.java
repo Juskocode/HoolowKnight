@@ -57,7 +57,8 @@ public class SceneLoader {
         scene.setMinhoteMonsters(createMinhoteMonsters(scene));
         scene.setPlayer(createPlayer());
         scene.setParticles(createParticles(0, scene));
-        scene.setCollectables(createCollectables(scene));
+        scene.setEnergyOrbs(createEnergyOrbs(scene));
+        scene.setHealthOrbs(createHealthOrbs(scene));
 
         return scene;
     }
@@ -150,21 +151,32 @@ public class SceneLoader {
         return rocks;
     }
 
-    private Collectables[][] createCollectables(Scene scene){
-        Collectables[][] collectables = new Collectables[scene.getHeight()][scene.getWidth()];
+    private EnergyOrb[][] createEnergyOrbs(Scene scene){
+        EnergyOrb[][] energyOrbs = new EnergyOrb[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'e') {
-                    collectables[y][x] = new EnergyOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
-                }
-                else if(line.charAt(x)=='h'){
-                    collectables[y][x] = new HealthOrb(x * TILE_SIZE, y * TILE_SIZE, 50);
+                    energyOrbs[y][x] = new EnergyOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
                 }
             }
         }
-        return collectables;
+        return energyOrbs;
+    }
+
+    private HealthOrb[][] createHealthOrbs(Scene scene){
+        HealthOrb[][] healthOrbs = new HealthOrb[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'h') {
+                    healthOrbs[y][x] = new HealthOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
+                }
+            }
+        }
+        return healthOrbs;
     }
 
     private SwordMonster[][] createSwordMonsters(Scene scene) {

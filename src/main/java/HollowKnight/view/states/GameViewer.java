@@ -79,7 +79,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
 
-
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time);
 
         drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
         drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
