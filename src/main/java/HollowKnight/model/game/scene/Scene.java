@@ -2,6 +2,8 @@ package HollowKnight.model.game.scene;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Collectables.Collectables;
+import HollowKnight.model.game.elements.Collectables.EnergyOrb;
+import HollowKnight.model.game.elements.Collectables.HealthOrb;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
@@ -25,7 +27,8 @@ public class Scene {
     private SmallTree[][] smallTrees;
     private MediumTree[][] mediumTrees;
 
-    private Collectables[][] collectables;
+    private EnergyOrb[][] energyOrbs;
+    private HealthOrb[][] healthOrbs;
 
     private BigRock[][] bigRocks;
     private SmallRock[][] smallRocks;
@@ -57,7 +60,8 @@ public class Scene {
         this.swordMonsters = new SwordMonster[height][width];
         this.purpleMonsters = new PurpleMonster[height][width];
         this.minhoteMonsters = new MinhoteMonster[height][width];
-        this.collectables = new Collectables[height][width];
+        this.energyOrbs = new EnergyOrb[height][width];
+        this.healthOrbs = new HealthOrb[height][width];
     }
 
     public int getWidth() {
@@ -152,12 +156,20 @@ public class Scene {
         return gravity;
     }
 
-    public Collectables[][] getCollectables() {
-        return collectables;
+    public EnergyOrb[][] getEnergyOrbs() {
+        return energyOrbs;
     }
 
-    public void setCollectables(Collectables[][] collectables) {
-        this.collectables = collectables;
+    public void setEnergyOrbs(EnergyOrb[][] energyOrbs) {
+        this.energyOrbs = energyOrbs;
+    }
+
+    public HealthOrb[][] getHealthOrbs() {
+        return healthOrbs;
+    }
+
+    public void setHealthOrbs(HealthOrb[][] healthOrbs) {
+        this.healthOrbs = healthOrbs;
     }
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
