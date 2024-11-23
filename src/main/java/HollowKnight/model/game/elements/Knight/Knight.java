@@ -210,7 +210,7 @@ public class Knight extends Element {
                     random.nextInt((int) this.getPosition().x(), (int) this.getPosition().x() + getWidth()),
                     random.nextInt((int) this.getPosition().y() - 4 + getHeight(), (int) this.getPosition().y() + getHeight()),
                     velocity,
-                    new TextColor.RGB(150, 150, 225) // Default black color for now
+                    new TextColor.RGB(0, 0, 0) // Default black color for now
             ));
         }
 
