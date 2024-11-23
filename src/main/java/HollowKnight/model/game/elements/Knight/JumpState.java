@@ -26,12 +26,24 @@ public class JumpState extends KnightState {
     }
 
     @Override
-    public Vector updateVelocity(Vector velocity) {
-        Vector newVelocity = new Vector(
-                velocity.x() * getKnight().getAcceleration(),
-                velocity.y() + getKnight().getScene().getGravity()
+    public Vector updateVelocity(Vector newvelocity) {
+
+        if (getKnight().getVelocity().y() < 0 && getKnight().getVelocity().y() >= -0.5) {
+
+            Vector velocity = new Vector(
+                    newvelocity.x() * getKnight().getAcceleration(),
+                    newvelocity.y() + getKnight().getScene().getGravity() * 0.5
+            );
+
+            return limitVelocity(velocity);
+
+        }
+
+        Vector velocity = new Vector(
+                newvelocity.x() * getKnight().getAcceleration(),
+                newvelocity.y() + getKnight().getScene().getGravity()
         );
-        return limitVelocity(applyCollisions(newVelocity));
+        return limitVelocity(applyCollisions(velocity));
     }
 
     @Override
