@@ -224,4 +224,19 @@ public class Scene {
     public void setJumpParticles(List<Particle> jumpParticles) {
         this.jumpParticles = jumpParticles;
     }
+
+    public void collectOrbs(Collectables[][] Orbs){
+        double x = getPlayer().getPosition().x();
+        double y = getPlayer().getPosition().y();
+        double width = player.getWidth(), height = player.getHeight();
+
+        for (int tileY: List.of((int)y / Tile.SIZE, (int)(y + height - 1) / Tile.SIZE)) {
+            for (int tileX: List.of((int)x / Tile.SIZE, (int)(x + width - 1) / Tile.SIZE)) {
+                if (Orbs[tileY][tileX] != null) {
+                    Orbs[tileY][tileX].benefit(getPlayer());
+                    Orbs[tileY][tileX] = null;
+                }
+            }
+        }
+    }
 }
