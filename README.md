@@ -36,6 +36,8 @@ sem morrer, face aos diversos inimigos e obstáculos que existem, e chegar ao fi
 - **Problemas/Funcionalidades e Padrões**:
   - As funcionalidades implementadas ou que irão ser, como o Dash ou o Jump foram escolhidas para dar uma movimentação avançada ao jogador.
   - Alguns padrões de Design de Software usados foram:
-    - o Singleton, usado na Game class;
+    - o Singleton, usado na Game class fazendo com que só possa haver uma única instância da class Game;
     - o MCV (Model-View-Controller);
+    - o Game Loop, presente na classe Game no método Start;
+    - o State, usado para representar os diferentes estados do Knight;
     
