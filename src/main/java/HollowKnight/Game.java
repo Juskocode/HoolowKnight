@@ -50,7 +50,7 @@ public class Game {
         int FPS = 30;
         int frameTime = 1000 / FPS;
         int tick = 0;
-        while (this.state != null) {
+        while (this.state != null) {    //Game loop
             long startTime = System.currentTimeMillis();
 
             state.move(this, gui, tick);
