@@ -1,12 +1,17 @@
 package HollowKnight.model.game.elements.Particle;
 
 import HollowKnight.model.Position;
+import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.model.menu.Menu;
 import com.googlecode.lanterna.TextColor;
 
+import static java.lang.Math.max;
+
 public abstract class Particle extends Element {
+
+    private Scene scene;
     // Random delay time for regenerating the particle (in ticks)
     private static final int MIN_REGEN_DELAY = 200;
     private static final int MAX_REGEN_DELAY = 600;
@@ -16,7 +21,7 @@ public abstract class Particle extends Element {
     private TextColor.RGB color;
     private Position velocity; // Includes x and y velocities
     private double opacity;    // Controls particle transparency
-    private final double fadeRate = 0.05; // Rate at which particles fade
+    private final double fadeRate = 0.025; // Rate at which particles fade
 
     // Constructor and other methods...
 
@@ -75,6 +80,15 @@ public abstract class Particle extends Element {
         return MIN_REGEN_DELAY + (int)(Math.random() * (MAX_REGEN_DELAY - MIN_REGEN_DELAY));
     }
 
+    protected abstract Vector applyCollisions(Vector velocity);
+
     public abstract Position moveParticle(Scene scene, long time);
 
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 }

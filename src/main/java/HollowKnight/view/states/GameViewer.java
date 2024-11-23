@@ -8,6 +8,7 @@ import HollowKnight.view.elements.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.elements.collectables.EnergyOrbViewer;
 import HollowKnight.view.elements.collectables.HealthOrbViewer;
+import HollowKnight.view.elements.collectables.SpeedOrbViewer;
 import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
 import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
 import HollowKnight.view.elements.monsters.SwordMonsterViewer;
@@ -28,6 +29,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private final EnergyOrbViewer energyOrbViewer;
     private final HealthOrbViewer healthOrbViewer;
+    private final SpeedOrbViewer speedOrbViewer;
+
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
     private final TileViewer tileViewer;
@@ -66,6 +69,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.minhoteMonsterViewer = new MinhoteMonsterViewer();
         this.energyOrbViewer = new EnergyOrbViewer();
         this.healthOrbViewer = new HealthOrbViewer();
+        this.speedOrbViewer = new SpeedOrbViewer();
     }
 
     @Override
@@ -78,6 +82,9 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time);
+
+
 
         drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
         drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
@@ -88,10 +95,9 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
-
         drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time);
         drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time);
-
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time);
         drawPlayerStats(gui, time);
 
         gui.flush();
@@ -166,6 +172,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         // Fetch player jumpBoost
         String jumpBoost = "jumpBoost " + String.format("%.2f", player.getJumpBoost());
 
+        String hp = "hp " + player.getHP();
+
         // Define a common color for all text
         TextColor.RGB color = new TextColor.RGB(0, 25, 25);
 
@@ -174,8 +182,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.textViewer.draw(vel, 4, 8, color, gui);
         this.textViewer.draw(state, 4, 16, color, gui);
         this.textViewer.draw(colides, 4, 24, color, gui);
-        this.textViewer.draw(jumpBoost, 4, 32, color, gui);
-
+        this.textViewer.draw(hp, 4, 32, color, gui);
 
     }
 

@@ -4,6 +4,7 @@ import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Collectables.EnergyOrb;
 import HollowKnight.model.game.elements.Collectables.HealthOrb;
+import HollowKnight.model.game.elements.Collectables.SpeedOrb;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
@@ -29,6 +30,7 @@ public class Scene {
 
     private EnergyOrb[][] energyOrbs;
     private HealthOrb[][] healthOrbs;
+    private SpeedOrb[][] speedOrbs;
 
     private BigRock[][] bigRocks;
     private SmallRock[][] smallRocks;
@@ -40,9 +42,11 @@ public class Scene {
     private double gravity = 0.25;
 
     private Knight player;
+    private Particle particle;
     private List<Particle> particles;
     private List<Particle> doubleJumpParticles;
     private List<Particle> jumpParticles;
+    private List<Particle> respawnParticles;
 
     public Scene(int width, int height) {
         this.width = width;
@@ -51,6 +55,7 @@ public class Scene {
         this.doubleJumpParticles = new ArrayList<>();
         this.jumpParticles = new ArrayList<>();
         this.particles = new ArrayList<>();
+        this.respawnParticles = new ArrayList<>();
 
         this.tiles = new Tile[height][width];
         this.smallTrees = new SmallTree[height][width];
@@ -62,6 +67,7 @@ public class Scene {
         this.minhoteMonsters = new MinhoteMonster[height][width];
         this.energyOrbs = new EnergyOrb[height][width];
         this.healthOrbs = new HealthOrb[height][width];
+        this.speedOrbs = new SpeedOrb[height][width];
     }
 
     public int getWidth() {
@@ -238,5 +244,29 @@ public class Scene {
                 }
             }
         }
+    }
+
+    public SpeedOrb[][] getSpeedOrbs() {
+        return speedOrbs;
+    }
+
+    public void setSpeedOrbs(SpeedOrb[][] speedOrbs) {
+        this.speedOrbs = speedOrbs;
+    }
+
+    public List<Particle> getRespawnParticles() {
+        return respawnParticles;
+    }
+
+    public void setRespawnParticles(List<Particle> respawnParticles) {
+        this.respawnParticles = respawnParticles;
+    }
+
+    public Particle getParticle() {
+        return particle;
+    }
+
+    public void setParticle(Particle particle) {
+        this.particle = particle;
     }
 }
