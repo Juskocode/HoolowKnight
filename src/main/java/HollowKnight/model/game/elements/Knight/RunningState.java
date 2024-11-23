@@ -5,7 +5,7 @@ import HollowKnight.model.Vector;
 public class RunningState extends KnightState{
 
     public static double MIN_VELOCITY = 1.75;
-    public static double MAX_VELOCITY = 2.00;
+    public static double MAX_VELOCITY = 2.0;
 
     public RunningState(Knight knight){
         super(knight);
@@ -37,7 +37,7 @@ public class RunningState extends KnightState{
         if (!getKnight().isOnGround())
             return getNextOnAirState();
         getKnight().setJumpCounter(0);
-        if (Math.abs(getKnight().getVelocity().x()) == RunningState.MAX_VELOCITY)
+        if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MAX_VELOCITY)
             return new MaxVelocityState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) < RunningState.MIN_VELOCITY)
             return new WalkingState(getKnight());
