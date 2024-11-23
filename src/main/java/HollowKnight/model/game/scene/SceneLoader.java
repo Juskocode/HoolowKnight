@@ -4,6 +4,7 @@ import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Collectables.EnergyOrb;
 import HollowKnight.model.game.elements.Collectables.HealthOrb;
+import HollowKnight.model.game.elements.Collectables.SpeedOrb;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RainParticle;
@@ -30,7 +31,7 @@ public class SceneLoader {
     private final int TILE_SIZE = 8;
 
     public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/levelJumpTest.lvl");
+        URL resource = getClass().getClassLoader().getResource("levels/levelKnight.lvl");
         assert resource != null;
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
@@ -59,7 +60,7 @@ public class SceneLoader {
         scene.setParticles(createParticles(0, scene));
         scene.setEnergyOrbs(createEnergyOrbs(scene));
         scene.setHealthOrbs(createHealthOrbs(scene));
-
+        scene.setSpeedOrbs(createSpeedOrbs(scene));
         return scene;
     }
 
@@ -179,6 +180,21 @@ public class SceneLoader {
         return healthOrbs;
     }
 
+
+    private SpeedOrb[][] createSpeedOrbs(Scene scene) {
+        SpeedOrb[][] speedOrbs = new SpeedOrb[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 's') {
+                    speedOrbs[y][x] = new SpeedOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
+                }
+            }
+        }
+        return speedOrbs;
+    }
+
     private SwordMonster[][] createSwordMonsters(Scene scene) {
         SwordMonster[][] monsters = new SwordMonster[scene.getHeight()][scene.getWidth()];
 
@@ -220,7 +236,6 @@ public class SceneLoader {
                 }
             }
         }
-
         return monsters;
     }
 
@@ -250,6 +265,4 @@ public class SceneLoader {
         }
         return particles;
     }
-
-
 }
