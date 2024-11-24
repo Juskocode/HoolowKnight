@@ -10,9 +10,11 @@ public abstract class Collectables extends Element {
         super(x, y);
         this.Type = Type;
     }
-
+    /*
     public String getType() {
         return Type;
     }
+    */
+
     public abstract void benefit(Knight knight);
 }
