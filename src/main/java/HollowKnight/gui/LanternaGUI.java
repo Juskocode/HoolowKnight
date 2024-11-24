@@ -31,7 +31,6 @@ public class LanternaGUI implements GUI {
     // Track active keys
     private final Set<Integer> activeKeys;
     private boolean keySpam;
-    private final Map<Integer, Long> keyPressTimestamps = new HashMap<>();
     private Long jumpPressStartTime = null; // Tracks when the jump key was pressed
     private KeyEvent priorityKeyPressed;
     private KeyEvent keyPressed;
@@ -77,7 +76,7 @@ public class LanternaGUI implements GUI {
     private boolean isJumpKeyHeld = false; // Tracks if the jump key is currently held
     private long lastJumpEndTime = 0;
 
-    private void handleKeyPressed(KeyEvent keyEvent) {
+    void handleKeyPressed(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
 
         if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime == null) {
@@ -99,7 +98,7 @@ public class LanternaGUI implements GUI {
             keyPressed = keyEvent;
     }
 
-    private void handleKeyReleased(KeyEvent keyEvent) {
+    void handleKeyReleased(KeyEvent keyEvent) {
         int keyCode = keyEvent.getKeyCode();
 
         if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime != null) {
@@ -154,33 +153,6 @@ public class LanternaGUI implements GUI {
             return ACTION.NULL;
         int keyCode = keyPressed.getKeyCode();
 
-        /*
-        if (keyStroke == null) {
-            System.out.println("null key");
-            System.out.println(priorityKeyPressed);
-        }
-        else {
-            System.out.println(keyStroke.getKeyType().toString());
-            System.out.println(priorityKeyPressed);
-        }
-        */
-        /*
-        if (keyStroke == null) {
-            if (priorityKeyPressed != 0) {
-                return priorityKeyPressed == KeyEvent.VK_LEFT ? ACTION.LEFT : ACTION.RIGHT;
-            }
-            return ACTION.NULL;
-        }
-
-        // Update priority based on Lanterna inputs
-        if (keyStroke.getKeyType() == KeyType.ArrowLeft) {
-            priorityKeyPressed = KeyEvent.VK_LEFT;
-            return ACTION.LEFT;
-        } else if (keyStroke.getKeyType() == KeyType.ArrowRight) {
-            priorityKeyPressed = KeyEvent.VK_RIGHT;
-            return ACTION.RIGHT;
-        }
-        */
         keyPressed = priorityKeyPressed;
         // Handle other keys
         return switch (keyCode) {
@@ -196,44 +168,7 @@ public class LanternaGUI implements GUI {
         };
     }
 
-
-
-    public void setKeySpam(boolean keySpam) {
-        if (!keySpam) priorityKeyPressed = null;
-        this.keySpam = keySpam;
-    }
-
-    /*
-    public double getJumpBoost() {
-        synchronized (this) {
-            // Ensure both times are valid
-            if (jumpKeyPressedTime == 0 || jumpKeyReleasedTime == 0) {
-                resetJumpTiming();
-                return 2.0; // Default minimum boost
-            }
-
-            long holdDuration = jumpKeyReleasedTime - jumpKeyPressedTime;
-
-            if (holdDuration < 0) { // Handle invalid timing
-                resetJumpTiming();
-                return 2.0; // Default boost
-            }
-
-            // Scale duration to range [2.0, 4.0], clamped at 350ms
-            double boost = 2.0 + (Math.min(holdDuration, 350) / 350.0) * (4.0 - 2.0);
-
-            resetJumpTiming(); // Reset after use
-            return boost;
-        }
-    }
-    // Reset method to clear timing variables
-    private void resetJumpTiming() {
-        jumpKeyPressedTime = 0;
-        jumpKeyReleasedTime = 0;
-    }
-*/
-
-    private Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
+    Terminal createTerminal(int width, int height, int fontSize) throws IOException, URISyntaxException, FontFormatException {
         TerminalSize size = new TerminalSize(width, height);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()
                 .setInitialTerminalSize(size);
@@ -244,7 +179,7 @@ public class LanternaGUI implements GUI {
         return terminalFactory.createTerminal();
     }
 
-    private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
+    AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
         URL resource = getClass().getClassLoader().getResource("fonts/pixel.ttf");
         assert resource != null;
         File fontFile = new File(resource.toURI());
@@ -252,7 +187,7 @@ public class LanternaGUI implements GUI {
         return AWTTerminalFontConfiguration.newInstance(font);
     }
 
-    private Screen createScreen(Terminal terminal) throws IOException {
+    Screen createScreen(Terminal terminal) throws IOException {
         final Screen screen = new TerminalScreen(terminal);
 
         screen.setCursorPosition(null);
@@ -260,6 +195,11 @@ public class LanternaGUI implements GUI {
         screen.doResizeIfNecessary();
 
         return screen;
+    }
+
+    @Override
+    public GUI getGUI() {
+        return this;
     }
 
     @Override
@@ -316,16 +256,11 @@ public class LanternaGUI implements GUI {
             tg.putString(x + dx, y + height - 1, " "); // Bottom edge
         }
 
-        // Draw the left and right edges
-        for (int dy = 0; dy < height; dy++) {
+        // Draw the left and right edges, excluding corners to avoid duplication
+        for (int dy = 1; dy < height - 1; dy++) {
             tg.putString(x, y + dy, " "); // Left edge
             tg.putString(x + width - 1, y + dy, " "); // Right edge
         }
-    }
-
-    @Override
-    public GUI getGUI() {
-        return this;
     }
 
     @Override

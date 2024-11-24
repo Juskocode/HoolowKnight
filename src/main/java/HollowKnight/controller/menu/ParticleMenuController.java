@@ -118,7 +118,7 @@ public class ParticleMenuController extends Controller<Menu> {
     }
 
     // Interpolates between two colors based on a factor (0.0 to 1.0)
-    private TextColor.RGB interpolateColor(TextColor.RGB start, TextColor.RGB end, float factor) {
+    TextColor.RGB interpolateColor(TextColor.RGB start, TextColor.RGB end, float factor) {
         int r = (int) (start.getRed() + factor * (end.getRed() - start.getRed()));
         int g = (int) (start.getGreen() + factor * (end.getGreen() - start.getGreen()));
         int b = (int) (start.getBlue() + factor * (end.getBlue() - start.getBlue()));

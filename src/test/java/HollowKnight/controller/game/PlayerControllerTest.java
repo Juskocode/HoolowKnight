@@ -1,18 +1,17 @@
 package HollowKnight.controller.game;
 
 import HollowKnight.Game;
-import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
+import HollowKnight.model.game.elements.Knight.IdleState;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Knight.KnightState;
+import HollowKnight.model.game.elements.Knight.RespawnState;
 import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static HollowKnight.gui.GUI.ACTION.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class PlayerControllerTest {
     private Scene scene;
@@ -34,53 +33,67 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void move(){
+    public void move() {
         playerController.move(game, NULL, 0);
-        verify(knight, times(1))
-                .setVelocity(Mockito.any());
-        verify(knight, times(1))
-                .updateVelocity();
-        verify(knight, times(1))
-                .setPosition(Mockito.any());
-        verify(knight, times(1))
-                .getNextState();
-        verify(knight, times(1))
-                .setState(Mockito.any());
+
+        verify(knight, times(1)).setVelocity(knight.updateVelocity());
+        verify(knight, times(1)).updateVelocity();
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
+
+        // Verify IdleState assignment when getState returns null
+        when(knight.getState()).thenReturn(null);
+        playerController.move(game, NULL, 0);
+        verify(knight, times(1)).setState(any(IdleState.class));
     }
 
     @Test
-    public void moveLeft(){
+    public void moveLeft() {
         playerController.move(game, LEFT, 0);
-        verify(knight, times(1))
-                .setVelocity(Mockito.any());
-        verify(knight, times(1))
-                .moveLeft();
-        verify(knight, times(1))
-                .setFacingRight(false);
 
-        verify(knight, times(1))
-                .setPosition(Mockito.any());
-        verify(knight, times(1))
-                .getNextState();
-        verify(knight, times(1))
-                .setState(Mockito.any());
+        verify(knight, times(1)).setVelocity(knight.moveLeft());
+        verify(knight, times(1)).moveLeft();
+        verify(knight, times(1)).setFacingRight(false);
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
     }
 
     @Test
-    public void moveRight(){
+    public void moveRight() {
         playerController.move(game, RIGHT, 0);
-        verify(knight, times(1))
-                .setVelocity(Mockito.any());
-        verify(knight, times(1))
-                .moveRight();
-        verify(knight, times(1))
-                .setFacingRight(true);
 
-        verify(knight, times(1))
-                .setPosition(Mockito.any());
-        verify(knight, times(1))
-                .getNextState();
-        verify(knight, times(1))
-                .setState(Mockito.any());
+        verify(knight, times(1)).setVelocity(knight.moveRight());
+        verify(knight, times(1)).moveRight();
+        verify(knight, times(1)).setFacingRight(true);
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
+    }
+
+    @Test
+    public void jump() {
+        playerController.move(game, JUMP, 0);
+
+        verify(knight, times(1)).setVelocity(knight.jump());
+        verify(knight, never()).setFacingRight(anyBoolean()); // Jump shouldn't affect facing direction
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
+    }
+
+    @Test
+    public void kill() {
+        playerController.move(game, KILL, 0);
+
+        verify(knight, times(1)).setState(any(RespawnState.class)); // Verify state changes to RespawnState
+        verify(knight, times(1)).setVelocity(knight.updateVelocity());
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
     }
 }
