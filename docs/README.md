@@ -50,9 +50,12 @@
 
 ### Problems/Features and Patterns
 - The implemented features, or those planned for future development, such as Dash and Jump, aim to provide advanced movement for the player while introducing a "skill gap."
-- Some software design patterns applied include:
+- Some software **Design patterns** used include:
     - **Singleton**: Used in the Game class to ensure only one instance of the Game exists.
-    - **Game Loop**: Implemented in the Game class within the Start method.
+    - **Game Loop**: Implemented in the Game class within the Start method. It ensures the game updates and renders consistently, regardless of varying frame rates or system performance.
+        <p align="center">
+            <img src="uml/game-loop.png"/>
+        </p>
     - **State**: Allows an object to alter its behavior dynamically based on its current state. Useful for managing the various states a character can occupy, such as Idle, Walking, Running, Jumping, Attacking, and Dying.
     - **MVC (Model-Controller-Viewer)**: Composed of three patterns:
       - **Strategy**: Applied in the Controller, allowing dynamic changes to the game's behavior without altering its logic.
