@@ -67,3 +67,15 @@
 - By following the MVC pattern, typically used for projects of this kind in Java, we were able to extend our project more easily and in a structured way.
 - However, when creating code for new features, we must carefully consider their structure and how to divide and implement them within this pattern, which can be challenging.
     
+
+
+## Mockups
+
+### Menu
+
+### Game
+
+## Test
+<p align="center">
+  <img src="test/coverage.png"/>
+</p>
