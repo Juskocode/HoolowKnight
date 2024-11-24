@@ -9,57 +9,79 @@ import static java.lang.Math.max;
 
 public class RespawnParticle extends Particle {
 
+    private double stickTimer = 0.1; // Time remaining to stick to the ceiling
+
+
     public RespawnParticle(int x, int y, Position velocity, TextColor.RGB color) {
         super(x, y, velocity, color);
     }
 
     @Override
-    protected Vector applyCollisions(Vector velocity)
-    {
-        double x = getPosition().x(), y = getPosition().y();
-        double vx = velocity.x(), vy = velocity.y();
+    protected Vector applyCollisions(Vector velocity) {
+        double x = getPosition().x();
+        double y = getPosition().y();
+        double vx = velocity.x();
+        double vy = velocity.y();
         Position size = new Position(1, 1);
 
-        while (vy > 0 && getScene().collidesDown(new Position(x, y + vy), size))
-            vy = Math.max(vy - 1, 0);
-        /*
-        while (vy < 0 && getScene().collidesUp(new Position(x, y + vy), size))
-            vy = Math.min(vy + 1, 0);
+        // Ceiling collision
+        if (vy < 0 && getScene().collidesUp(new Position(x, y + vy), size)) {
+            vy = -vy; // Stop upward movement
+            stickTimer = 0.1; // Set stick time (adjust as needed)
+        }
 
-        while (vx < 0 && getScene().collidesLeft(new Position(x + vx, y + vy), size))
-            vx = Math.min(vx + 1, 0);
+        // Downward collision (falling)
+        if (vy > 0) {
+            while (vy > 0 && getScene().collidesDown(new Position(x, y + vy), size)) {
+                vy -= 0.1; // Reduce incrementally for precise alignment
+            }
+            if (vy < 0.1) {
+                vy = 0; // Stop falling if close enough
+            }
+        }
 
-        while (vx > 0 && getScene().collidesRight(new Position(x + vx, y + vy), size))
-            vx = max(vx - 1, 0);
-        */
+        // Horizontal collisions (optional, depending on requirements)
+        if (vx < 0 && getScene().collidesLeft(new Position(x + vx, y), size)) {
+            vx = 0;
+        } else if (vx > 0 && getScene().collidesRight(new Position(x + vx, y), size)) {
+            vx = 0;
+        }
+
         return new Vector(vx, vy);
     }
 
-
     @Override
     public Position moveParticle(Scene scene, long time) {
-        // Update position based on velocity
-        Position position = new Position(
-                getPosition().x() + getVelocity().x(),
-                getPosition().y() + getVelocity().y()
-        );
+        // Current position and velocity
+        double x = getPosition().x();
+        double y = getPosition().y();
+        double vx = getVelocity().x();
+        double vy = getVelocity().y();
 
-        Position velocity = new Position(
-                getVelocity().x(),
-                getVelocity().y() + 0.2
-        );
-        this.setVelocity(velocity);
+        // Apply gravity only if not sticking to the ceiling
+        if (stickTimer > 0) {
+            stickTimer -= 0.1; // Decrement stick timer (adjust rate as needed)
+            vy = 0; // No vertical movement while sticking
+        } else {
+            vy += 0.2; // Gravity pulls down
+        }
+        System.out.println(stickTimer);
+        // Apply collisions to adjust velocity
+        Vector adjustedVelocity = applyCollisions(new Vector(vx, vy));
+        vx = adjustedVelocity.x();
+        vy = adjustedVelocity.y();
 
-        this.setOpacity(Math.max(0, getOpacity() - getFadeRate() ));
+        // Update particle position with adjusted velocity
+        x += vx;
+        y += vy;
 
-        Position next = new Position(position.x() + velocity.x(),
-                position.y() + velocity.y());
+        // Update particle opacity (simulate fading)
+        this.setOpacity(Math.max(0, getOpacity() - getFadeRate()));
 
-        Vector v = new Vector(next.x(), next.y());
-        //Vector vdt = applyCollisions(v);
+        // Set new position and velocity
+        this.setPosition(new Position(x, y));
+        this.setVelocity(new Position(vx, vy));
 
-        return new Position(v.x(), v.y());
+        return new Position(x, y);
     }
-
-
 }

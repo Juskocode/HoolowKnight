@@ -22,6 +22,7 @@ public class RespawnState extends KnightState {
     @Override
     public Vector updateVelocity(Vector newVelocity) {
         deathTimer--;
+        tickParticles();
         return new Vector(0, 0);
     }
 
@@ -29,7 +30,7 @@ public class RespawnState extends KnightState {
     public KnightState getNextState()
     {
         if (deathTimer <= 0) {
-            Position respawn = new Position(getKnight().getPosition().x(), 10);
+            Position respawn = new Position(getKnight().getPosition().x(), 0);
             getKnight().setPosition(respawn);
             return new FallingState(getKnight());
         }

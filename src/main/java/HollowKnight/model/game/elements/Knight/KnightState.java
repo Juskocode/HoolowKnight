@@ -7,6 +7,7 @@ import static java.lang.Math.max;
 
 public abstract class KnightState {
     private final Knight knight;
+    private long particlesTimer = 100;
 
     public KnightState(Knight knight){
         this.knight = knight;
@@ -73,6 +74,18 @@ public abstract class KnightState {
         if (getKnight().getVelocity().y() < 0)
             return new JumpState(getKnight());
         return new FallingState(getKnight());
+    }
+
+    public void tickParticles(){
+        particlesTimer--;
+    }
+
+    public long getParticlesTimer() {
+        return particlesTimer;
+    }
+
+    public void resetParticlesTimer() {
+        particlesTimer = 100;
     }
 
     public abstract Vector jump();

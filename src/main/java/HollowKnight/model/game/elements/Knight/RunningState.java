@@ -25,6 +25,7 @@ public class RunningState extends KnightState{
 
     @Override
     public Vector updateVelocity(Vector velocity) {
+        tickParticles();
         Vector newVelocity = new Vector(
                 velocity.x() * getKnight().getAcceleration(),
                 velocity.y()
@@ -34,6 +35,11 @@ public class RunningState extends KnightState{
 
     @Override
     public KnightState getNextState() {
+        if (getParticlesTimer() == 0)
+        {
+            getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));
+            resetParticlesTimer();
+        }
         if (!getKnight().isOnGround())
             return getNextOnAirState();
         getKnight().setJumpCounter(0);
