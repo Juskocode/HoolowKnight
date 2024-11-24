@@ -21,7 +21,7 @@ public abstract class Particle extends Element {
     private TextColor.RGB color;
     private Position velocity; // Includes x and y velocities
     private double opacity;    // Controls particle transparency
-    private final double fadeRate = 0.025; // Rate at which particles fade
+    private final double fadeRate = 0.00675; // Rate at which particles fade
 
     // Constructor and other methods...
 
