@@ -120,3 +120,4 @@ The adoption of the **State Pattern** provides several benefits:
 
 These advantages ensure the codebase is scalable, maintainable, and prepared for future additions.
 
+
