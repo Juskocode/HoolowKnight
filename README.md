@@ -1,53 +1,54 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rUa5vdmg)
 
-## Descrição do Projeto
-Soul knight é um jogo inspirado em jogos Platformers, como por exemplo Hollow Knight, mas com algumas ideias distintas. Neste mundo tudo está a tentar matar-te, e tu és um guerreiro de grande prestígio e renome. O teu objetivo é sobreviver e atravessar este mundo subterrâneo para escapar. 
-# Funcionalidades a Implementar no Jogo
+# Project Description
+**Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
 
-## Jogador
-- **O jogador apresenta as seguintes características**:
-    - HP (health-points), é a vida do jogador ,representada por um inteiro e se chega a zero o jogador morre;
-    - Energy, o jogador vai acumulando energia para realizar um ataque especial;
-    - Movimento, opções de movimentação para atravessar o mapa (Jump, Dash);
+## Features to Implement in the Game
 
-## Mecânicas do Jogo
-- **Randomização de Níveis**: criação de layouts de nível variados em cada partida.
-- **Ação de Saltar**: introdução da mecânica de salto para o jogador.
-- **Físicas do Jogo**: implementação de física para elementos móveis e interações.
+### Player
+- **The player has the following characteristics**:
+  - **HP (Health Points)**: The player's life is represented by an integer. If it reaches zero, the player dies.
+  - **Energy**: The player accumulates energy to perform a special attack.
+  - **Movement**: Options for navigating the map, such as jumping and dashing.
 
-## Combate
-- **Ataques do Jogador**:
-    - **Ataque Corpo-a-Corpo** (close range)
-    - **Ataque Especial**: habilidade especial com maior dano ou efeito único.
+### Game Mechanics
+- **Random Level Generation**: Creation of varied level layouts in each playthrough.
+- **Jump Mechanic**: Introduction of jumping mechanics for the player.
+- **Game Physics**: Implementation of physics for moving elements and interactions.
 
-## Coletáveis e Inimigos
-- **Coletáveis**: introdução de itens colecionáveis ao longo dos níveis. Estes "orbs" irão dar "Power Ups" ao jogador incrementando as suas capacidades.
-- **Tipos de Inimigos**: criação de variedades de inimigos com habilidades distintas.
+### Combat
+- **Player Attacks**:
+  - **Melee Attack**: Close-range attack.
+  - **Special Attack**: A powerful ability with higher damage or a unique effect.
 
-## Interface e Navegação
-- **Menu Principal**: adição de um menu de navegação.
-- **Barras de Informação**: visualização de status e informações importantes (vida, energia, etc.).
+### Collectibles and Enemies
+- **Collectibles**: Items scattered throughout the levels, such as orbs that provide "Power-Ups," enhancing the player's abilities.
+- **Enemy Types**: Introduction of various enemies with distinct abilities.
 
-## Movimentação Avançada
-- **Dash ou Dodge**: capacidade augmentada de atravessar o mapa e de esquivar de inimigos.
+### Interface and Navigation
+- **Main Menu**: A navigable menu for starting and managing the game.
+- **Information Bars**: Displays for important stats and information (e.g., health, energy).
 
-## Gráficos
-- **Ajuste de Resolução**: melhoria e optimização da resolução do jogo.
+### Advanced Movement
+- **Dash or Dodge**: Enhanced movement for crossing the map and evading enemies.
 
-## Documentação
-- **Problemas/Funcionalidades e Padrões**:
-  - As funcionalidades já implementadas, ou que futuramente serão implementadas, como o Dash ou o Jump foram escolhidas para dar uma movimentação avançada ao jogador, também introduzindo uma espécie de "Skill Gap".
-  - Alguns padrões de Design de Software usados foram:
-    - o Singleton, usado na Game class fazendo com que só possa haver uma única instância da class Game;
-    - o MCV (Model-Controller-Viewer) composto por três padrões:
-      - Strategy, usado no Controller, permite flexibilidade para o jogo ao mudar dinamicamente o seu comportamento, sem necessitar de modificar a lógica dele;
-      - Composite, usado na Viewer. Coloca cada Viewer numa estrutura hierárquicas, o que possibilita um ponto de acesso comum para cada Viewer;
-      - Observer,usado entre o View e o Controller. O model notifica vários Viewers "interessados" em específicos objetos para assim ficarem atualuzados;
-    - o Game Loop, presente na classe Game no método Start;
-    - o State, usado para representar os diferentes estados do Knight;
+### Graphics
+- **Resolution Adjustment**: Optimization and improvement of game resolution.
 
-- **Conseqências**:
-  - Seguindo o padrão MCV,que é tipícamente usado para este tipo de projetos em Java, possibilitou-nos uma extender o nosso projeto de uma forma menos complicada e mais estruturada.
-Porém quando estamos a criar código para novas funcionalidades, temos que pensar na estrutura dele e como vamos dividir para implementá-lo neste tipo de padrão, o que pode se revelar complicado.
-    
+## Documentation
+
+### Problems/Features and Patterns
+- The implemented features, or those planned for future development, such as Dash and Jump, aim to provide advanced movement for the player while introducing a "skill gap."
+- Some software design patterns applied include:
+  - **Singleton**: Used in the `Game` class to ensure only one instance of the `Game` exists.
+  - **MVC (Model-Controller-Viewer)**: Composed of three patterns:
+    - **Strategy**: Applied in the Controller, allowing dynamic changes to the game's behavior without altering its logic.
+    - **Composite**: Applied in the Viewer. Organizes each Viewer into a hierarchical structure, providing a common access point for each Viewer.
+    - **Observer**: Applied between the View and the Controller. The Model notifies multiple Viewers "interested" in specific objects, ensuring they remain updated.
+  - **Game Loop**: Implemented in the `Game` class within the `Start` method.
+  - **State**: Represents the different states of the Knight.
+
+### Consequences
+- By following the MVC pattern, typically used for projects of this kind in Java, we were able to extend our project more easily and in a structured way.
+- However, when creating code for new features, we must carefully consider their structure and how to divide and implement them within this pattern, which can be challenging.
     
