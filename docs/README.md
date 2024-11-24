@@ -2,6 +2,10 @@
   LDTS_T02G07 - Soul Knight
 </h1>
 
+<p align="center">
+  <img src="mockups/mockupIdle.png"/>
+</p>
+
 ## Project Description
 **Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
 
@@ -56,10 +60,22 @@
       - **Observer**: Applied between the View and the Controller. The Model notifies multiple Viewers "interested" in specific objects, ensuring they remain updated. 
 - **An explanation is also provided in the following diagram**:
 <p align="center">
-  <img src="resources/uml/class/mvc.png"/>
+  <img src="uml/mvc.png"/>
 </p>
 
 ### Consequences
 - By following the MVC pattern, typically used for projects of this kind in Java, we were able to extend our project more easily and in a structured way.
 - However, when creating code for new features, we must carefully consider their structure and how to divide and implement them within this pattern, which can be challenging.
     
+
+
+## Mockups
+
+### Menu
+
+### Game
+
+## Test
+<p align="center">
+  <img src="test/coverage.png"/>
+</p>
