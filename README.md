@@ -4,6 +4,12 @@
 Soul knight é um jogo inspirado em jogos Platformers, como por exemplo Hollow Knight, mas com algumas ideias distintas. Neste mundo tudo está a tentar matar-te, e tu és um guerreiro de grande prestígio e renome. O teu objetivo é sobreviver e atravessar este mundo subterrâneo para escapar. 
 # Funcionalidades a Implementar no Jogo
 
+## Jogador
+- **O jogador apresenta as seguintes características**:
+    - HP (health-points), é a vida do jogador representada por um inteiro e se chega a zero o jogador morre;
+    - Energy, o jogador vai acumulando energia para fazer um ataque especial;
+    - Movimento, opções de movimentação para atravessar o mapa;
+
 ## Mecânicas do Jogo
 - **Randomização de Níveis**: criação de layouts de nível variados em cada partida.
 - **Ação de Saltar**: introdução da mecânica de salto para o jogador.
@@ -34,9 +40,9 @@ Soul knight é um jogo inspirado em jogos Platformers, como por exemplo Hollow K
   - Alguns padrões de Design de Software usados foram:
     - o Singleton, usado na Game class fazendo com que só possa haver uma única instância da class Game;
     - o MCV (Model-View-Controller) composto por três padrões:
-      - Strategy, possibilitando flexibilidade para o jogo ao permitir que mude dinamicamente o seu comportamento, sem necessitar de modificar a lógica do jogo;
-      - Composite,
-      - Observer,
+      - Strategy, usado no Controller, permite flexibilidade para o jogo ao mudar dinamicamente o seu comportamento, sem necessitar de modificar a lógica dele;
+      - Composite, usado na Viewer. Coloca cada Viewer numa estrutura hierárquicas, o que possibilita um ponto de acesso comum para cada Viewer;
+      - Observer,usado entre o View e o Controller. O model notifica vários Viewers "interessados" em específicos objetos para assim ficarem atualuzados;
     - o Game Loop, presente na classe Game no método Start;
     - o State, usado para representar os diferentes estados do Knight;
     
