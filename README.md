@@ -3,22 +3,13 @@
 </h1>
 
 <p align="center">
-  <img src="mockups/mockupIdle.png"/>
+  <img src="docs/mockups/SoulKnight.gif"/>
 </p>
 
 ## Project Description
 **Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
 
 ## Mockups
-
-[comment]: <> (Character movement and Design)
-<h3 align="center">
-  Main Character Movement and Design
-</h3>
-
-<p align="center">
-<img src="docs/mockups/SoulKnight.gif">
-</p>
 
 [comment]: <> (Character movement and Design)
 <h3 align="center">
