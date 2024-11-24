@@ -6,9 +6,9 @@ Soul knight é um jogo inspirado em jogos Platformers, como por exemplo Hollow K
 
 ## Jogador
 - **O jogador apresenta as seguintes características**:
-    - HP (health-points), é a vida do jogador representada por um inteiro e se chega a zero o jogador morre;
-    - Energy, o jogador vai acumulando energia para fazer um ataque especial;
-    - Movimento, opções de movimentação para atravessar o mapa;
+    - HP (health-points), é a vida do jogador ,representada por um inteiro e se chega a zero o jogador morre;
+    - Energy, o jogador vai acumulando energia para realizar um ataque especial;
+    - Movimento, opções de movimentação para atravessar o mapa (Jump, Dash);
 
 ## Mecânicas do Jogo
 - **Randomização de Níveis**: criação de layouts de nível variados em cada partida.
@@ -39,11 +39,15 @@ Soul knight é um jogo inspirado em jogos Platformers, como por exemplo Hollow K
   - As funcionalidades já implementadas, ou que futuramente serão implementadas, como o Dash ou o Jump foram escolhidas para dar uma movimentação avançada ao jogador, também introduzindo uma espécie de "Skill Gap".
   - Alguns padrões de Design de Software usados foram:
     - o Singleton, usado na Game class fazendo com que só possa haver uma única instância da class Game;
-    - o MCV (Model-View-Controller) composto por três padrões:
+    - o MCV (Model-Controller-Viewer) composto por três padrões:
       - Strategy, usado no Controller, permite flexibilidade para o jogo ao mudar dinamicamente o seu comportamento, sem necessitar de modificar a lógica dele;
       - Composite, usado na Viewer. Coloca cada Viewer numa estrutura hierárquicas, o que possibilita um ponto de acesso comum para cada Viewer;
       - Observer,usado entre o View e o Controller. O model notifica vários Viewers "interessados" em específicos objetos para assim ficarem atualuzados;
     - o Game Loop, presente na classe Game no método Start;
     - o State, usado para representar os diferentes estados do Knight;
+
+- **Conseqências**:
+  - Seguindo o padrão MCV,que é tipícamente usado para este tipo de projetos em Java, possibilitou-nos uma extender o nosso projeto de uma forma menos complicada e mais estruturada.
+Porém quando estamos a criar código para novas funcionalidades, temos que pensar na estrutura dele e como vamos dividir para implementá-lo neste tipo de padrão, o que pode se revelar complicado.
     
     
