@@ -105,19 +105,53 @@ To address this, the **State** pattern is used. By introducing an abstract state
 - This encapsulation makes each state self-contained, modular, and independent from others.
 - The main Game class only needs to execute the move function of the current state, without requiring knowledge of which state it is in.
 
+#### Implementation
+
+<p align="center">
+  <img src="uml/game-loop.png"/>
+</p>
+
 #### Consequences
 
 The adoption of the **State Pattern** provides several benefits:
 
 1. **Polymorphism Removes Complex Conditional Logic**  
-   Eliminates long chains of `if-else` or `switch` statements for state handling.
+   Eliminates long chains of conditional statements for state handling.
 
 2. **Ease of Expansion**  
-   Adding new states is straightforward and does not affect existing code, adhering to the **Open/Closed Principle**.
+   Adding new states is straightforward and does not modify existing code, adhering to the **Open/Closed Principle**.
 
 3. **Improved Modularity**  
    Each screen or application's behavior is encapsulated within its state, solving violations of the **Single Responsibility Principle**.
 
-These advantages ensure the codebase is scalable, maintainable, and prepared for future additions.
+### Simplification of Lanterna's Interface
+
+#### Problem in Context
+
+To handle the visuals of our game, we needed a way to draw characters on the terminal and process inputs using Lanterna. However, Lanterna's API lacks straightforward functions for these tasks.
+One solution would be to manually implement these functionalities every time we need them, but this approach leads to repetitive, non-modular code that is difficult to maintain.
+
+#### The Pattern
+
+To address this, we implemented the **Adapter** pattern. This design pattern involves creating a specialized object that acts as a bridge, translating the interface of one system (Lanterna) into a format that another system (our application) can easily use.
+By introducing an adapter ,LanternaGUI, we provide our application's classes with a more intuitive and user-friendly interface for interacting with Lanterna's features.
+
+#### Implementation
+
+<p align="center">
+  <img src="uml/game-loop.png"/>
+</p>
+
+#### Consequences
+
+Using the Adapter Pattern provides several benefits such as:
+
+1. **Encapsulation of Lanterna-Specific Logic**  
+   Our application classes no longer need to manage the intricacies of Lanterna, adhering to the **Single Responsibility Principle**.
+
+2. **Improved Modularity**  
+   By abstracting Lanterna's functionality, the codebase becomes more adaptable and easier to update or extend in the future.
+
+This pattern simplifies interactions with Lanterna and supports long-term maintainability.
 
 
