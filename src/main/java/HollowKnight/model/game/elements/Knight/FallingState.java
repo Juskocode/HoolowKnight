@@ -27,6 +27,7 @@ public class FallingState extends KnightState{
 
     @Override
     public Vector updateVelocity(Vector newVelocity) {
+        tickParticles();
         //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");
         if (getKnight().getVelocity().y() >= 0 && getKnight().getVelocity().y() <= 0.5) {
 
@@ -49,6 +50,11 @@ public class FallingState extends KnightState{
 
     @Override
     public KnightState getNextState() {
+        if (getParticlesTimer() == 0)
+        {
+            getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));
+            resetParticlesTimer();
+        }
         if (getKnight().isOnGround())
             return getNextGroundState();
         if (getKnight().getJumpCounter() == 2)
