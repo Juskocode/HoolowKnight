@@ -35,6 +35,20 @@ a unique experience in each playthrough.
 - **Settings and Scoreboard** - Implement the Settings and ScoreBoard options of the Menu.
 - **Tutorial** - Add a tutorial to the BackGround of the MainMenu.
 - **Attack States** - Implement the attack states of the player and the respective hitboxes for each attack and their effects on the monsters;
+## CONTROLS
+
+`->`: Moves the player to the right.
+
+`<-`: Moves the player to the left.
+
+`SPACE`: Makes the player jump.
+
+`q`: Kills the player
+
+`ESC`: Press ESC to quit or return to the main menu.
+
+`ENTER`: Press ENTER to select the desired options in the menu.
+
 ## General Structure
 <p align="center">
   <img src="uml/SoulKnightStruct.png"/>
@@ -156,3 +170,12 @@ Using the Adapter Pattern provides several benefits such as:
 This pattern simplifies interactions with Lanterna and supports long-term maintainability.
 
 
+## TESTING
+
+- We used unit testing and mocks for more complex tasks
+- **[Coverage Testing](/docs/tests/TestCoverageResult.png)**
+  - Class Coverage ≈ 78,5%
+  - Branch Coverage ≈ 41,9% (for now with trivial test this is normal)
+  <p align="center">
+    <img src="tests/TestCoverageResult.png"/>
+  </p>
