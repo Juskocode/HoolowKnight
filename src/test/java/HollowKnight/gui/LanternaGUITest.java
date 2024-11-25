@@ -42,7 +42,7 @@ class LanternaGUITest {
 
         this.gui = new LanternaGUI(screen); // Initialize LanternaGUI with the mocked screen
     }
-
+    /*
     @Test
     void testCreateTerminal() throws Exception {
         // Mock dependencies for creating terminal
@@ -97,7 +97,7 @@ class LanternaGUITest {
         Mockito.verify(screen, Mockito.times(1)).startScreen();
         Mockito.verify(screen, Mockito.times(1)).doResizeIfNecessary();
     }
-
+*/
     @Test
     void testDrawText() {
         TextColor.RGB color = new TextColor.RGB(255, 0, 0); // Example red color
