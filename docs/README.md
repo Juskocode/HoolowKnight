@@ -87,42 +87,38 @@ The following diagram illustrates the flow of this pattern:
 Implementing the Game Loop pattern provides several benefits, including smooth and consistent gameplay across various systems and the ability to precisely control the execution speed of the game.  
 However, some linters may flag the use of thread-sleeping commands inside loops as bad practice, since they involve idle waiting. While this is true in general programming, it’s a standard and expected practice in game development to achieve consistent timing.
 
-### Multiple Game States
+### Player States
 
 #### Problem in Context
 
-The application needs to differentiate between its various states, such as being on the main menu or actively running the game. A simple approach might involve using a boolean field and conditional statements to modify the application's behavior. However, this method:
+While implementing the player's movement, we wanted to restrict its movement while it's performing certain actions. For example, the player should not be able to jump right after jumping, it should not dash right after dashing, etc. Also, determining in what state the player is is useful for its respective animations.
+Initially, we had the player's state stored in a lot of **flags** inside of the Player class, which not only was confusing to understand from those flags what exactly the player was doing but also made the code that updated the player's movement very long and messy. It also didn't favor the Open/Closed Principle very well, as we realized that slight alterations to one part of the movement impacted others in unpredictable ways.
 
-- Becomes hard to scale as more states are added (e.g., settings screen, credits screen).
-- Violates the **Open/Closed Principle**, as adding new states requires modifying existing logic.
-- Results in large, complex conditional statements, violating the **Single Responsibility Principle**.
+#### The Pattern
 
-#### The Pattern: State Pattern
-
-To address this, the **State** pattern is used. By introducing an abstract state class, each application state is represented as a subclass.
-
-- Each subclass contains the specific logic for its state and manages transitions based on user input.
-- This encapsulation makes each state self-contained, modular, and independent from others.
-- The main Game class only needs to execute the move function of the current state, without requiring knowledge of which state it is in.
+For this problem, we recurred to the **State** Pattern once again. As stated before, this pattern suggests creating an abstract class for the player state and implementing each one of the concrete states as their own subclass, with their own implementation of the needed player's actions and state transitions.
 
 #### Implementation
 
+The implementation of this pattern can be found in the [abstract class KnightState](/src/main/java/HollowKnight/model/game/elements/Knight/KnightState.java),
+as well as its subclasses: [IdleState](/src/main/java/HollowKnight/model/game/elements/Knight/IdleState.java),
+[WalkingState](/src/main/java/HollowKnight/model/game/elements/Knight/WalkingState.java),
+[RunningState](/src/main/java/HollowKnight/model/game/elements/Knight/RunningState.java),
+[JumpingState](/src/main/java/HollowKnight/model/game/elements/Knight/JumpState.java),
+[FallingState](/src/main/java/HollowKnight/model/game/elements/Knight/FallingState.java),
+  and [RespawnState](/src/main/java/HollowKnight/model/game/elements/Knight/RespawnState.java).
+
+This way, the player redirects the logic of movement to the state, and the state deals with the movement's actualization, with methods such as `movePlayerLeft()`, `jump()` or `updateVelocity()`.
+
+A UML diagram describing the pattern implementation can be found below:
+
 <p align="center">
-  <img src="uml/game-loop.png"/>
+  <img src="uml/KnightStateStruct.png"/>
 </p>
 
 #### Consequences
 
-The adoption of the **State Pattern** provides several benefits:
-
-1. **Polymorphism Removes Complex Conditional Logic**  
-   Eliminates long chains of conditional statements for state handling.
-
-2. **Ease of Expansion**  
-   Adding new states is straightforward and does not modify existing code, adhering to the **Open/Closed Principle**.
-
-3. **Improved Modularity**  
-   Each screen or application's behavior is encapsulated within its state, solving violations of the **Single Responsibility Principle**.
+With this pattern, all the phases of the player's movement became well segregated and intuitively identified, as well as more securely defined than with the flag fields. Also, the transitions between each state become much clearer and, if we were to add more states in the future, it would be as easy as adding another subclass (no need to potentially alter the behavior of other states to add another). It also allows for more flexible player movement, by allowing to make state-specific operations.
 
 ### Simplification of Lanterna's Interface
 
