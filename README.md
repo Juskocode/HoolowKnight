@@ -8,6 +8,9 @@
 
 ## Project Description
 **Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
+><p align="center">
+>This project is being developed by <a href="https://github.com/JuskoCode">André Freitas</a> (up202007189@fe.up.pt), <a href="https://github.com/frutastontas">João Furtado</a> (up202305812@fe.up.pt) and <a href="https://github.com/jonas291205">João Santos</a> (up202303908@fe.up.pt) for LDTS 2024/25
+></p>
 
 ## Mockups
 
@@ -63,6 +66,5 @@
 
 ## General Structure
 <p align="center">
-  <img src="resources/uml/class/structure.png"/>
+  <img src="docs/uml/SoulKnightStruct.png"/>
 </p>
-

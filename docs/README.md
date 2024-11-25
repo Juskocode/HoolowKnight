@@ -35,7 +35,12 @@ a unique experience in each playthrough.
 - **Settings and Scoreboard** - Implement the Settings and ScoreBoard options of the Menu.
 - **Tutorial** - Add a tutorial to the BackGround of the MainMenu.
 - **Attack States** - Implement the attack states of the player and the respective hitboxes for each attack and their effects on the monsters;
-## Documentation
+## General Structure
+<p align="center">
+  <img src="uml/SoulKnightStruct.png"/>
+</p>
+
+## Design
 
 ### Code Structure
 
