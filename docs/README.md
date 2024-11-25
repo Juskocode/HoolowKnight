@@ -154,7 +154,7 @@ By introducing an adapter ,LanternaGUI, we provide our application's classes wit
 #### Implementation
 
 <p align="center">
-  <img src="uml/game-loop.png"/>
+  <img src="uml/adapter.png"/>
 </p>
 
 #### Consequences
