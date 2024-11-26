@@ -8,7 +8,7 @@ public class DashAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) {
+    public void loadAnimation(String path) {
         setState(DashAnimation.class);
         setAnimation(new PairList<>(null, null));
         setFrames(1);

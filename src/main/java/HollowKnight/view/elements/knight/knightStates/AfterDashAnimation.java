@@ -10,7 +10,7 @@ public class AfterDashAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         setState(AfterDashAnimation.class);
         setAnimation(new PairList<>(null, null));
         setFrames(1);

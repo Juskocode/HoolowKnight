@@ -14,12 +14,12 @@ public class IdleAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> idleSpriteRight = new ArrayList<>();
         List<Sprite> idleSpriteLeft = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            idleSpriteRight.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + ".png"));
-            idleSpriteLeft.add(new Sprite("sprites/Knight/Idle/pixil-frame-" + i + "-reversed.png"));
+            idleSpriteRight.add(new Sprite(path + "/Idle/pixil-frame-" + i + ".png"));
+            idleSpriteLeft.add(new Sprite(path + "/Idle/pixil-frame-" + i + "-reversed.png"));
         }
         this.setState(IdleState.class);
         this.setFrames(8);

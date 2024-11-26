@@ -14,12 +14,12 @@ public class FallingAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> fallingSpriteRight = new ArrayList<>();
         List<Sprite> fallingSpriteLeft = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            fallingSpriteLeft.add(new Sprite("sprites/Knight/movement/falling/pixil-frame-" + i +".png"));
-            fallingSpriteRight.add(new Sprite("sprites/Knight/movement/falling/pixil-frame-"+ i + "-reversed.png"));
+            fallingSpriteLeft.add(new Sprite(path + "/movement/falling/pixil-frame-" + i +".png"));
+            fallingSpriteRight.add(new Sprite(path + "/movement/falling/pixil-frame-"+ i + "-reversed.png"));
         }
         setState(FallingState.class);
         setAnimation(new PairList<>(fallingSpriteLeft, fallingSpriteRight));
