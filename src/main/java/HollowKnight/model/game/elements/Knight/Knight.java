@@ -29,6 +29,7 @@ public class Knight extends Element {
     private Scene scene;
     private boolean isFacingRight;
     private double jumpBoost;
+    private double dashBoost;
     private final int offSetX = 4;
     private final int offSetY = 1;
 
@@ -46,6 +47,7 @@ public class Knight extends Element {
         this.state = new IdleState(this);
         this.isFacingRight = true;
         this.jumpCounter = 0;
+        this.dashBoost = 5;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -106,6 +108,9 @@ public class Knight extends Element {
         return jumpCounter;
     }
 
+    public double getDashBoost() {
+        return dashBoost;
+    }
     //SETTERS
 
     public void setHP(int HP) {
@@ -144,6 +149,9 @@ public class Knight extends Element {
         this.scene = scene;
     }
 
+    public void setDashBoost(double dashBoost) {
+        this.dashBoost = dashBoost;
+    }
 
     public void setState(KnightState state) {
         this.state = state;
@@ -183,6 +191,7 @@ public class Knight extends Element {
     public Vector jump() {
         return state.jump();
     }
+    public Vector dash(){return state.dash();}
 
     public List<Particle> createParticlesDoubleJump(int size, Scene scene) {
         List<Particle> particles = new ArrayList<>();

@@ -5,7 +5,7 @@ import com.googlecode.lanterna.TextColor;
 import java.io.IOException;
 
 public interface GUI {
-    enum ACTION{UP, DOWN, RIGHT, LEFT, JUMP, KILL, QUIT, SELECT, NULL};
+    enum ACTION{UP, DOWN, RIGHT, LEFT, JUMP, DASH ,KILL, QUIT, SELECT, NULL};
 
     int getWidth();
     int getHeight();

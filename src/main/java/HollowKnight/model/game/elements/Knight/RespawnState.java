@@ -20,6 +20,11 @@ public class RespawnState extends KnightState {
     }
 
     @Override
+    public Vector dash() {
+        return updateVelocity(getKnight().getVelocity());
+    }
+
+    @Override
     public Vector updateVelocity(Vector newVelocity) {
         deathTimer--;
         tickParticles();
