@@ -44,6 +44,9 @@ public class PlayerController extends Controller<Scene> {
                 }*/
                 knight.setVelocity(knight.jump());
                 break;
+            case DASH:
+                knight.setVelocity(knight.dash());
+                break;
             case KILL:
                 knight.setState(new RespawnState(knight, 30));
             default:

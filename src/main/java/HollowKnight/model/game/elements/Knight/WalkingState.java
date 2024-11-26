@@ -17,7 +17,16 @@ public class WalkingState extends KnightState{
                 getKnight().getVelocity().y() - getKnight().getJumpBoost()
         );
         getKnight().getScene().setJumpParticles(getKnight().createParticlesJump(10));
-        return updateVelocity(newVelocity);
+        return applyCollisions(newVelocity);
+    }
+    @Override
+    public Vector dash() {
+        Vector newVelocity = new Vector(
+                getKnight().getVelocity().x() + (getKnight().isFacingRight() ? getKnight().getDashBoost():
+                        -getKnight().getDashBoost()),
+                getKnight().getVelocity().y()
+        );
+        return applyCollisions(newVelocity);
     }
 
     @Override
@@ -40,6 +49,8 @@ public class WalkingState extends KnightState{
         if (!getKnight().isOnGround())
             return getNextOnAirState();
         getKnight().setJumpCounter(0);
+        if (getKnight().isOverMaxXVelocity())
+            return new DashState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MIN_VELOCITY)
             return new RunningState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) < WalkingState.MIN_VELOCITY)
