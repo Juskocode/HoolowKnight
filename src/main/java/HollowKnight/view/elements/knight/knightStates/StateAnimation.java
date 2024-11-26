@@ -4,6 +4,7 @@ import HollowKnight.view.elements.PairList;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;
+import java.util.List;
 
 public abstract class StateAnimation {
     private PairList<Sprite> animation;
@@ -37,5 +38,13 @@ public abstract class StateAnimation {
         this.state = state;
     }
 
-    protected abstract void loadAnimation(String path) throws IOException;
+    public Sprite getSprite(long tick, boolean facingRight) {
+        if (frames == 0) return null;
+        int animationFrameTime = 30 / frames; // Assuming 60 ticks per second
+        List<Sprite> sprites = facingRight ? animation.getFirstList() : animation.getSecondList();
+        int frameIndex = (int) ((tick / animationFrameTime) % sprites.size());
+        return sprites.get(frameIndex);
+    }
+
+    public abstract void loadAnimation(String path) throws IOException;
 }

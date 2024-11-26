@@ -11,7 +11,7 @@ public class RespawnState extends KnightState {
     public RespawnState(Knight knight, long deathTimer) {
         super(knight);
         this.deathTimer = deathTimer;
-        knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(45));
+        knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
     }
 
     @Override

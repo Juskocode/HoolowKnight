@@ -14,12 +14,12 @@ public class RunningAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> runningSpriteRight = new ArrayList<>();
         List<Sprite> runningSpriteLeft = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            runningSpriteRight.add(new Sprite("sprites/Knight/movement/running/running-final-" + i + ".png"));
-            runningSpriteLeft.add(new Sprite("sprites/Knight/movement/running/running-final-" + i + "-reversed.png"));
+            runningSpriteRight.add(new Sprite(path + "/movement/running/running-final-" + i + ".png"));
+            runningSpriteLeft.add(new Sprite(path + "/movement/running/running-final-" + i + "-reversed.png"));
         }
         setState(RunningState.class);
         setAnimation(new PairList<>(runningSpriteRight, runningSpriteLeft));

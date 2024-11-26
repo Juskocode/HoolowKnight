@@ -15,12 +15,12 @@ public class WalkingAnimation extends StateAnimation {
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> walkingSpriteRight = new ArrayList<>();
         List<Sprite> walkingSpriteLeft = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            walkingSpriteLeft.add(new Sprite("sprites/Knight/movement/walking/running-intermediate-" + i + ".png"));
-            walkingSpriteRight.add(new Sprite("sprites/Knight/movement/walking/running-intermediate-" + i + "-reversed.png"));
+            walkingSpriteLeft.add(new Sprite(path + "/movement/walking/running-intermediate-" + i + ".png"));
+            walkingSpriteRight.add(new Sprite(path + "/movement/walking/running-intermediate-" + i + "-reversed.png"));
         }
         setState(WalkingState.class);
         setAnimation(new PairList<>(walkingSpriteLeft, walkingSpriteRight));

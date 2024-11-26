@@ -14,13 +14,13 @@ public class JumpAnimation extends StateAnimation {
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> jumpingSpriteLeft = new ArrayList<>();
         List<Sprite> jumpingSpriteRight = new ArrayList<>();
 
         for (int i = 0; i < 1; i++) {
-            jumpingSpriteLeft.add(new Sprite("sprites/Knight/movement/jumping/pixil-frame-" + i + ".png"));
-            jumpingSpriteRight.add(new Sprite("sprites/Knight/movement/jumping/pixil-frame-" + i + "-reversed.png"));
+            jumpingSpriteLeft.add(new Sprite(path + "/movement/jumping/pixil-frame-" + i + ".png"));
+            jumpingSpriteRight.add(new Sprite(path + "/movement/jumping/pixil-frame-" + i + "-reversed.png"));
         }
         setState(JumpState.class);
         setAnimation(new PairList<>(jumpingSpriteLeft, jumpingSpriteRight));

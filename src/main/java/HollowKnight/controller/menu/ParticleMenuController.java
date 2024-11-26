@@ -40,7 +40,7 @@ public class ParticleMenuController extends Controller<Menu> {
     }
 
     public Position ParticleMove(Particle particle, long tick) {
-        int modeDuration = 800; // Number of ticks before switching mode
+        int modeDuration = 250; // Number of ticks before switching mode
         int mode = (int) ((tick / modeDuration) % 4); // Cycle through 4 modes (0: random, 1: windy, 2: calm, 3: dispersing)
 
         double currentWindAngle = windAngle; // Default wind angle for calculations

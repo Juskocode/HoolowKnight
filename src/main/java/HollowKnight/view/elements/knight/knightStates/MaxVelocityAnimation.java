@@ -14,12 +14,12 @@ public class MaxVelocityAnimation extends StateAnimation{
     }
 
     @Override
-    protected void loadAnimation(String path) throws IOException {
+    public void loadAnimation(String path) throws IOException {
         List<Sprite> maxVelocityRight = new ArrayList<>();
         List<Sprite> maxVelocityLeft = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            maxVelocityRight.add(new Sprite("sprites/Knight/movement/maxVelocity/frame-" + i + ".png"));
-            maxVelocityLeft.add(new Sprite("sprites/Knight/movement/maxVelocity/frame-" + i + "-reversed.png"));
+            maxVelocityRight.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + ".png"));
+            maxVelocityLeft.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + "-reversed.png"));
         }
         setState(MaxVelocityState.class);
         setAnimation(new PairList<>(maxVelocityRight, maxVelocityLeft));
