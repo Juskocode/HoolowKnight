@@ -24,7 +24,15 @@ public class FallingState extends KnightState{
         }
         return updateVelocity(getKnight().getVelocity());
     }
-
+    @Override
+    public Vector dash() {
+        Vector newVelocity = new Vector(
+                getKnight().getVelocity().x() + (getKnight().isFacingRight() ? getKnight().getDashBoost():
+                        -getKnight().getDashBoost()),
+                getKnight().getVelocity().y()
+        );
+        return applyCollisions(newVelocity);
+    }
     @Override
     public Vector updateVelocity(Vector newVelocity) {
         tickParticles();
@@ -55,6 +63,8 @@ public class FallingState extends KnightState{
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));
             resetParticlesTimer();
         }
+        if (getKnight().isOverMaxXVelocity())
+            return new DashState(getKnight());
         if (getKnight().isOnGround())
             return getNextGroundState();
         if (getKnight().getJumpCounter() == 2)

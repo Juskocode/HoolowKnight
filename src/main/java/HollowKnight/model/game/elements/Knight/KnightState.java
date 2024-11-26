@@ -89,6 +89,7 @@ public abstract class KnightState {
     }
 
     public abstract Vector jump();
+    public abstract Vector dash();
     public abstract Vector updateVelocity(Vector newVelocity);
     public abstract KnightState getNextState();
 }

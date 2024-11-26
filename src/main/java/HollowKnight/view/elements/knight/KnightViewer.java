@@ -109,6 +109,12 @@ public class KnightViewer implements ElementViewer<Knight> {
 
         spriteMap.put(RespawnState.class, new PairList<>(null, null));
         animationFPSMap.put(RespawnState.class, 0);
+
+        spriteMap.put(DashState.class, new PairList<>(maxVelocityLeft, maxVelocityRight));
+        animationFPSMap.put(DashState.class, 5);
+
+        spriteMap.put(AfterDashState.class, new PairList<>(maxVelocityLeft, maxVelocityRight));
+        animationFPSMap.put(AfterDashState.class, 5);
     }
 
     @Override

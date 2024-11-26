@@ -22,7 +22,15 @@ public class RunningState extends KnightState{
 
         return updateVelocity(newVelocity);
     }
-
+    @Override
+    public Vector dash() {
+        Vector newVelocity = new Vector(
+                 (getKnight().isFacingRight() ? getKnight().getDashBoost():
+                        -getKnight().getDashBoost()),
+                getKnight().getVelocity().y()
+        );
+        return applyCollisions(newVelocity);
+    }
     @Override
     public Vector updateVelocity(Vector velocity) {
         tickParticles();
@@ -43,6 +51,8 @@ public class RunningState extends KnightState{
         if (!getKnight().isOnGround())
             return getNextOnAirState();
         getKnight().setJumpCounter(0);
+        if (getKnight().isOverMaxXVelocity())
+            return new DashState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) >= RunningState.MAX_VELOCITY)
             return new MaxVelocityState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) < RunningState.MIN_VELOCITY)
