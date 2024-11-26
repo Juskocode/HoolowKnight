@@ -12,7 +12,7 @@ public class SpeedOrbViewer implements ElementViewer<SpeedOrb> {
     private final Sprite speedOrbSprite;
 
     public SpeedOrbViewer() throws IOException {
-        this.speedOrbSprite = new Sprite("sprites/collectables/speed.png");
+        this.speedOrbSprite = new Sprite("sprites/Collectables/speed.png");
     }
     @Override
     public void draw(SpeedOrb model, GUI gui, long time) throws IOException {
