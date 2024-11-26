@@ -4,7 +4,7 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
-import HollowKnight.view.elements.KnightViewer;
+import HollowKnight.view.elements.knight.KnightViewer;
 import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.elements.collectables.EnergyOrbViewer;
 import HollowKnight.view.elements.collectables.HealthOrbViewer;
