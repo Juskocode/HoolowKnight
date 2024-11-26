@@ -27,7 +27,7 @@ public class IdleState extends KnightState {
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
-        return updateVelocity(newVelocity);
+        return applyCollisions(newVelocity);
     }
 
     @Override
