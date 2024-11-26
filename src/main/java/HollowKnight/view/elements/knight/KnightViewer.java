@@ -1,8 +1,11 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.knight;
 
 import HollowKnight.gui.GUI;
 
 import HollowKnight.model.game.elements.Knight.*;
+import HollowKnight.view.elements.ElementViewer;
+import HollowKnight.view.elements.PairList;
+import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.sprites.Sprite;
 import com.googlecode.lanterna.TextColor;
 
@@ -13,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class KnightViewer implements ElementViewer<Knight>{
+public class KnightViewer implements ElementViewer<Knight> {
 
     private final List<Sprite> idleSpriteRight;
     private final List<Sprite> idleSpriteLeft;
