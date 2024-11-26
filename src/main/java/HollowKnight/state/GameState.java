@@ -1,24 +1,27 @@
 package HollowKnight.state;
 
 import HollowKnight.controller.Controller;
+import HollowKnight.controller.game.ParticleController;
 import HollowKnight.controller.game.PlayerController;
 import HollowKnight.controller.game.SceneController;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.states.GameViewer;
 import HollowKnight.view.states.ScreenViewer;
 
+import java.io.IOException;
+
 public class GameState extends State<Scene> {
-    public GameState(Scene model) {
+    public GameState(Scene model) throws IOException {
         super(model);
     }
 
     @Override
     protected Controller<Scene> getController() {
-        return new SceneController(model, new PlayerController(model));
+        return new SceneController(getModel(), new PlayerController(getModel()), new ParticleController(getModel()));
     }
 
     @Override
-    protected ScreenViewer<Scene> getScreenViewer() {
-        return new GameViewer(model);
+    protected ScreenViewer<Scene> getScreenViewer() throws IOException {
+        return new GameViewer(getModel());
     }
 }

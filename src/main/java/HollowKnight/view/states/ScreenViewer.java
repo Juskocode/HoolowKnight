@@ -5,7 +5,7 @@ import HollowKnight.gui.GUI;
 import java.io.IOException;
 
 public abstract class ScreenViewer<T> {
-    final protected T model;
+    private final T model;
 
     public ScreenViewer(T model) {
         this.model = model;
@@ -15,5 +15,5 @@ public abstract class ScreenViewer<T> {
         return model;
     }
 
-    public abstract void draw(GUI gui) throws IOException;
+    public abstract void draw(GUI gui, long time) throws IOException;
 }

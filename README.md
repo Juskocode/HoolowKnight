@@ -1,28 +1,70 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rUa5vdmg)
+<h1 align="center">
+  LDTS_T02G07 - Soul Knight
+</h1>
 
-# Funcionalidades a Implementar no Jogo
+<p align="center">
+  <img src="docs/mockups/SoulKnight.gif"/>
+</p>
 
-## Mecânicas do Jogo
-- **Randomização de Níveis**: criação de layouts de nível variados em cada partida.
-- **Ação de Saltar**: introdução da mecânica de salto para o jogador.
-- **Físicas do Jogo**: implementação de física para elementos móveis e interações.
+## Project Description
+**Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
+><p align="center">
+>This project is being developed by <a href="https://github.com/JuskoCode">André Freitas</a> (up202007189@fe.up.pt), <a href="https://github.com/frutastontas">João Furtado</a> (up202305812@fe.up.pt) and <a href="https://github.com/jonas291205">João Santos</a> (up202303908@fe.up.pt) for LDTS 2024/25
+></p>
 
-## Combate
-- **Ataques do Jogador**:
-    - **Ataque Corpo-a-Corpo** (close range)
-    - **Ataque de Longo Alcance** (long range)
-    - **Ataque Especial**: habilidade especial com maior dano ou efeito único.
+## Mockups
 
-## Coletáveis e Inimigos
-- **Coletáveis**: introdução de itens colecionáveis ao longo dos níveis.
-- **Tipos de Inimigos**: criação de variedades de inimigos com habilidades distintas.
+[comment]: <> (Character movement and Design)
+<h3 align="center">
+  Main Character Movement and Design
+</h3>
 
-## Interface e Navegação
-- **Menu Principal**: adição de um menu de navegação.
-- **Barras de Informação**: visualização de status e informações importantes (vida, energia, etc.).
+<p align="center">
+<img src="docs/mockups/PlayerMovement.gif">
+</p>
 
-## Movimentação Avançada
-- **Dash ou Dodge**: possibilidade de implementar uma habilidade de desvio rápido.
+[comment]: <> (Menu Design)
 
-## Gráficos
-- **Ajuste de Resolução**: melhoria e optimização da resolução do jogo.
+<h3 align="center">
+  Menu Design
+</h3>
+
+<p align="center">
+  <img src="docs/mockups/MainMenu.gif"/>
+</p>
+
+[comment]: <> (Particles Fuild engine)
+<h3 align="center">
+  Particles Fuild engine
+</h3>
+
+<p align="center">
+  <img src="docs/mockups/ParticlesFuild.gif"/>
+  <img src="docs/mockups/FluidParticles.gif"/>
+
+</p>
+
+[comment]: <> (Monsters and Elements Design)
+<h3 align="center">
+  Monsters and Elements Design
+</h3>
+
+<p align="center">
+  <img src="docs/mockups/ElementsAndMonsters.gif"/>
+</p>
+
+[comment]: <> (Collectables)
+
+<h3 align="center">
+  Speed Orb and Health Orb
+</h3>
+
+<p align="center">
+  <img src="docs/mockups/HealthOrb.gif">
+  <img src="docs/mockups/SpeedOrb.gif">
+</p>
+
+## General Structure
+<p align="center">
+  <img src="docs/uml/SoulKnightStruct.png"/>
+</p>

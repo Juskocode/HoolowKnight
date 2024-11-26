@@ -11,12 +11,14 @@ repositories {
 }
 
 dependencies {
+    // Add the main implementation dependencies
     implementation 'com.googlecode.lanterna:lanterna:3.1.1'
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-core:3.7.7'
-    testImplementation 'net.jqwik:jqwik:1.5.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // Test dependencies
+    testImplementation platform('org.junit:junit-bom:5.10.0')  // JUnit BOM to handle JUnit versions
+    testImplementation 'org.junit.jupiter:junit-jupiter'  // JUnit 5 Jupiter API
+    testImplementation 'org.mockito:mockito-core:3.7.7'    // Mockito for mocking
+    testImplementation 'net.jqwik:jqwik:1.5.1'  // Property-based testing (jqwik)
 }
 
 application {
@@ -24,5 +26,5 @@ application {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform()  // Ensure tests use JUnit 5 platform
 }

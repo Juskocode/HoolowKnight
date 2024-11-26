@@ -3,123 +3,192 @@ package HollowKnight.view.states;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
-import HollowKnight.view.elements.ElementViewer;
-import HollowKnight.view.elements.KnightViewer;
-import HollowKnight.view.elements.TileViewer;
+import HollowKnight.view.elements.*;
+import HollowKnight.view.elements.knight.KnightViewer;
+import HollowKnight.view.elements.ParticleViewer;
+import HollowKnight.view.elements.collectables.EnergyOrbViewer;
+import HollowKnight.view.elements.collectables.HealthOrbViewer;
+import HollowKnight.view.elements.collectables.SpeedOrbViewer;
+import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
+import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
+import HollowKnight.view.elements.monsters.SwordMonsterViewer;
+import HollowKnight.view.elements.rocks.BigRockViewer;
+import HollowKnight.view.elements.rocks.SmallRockViewer;
+import HollowKnight.view.elements.trees.MediumTreeViewer;
+import HollowKnight.view.elements.trees.SmallTreeViewer;
+import HollowKnight.view.text.GameTextViewer;
+import HollowKnight.view.text.TextViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
 import java.util.List;
 
 public class GameViewer extends ScreenViewer<Scene> {
-    public GameViewer(Scene model) {
+
+    private final TextViewer textViewer;
+
+    private final EnergyOrbViewer energyOrbViewer;
+    private final HealthOrbViewer healthOrbViewer;
+    private final SpeedOrbViewer speedOrbViewer;
+
+    private final ParticleViewer particleViewer;
+    private final KnightViewer knightViewer;
+    private final TileViewer tileViewer;
+
+    private final MediumTreeViewer mediumTreeViewer;
+    private final SmallTreeViewer smallTreeViewer;
+
+    private final BigRockViewer bigRockViewer;
+    private final SmallRockViewer smallRockViewer;
+
+    private final SwordMonsterViewer swordMonsterViewer;
+    private final PurpleMonsterViewer purpleMonsterViewer;
+    private final MinhoteMonsterViewer minhoteMonsterViewer;
+
+
+    public GameViewer(Scene model) throws IOException {
+
         super(model);
+
+        this.textViewer = new GameTextViewer();
+
+        this.particleViewer = new ParticleViewer();
+
+        this.knightViewer = new KnightViewer();
+
+        this.tileViewer = new TileViewer();
+
+        this.mediumTreeViewer = new MediumTreeViewer();
+        this.smallTreeViewer = new SmallTreeViewer();
+
+        this.bigRockViewer = new BigRockViewer();
+        this.smallRockViewer = new SmallRockViewer();
+
+        this.swordMonsterViewer = new SwordMonsterViewer();
+        this.purpleMonsterViewer = new PurpleMonsterViewer();
+        this.minhoteMonsterViewer = new MinhoteMonsterViewer();
+        this.energyOrbViewer = new EnergyOrbViewer();
+        this.healthOrbViewer = new HealthOrbViewer();
+        this.speedOrbViewer = new SpeedOrbViewer();
     }
 
     @Override
-    public void draw(GUI gui) throws IOException {
+    public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-        gradientLoader(gui);
-        drawElements(gui, getModel().getTiles(), new TileViewer());
-        drawElement(gui, getModel().getPlayer(), new KnightViewer());
+
+        dynamicGradientBackground(gui, time);
+        drawElements(gui, getModel().getTiles(), this.tileViewer, time);
+        drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
+        drawElements(gui, getModel().getParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
+        drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time);
+
+
+
+        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
+        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
+
+        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time);
+        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time);
+
+        drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time);
+        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
+        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time);
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time);
+        drawPlayerStats(gui, time);
+
         gui.flush();
     }
-    private <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer) {
-        viewer.draw(element, gui);
-    }
-    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer) throws IOException {
+
+
+    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
         for (T element : elements)
-            drawElement(gui, element, viewer);
+            drawElement(gui, element, viewer, time);
     }
-    private void setBackgroundColor(GUI gui, TextColor.RGB color) {
-        // BACKGROUND (NOT SCENE RELATED)
-        for (int w = 0; w < 160; w++) {
-            for (int h = 0; h < 90; h++) {
-                gui.drawPixel(w, h, color);
+
+    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
+        viewer.draw(element, gui, time);
+    }
+
+    private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount) throws IOException {
+        for (T[] elementLine : elements) {
+            for (T element : elementLine) {
+                if (element != null)
+                    drawElement(gui, element, viewer, frameCount);
             }
         }
     }
-    private void gradientLoader(GUI gui){
-        // COLOR 1: 255  205  178
-        // COLOR 2: 109  104  117
-        TextColor.RGB color1 = new TextColor.RGB(34, 87, 122);
-        TextColor.RGB color2 = new TextColor.RGB(128, 237, 153);
 
-        // Outer background
-        for (int w = 0; w < 80; w++) {
-            for (int h = 0; h < 40; h++) {
-                gui.drawPixel(w, h, new TextColor.RGB(28, 28, 28));
+
+    private void dynamicGradientBackground(GUI gui, long time) {
+        int width = getModel().getWidth();
+        int height = getModel().getHeight();
+
+        double changeRate = 0.04;
+        // Calculate dynamic colors based on time
+        int baseRed1 = (int) (128 + 127 * Math.sin(time * changeRate));
+        int baseGreen1 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI / 3));
+        int baseBlue1 = (int) (128 + 127 * Math.sin(time * changeRate + 2 * Math.PI / 3));
+
+        int baseRed2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI));
+        int baseGreen2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI + Math.PI / 3));
+        int baseBlue2 = (int) (128 + 127 * Math.sin(time * changeRate + Math.PI + 2 * Math.PI / 3));
+
+        TextColor.RGB color1 = new TextColor.RGB(baseRed1, baseGreen1, baseBlue1);
+        TextColor.RGB color2 = new TextColor.RGB(baseRed2, baseGreen2, baseBlue2);
+
+        // Draw dynamic gradient background
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
+                double interpolationX = (double) w / (width - 1);
+                double interpolationY = (double) h / (height - 1);
+
+                int red = (int) ((1 - interpolationX) * color1.getRed() + interpolationX * color2.getRed());
+                int green = (int) ((1 - interpolationY) * color1.getGreen() + interpolationY * color2.getGreen());
+                int blue = (int) ((1 - interpolationX) * color1.getBlue() + interpolationX * color2.getBlue());
+
+                gui.drawPixel(w, h, new TextColor.RGB(red, green, blue));
             }
         }
+    }
 
-        // Inner rectangle with gradient
-        for (int w = 5; w < 75; w++) {
-            for (int h = 5; h < 35; h++) {
-                gui.drawPixel(w, h, new TextColor.RGB(55, 55, 55));
-            }
-        }
+    private void drawPlayerStats(GUI gui, long time) throws IOException {
+        // Fetch the player details
+        var player = getModel().getPlayer();
 
-        // Top and bottom gradients
-        for (int w = 0; w < 80; w++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * w / 80,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * w / 80,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * w / 80
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * w / 80,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * w / 80,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * w / 80
-            );
-            gui.drawPixel(w, 0, current);
-            gui.drawPixel(w, 39, opposite);
-        }
+        // Format position and velocity strings
+        String pos = formatVector("pos", player.getPosition().x(), player.getPosition().y());
+        String vel = formatVector("vel", player.getVelocity().x(), player.getVelocity().y());
 
-        for (int w = 5; w < 75; w++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * (w - 5) / 70,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * (w - 5) / 70,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * (w - 5) / 70
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * (w - 5) / 70,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * (w - 5) / 70,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * (w - 5) / 70
-            );
-            gui.drawPixel(w, 5, opposite);
-            gui.drawPixel(w, 34, current);
-        }
+        // Fetch the player's state class name
+        String state = "state " + player.getState().getClass().getSimpleName();
 
-        // Left and right gradients
-        for (int h = 1; h < 39; h++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * h / 40,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * h / 40,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * h / 40
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * h / 40,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * h / 40,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * h / 40
-            );
-            gui.drawPixel(0, h, current);
-            gui.drawPixel(79, h, opposite);
-        }
+        // Fetch player collision
+        String colides = "ground " + player.isOnGround();
 
-        for (int h = 5; h < 34; h++) {
-            TextColor.RGB current = new TextColor.RGB(
-                    color1.getRed() + (color2.getRed() - color1.getRed()) * (h - 5) / 30,
-                    color1.getGreen() + (color2.getGreen() - color1.getGreen()) * (h - 5) / 30,
-                    color1.getBlue() + (color2.getBlue() - color1.getBlue()) * (h - 5) / 30
-            );
-            TextColor.RGB opposite = new TextColor.RGB(
-                    color2.getRed() + (color1.getRed() - color2.getRed()) * (h - 5) / 30,
-                    color2.getGreen() + (color1.getGreen() - color2.getGreen()) * (h - 5) / 30,
-                    color2.getBlue() + (color1.getBlue() - color2.getBlue()) * (h - 5) / 30
-            );
-            gui.drawPixel(5, h, opposite);
-            gui.drawPixel(74, h, current);
-        }
+        // Fetch player jumpBoost
+        String jumpBoost = "jumpBoost " + String.format("%.2f", player.getJumpBoost());
 
+        String hp = "hp " + player.getHP();
+
+        // Define a common color for all text
+        TextColor.RGB color = new TextColor.RGB(0, 25, 25);
+
+        // Draw each piece of information
+        this.textViewer.draw(pos, 4, 0, color, gui);
+        this.textViewer.draw(vel, 4, 8, color, gui);
+        this.textViewer.draw(state, 4, 16, color, gui);
+        this.textViewer.draw(colides, 4, 24, color, gui);
+        this.textViewer.draw(hp, 4, 32, color, gui);
+
+    }
+
+
+    // Helper method to format position or velocity with truncated decimal values
+    String formatVector(String label, double x, double y) {
+        return String.format("%s %.2fx%.2fy", label, x, y);
     }
 }
