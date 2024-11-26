@@ -38,7 +38,7 @@ public abstract class StateAnimation {
         this.state = state;
     }
 
-    public Sprite getSprite(StateAnimation stateAnimation, long tick, boolean facingRight) {
+    public Sprite getSprite(long tick, boolean facingRight) {
         if (frames == 0) return null;
         int animationFrameTime = 30 / frames; // Assuming 60 ticks per second
         List<Sprite> sprites = facingRight ? animation.getFirstList() : animation.getSecondList();

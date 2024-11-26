@@ -49,7 +49,7 @@ public class KnightViewer implements ElementViewer<Knight> {
     public void draw(Knight model, GUI gui, long time) throws IOException {
         StateAnimation animation = findAnimationForState(model.getState().getClass());
         if (animation != null) {
-            Sprite sprite = animation.getSprite(animation, time, model.isFacingRight());
+            Sprite sprite = animation.getSprite(time, model.isFacingRight());
             if (sprite != null) {
                 int offSetX = 4;
                 int offSetY = 1;
