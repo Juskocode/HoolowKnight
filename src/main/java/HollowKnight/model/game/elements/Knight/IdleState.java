@@ -21,6 +21,16 @@ public class IdleState extends KnightState {
     }
 
     @Override
+    public Vector dash() {
+        Vector newVelocity = new Vector(
+                (getKnight().isFacingRight() ? getKnight().getDashBoost():
+                        -getKnight().getDashBoost()),
+                getKnight().getVelocity().y()
+        );
+        return updateVelocity(newVelocity);
+    }
+
+    @Override
     public Vector updateVelocity(Vector velocity) {
         tickParticles();
         System.out.println(getParticlesTimer());
@@ -41,6 +51,8 @@ public class IdleState extends KnightState {
         if (!getKnight().isOnGround())
             return getNextOnAirState();
         getKnight().setJumpCounter(0);
+        if (getKnight().isOverMaxXVelocity())
+            return new DashState(getKnight());
         if (Math.abs(getKnight().getVelocity().x()) >= WalkingState.MIN_VELOCITY)
             return new WalkingState(getKnight());
         return this;
