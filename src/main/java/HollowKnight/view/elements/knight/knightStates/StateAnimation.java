@@ -40,7 +40,7 @@ public abstract class StateAnimation {
 
     public Sprite getSprite(long tick, boolean facingRight) {
         if (frames == 0) return null;
-        int animationFrameTime = 30 / frames; // Assuming 60 ticks per second
+        int animationFrameTime = 30 / frames; // Assuming 30 ticks per second
         List<Sprite> sprites = facingRight ? animation.getFirstList() : animation.getSecondList();
         int frameIndex = (int) ((tick / animationFrameTime) % sprites.size());
         return sprites.get(frameIndex);

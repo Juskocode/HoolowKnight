@@ -1,5 +1,7 @@
 package HollowKnight.model.menu;
 
+import HollowKnight.model.Position;
+import HollowKnight.state.particle.RandomState;
 import com.googlecode.lanterna.TextColor;
 
 import java.util.ArrayList;
@@ -72,8 +74,8 @@ public class Menu {
             int greenIntensity = (int) ((x / (float) width) * 255); // Map x to range [0, 255]
 
             Particle new_particle = new Particle(
-                    x,
-                    y,
+                    new Position(x, y),
+                    new RandomState(),
                     new TextColor.RGB(0, greenIntensity, 0) // Shades of green
             );
 

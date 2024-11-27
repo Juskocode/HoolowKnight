@@ -4,6 +4,7 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Option;
+import HollowKnight.model.menu.Particle;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.menu.OptionViewer;
 import HollowKnight.view.menu.ParticleViewer;
@@ -38,9 +39,15 @@ public class MenuViewer extends ScreenViewer<Menu> {
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         drawRetroDynamicBackground(gui, time);
-        drawElements(gui, getModel().getParticles(), this.particleViewer, time);
+        drawParticles(gui, getModel().getParticles(), particleViewer, time);
         this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
         gui.flush();
+    }
+
+    private void drawParticles(GUI gui, List<Particle> particles, ParticleViewer viewer, long time) throws IOException {
+        for (Particle particle : particles) {
+            viewer.draw(particle, gui, time);
+        }
     }
 
     private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
