@@ -78,7 +78,6 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         dynamicGradientBackground(gui, time);
         drawElements(gui, getModel().getTiles(), this.tileViewer, time);
-        drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
@@ -95,9 +94,12 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
+
         drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time);
         drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time);
         drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time);
+
+        drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
         drawPlayerStats(gui, time);
 
         gui.flush();
