@@ -2,11 +2,15 @@ package HollowKnight;
 
 
 import HollowKnight.gui.LanternaGUI;
+import HollowKnight.gui.LanternaScreenGenerator;
+import HollowKnight.gui.ScreenGenerator;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.state.GameState;
 import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import java.awt.*;
 import java.io.IOException;
@@ -15,21 +19,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game {
+    public static final int PIXEL_WIDTH = 160;
+    public static final int PIXEL_HEIGHT = 90;
     private final LanternaGUI gui;
-    private State state;
+    private State<?> state;
 
     private Game() throws IOException, URISyntaxException, FontFormatException {
-        int SCREEN_WIDTH = 200;
-        int SCREEN_HEIGHT = 88;
-
-        Rectangle screenSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-        double maxFontWidth = width / SCREEN_WIDTH;
-        double maxFontHeight = height / SCREEN_HEIGHT;
-        int fontSize = (int) Math.min(maxFontWidth, maxFontHeight);
-
-        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT, 10);
+        ScreenGenerator screenCreator = new LanternaScreenGenerator(
+                new DefaultTerminalFactory(),
+                new TerminalSize(PIXEL_WIDTH, PIXEL_HEIGHT),
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
+        );
+        this.gui = new LanternaGUI(screenCreator, "Soul Knight");
         this.state = new MenuState(new Menu());
     }
 
