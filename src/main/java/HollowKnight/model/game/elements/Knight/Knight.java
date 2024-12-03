@@ -30,6 +30,7 @@ public class Knight extends Element {
     private boolean isFacingRight;
     private double jumpBoost;
     private double dashBoost;
+    private double dashGravity;
     private final int offSetX = 4;
     private final int offSetY = 1;
 
@@ -47,7 +48,8 @@ public class Knight extends Element {
         this.state = new IdleState(this);
         this.isFacingRight = true;
         this.jumpCounter = 0;
-        this.dashBoost = 5;
+        this.dashBoost = 6;
+        this.dashGravity = 0.3;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -110,6 +112,10 @@ public class Knight extends Element {
 
     public double getDashBoost() {
         return dashBoost;
+    }
+
+    public double getDashGravity() {
+        return dashGravity;
     }
     //SETTERS
 
@@ -281,6 +287,16 @@ public class Knight extends Element {
         }
 
         return particles;
+    }
+
+    public List<Particle> createDashParticles(int size){
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+
+
+
+        return particles;
+
     }
 
     public void resetValues(){
