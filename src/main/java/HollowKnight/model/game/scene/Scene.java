@@ -47,6 +47,7 @@ public class Scene {
     private List<Particle> doubleJumpParticles;
     private List<Particle> jumpParticles;
     private List<Particle> respawnParticles;
+    private List<Particle> dashParticles;
 
     public Scene(int width, int height) {
         this.width = width;
@@ -56,6 +57,7 @@ public class Scene {
         this.jumpParticles = new ArrayList<>();
         this.particles = new ArrayList<>();
         this.respawnParticles = new ArrayList<>();
+        this.dashParticles = new ArrayList<>();
 
         this.tiles = new Tile[height][width];
         this.smallTrees = new SmallTree[height][width];
@@ -229,6 +231,14 @@ public class Scene {
 
     public void setJumpParticles(List<Particle> jumpParticles) {
         this.jumpParticles = jumpParticles;
+    }
+
+    public List<Particle> getDashParticles() {
+        return dashParticles;
+    }
+
+    public void setDashParticles(List<Particle> dashParticles) {
+        this.dashParticles = dashParticles;
     }
 
     public void collectOrbs(Collectables[][] Orbs){
