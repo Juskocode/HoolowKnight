@@ -20,7 +20,7 @@
 </h3>
 
 <p align="center">
-<img src="docs/mockups/PlayerMovement.gif">
+<img src="dfocs/mockups/PlayerMovement.gif">
 </p>
 
 [comment]: <> (Menu Design)
@@ -30,7 +30,7 @@
 </h3>
 
 <p align="center">
-  <img src="docs/mockups/MainMenu.gif"/>
+  <img src="fdocs/mockups/MainMenu.gif"/>
 </p>
 
 [comment]: <> (Particles Fuild engine)
@@ -50,7 +50,7 @@
 </h3>
 
 <p align="center">
-  <img src="docs/mockups/ElementsAndMonsters.gif"/>
+  <img src="dfocs/mockups/ElementsAndMonsters.gif"/>
 </p>
 
 [comment]: <> (Collectables)
@@ -60,8 +60,8 @@
 </h3>
 
 <p align="center">
-  <img src="docs/mockups/HealthOrb.gif">
-  <img src="docs/mockups/SpeedOrb.gif">
+  <img src="fdocs/mockups/HealthOrb.gif">
+  <img src="fdocs/mockups/SpeedOrb.gif">
 </p>
 
 ## General Structure
