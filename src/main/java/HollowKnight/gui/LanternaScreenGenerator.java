@@ -24,8 +24,8 @@ public class LanternaScreenGenerator implements ScreenGenerator {
         this.terminalFactory = terminalFactory;
         this.terminalSize = terminalSize;
         this.defaultBounds = defaultBounds;
-        terminalFactory.setInitialTerminalSize(terminalSize);
         terminalFactory.setForceAWTOverSwing(true);
+        terminalFactory.setInitialTerminalSize(terminalSize);
     }
 
     @Override
