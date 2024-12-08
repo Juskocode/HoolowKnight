@@ -24,6 +24,7 @@ public class Scene {
     private final int width;
     private final int height;
 
+    private Element[][] map;
     private Tile[][] tiles;
     private SmallTree[][] smallTrees;
     private MediumTree[][] mediumTrees;
@@ -59,6 +60,7 @@ public class Scene {
         this.respawnParticles = new ArrayList<>();
         this.dashParticles = new ArrayList<>();
 
+        this.map = new Element[height][width];
         this.tiles = new Tile[height][width];
         this.smallTrees = new SmallTree[height][width];
         this.mediumTrees = new MediumTree[height][width];
@@ -87,6 +89,10 @@ public class Scene {
     public void setPlayer(Knight player) {
         this.player = player;
     }
+
+    public Element[][] getMap() {return map;}
+
+    public void setMap(Element[][] map) {this.map = map;}
 
     public Tile[][] getTiles() {
         return tiles;
@@ -190,8 +196,15 @@ public class Scene {
 
         for (int tileY: List.of(((int)y1 / Tile.SIZE), ((int)y2 / Tile.SIZE))) {
             for (int tileX: List.of((int)x1 / Tile.SIZE, (int)x2 / Tile.SIZE)) {
-                if (layer[tileY][tileX] != null)
+                if (layer[tileY][tileX] != null) {
+                    System.out.println("collides with :" + layer[tileY][tileX].getClass().getSimpleName());
+                    if (layer[tileY][tileX].getClass().getSimpleName().equals("MinhoteMonster")) {
+                        player.setHP(player.getHP() - 10);
+                        System.out.println(player.getHP());
+
+                    }
                     return true;
+                }
             }
         }
         return false;
@@ -199,22 +212,22 @@ public class Scene {
 
     public boolean collidesLeft(Position position, Position size) {
         double x = position.x(), y = position.y();
-        return checkCollision(x, x + 1, y, y + size.y() - 1, tiles);
+        return checkCollision(x, x + 1, y, y + size.y() - 1, map);
     }
 
     public boolean collidesRight(Position position, Position size) {
         double x = position.x(), y = position.y();
-        return checkCollision(x + size.x() - 1, x + size.x() - 1, y, y + size.y() - 1, tiles);
+        return checkCollision(x + size.x() - 1, x + size.x() - 1, y, y + size.y() - 1, map);
     }
 
     public boolean collidesUp(Position position, Position size) {
         double x = position.x(), y = position.y();
-        return checkCollision(x, x + size.x() - 1, y, y + 1, tiles);
+        return checkCollision(x, x + size.x() - 1, y, y + 1, map);
     }
 
     public boolean collidesDown(Position position, Position size) {
         double x = position.x(), y = position.y();
-        return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, tiles);
+        return checkCollision(x, x + size.x() - 1, y + size.y() - 2, y + size.y() - 1, map);
     }
 
     public List<Particle> getDoubleJumpParticles() {
