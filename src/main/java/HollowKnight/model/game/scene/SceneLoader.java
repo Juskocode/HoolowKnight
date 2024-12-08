@@ -5,6 +5,7 @@ import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Collectables.EnergyOrb;
 import HollowKnight.model.game.elements.Collectables.HealthOrb;
 import HollowKnight.model.game.elements.Collectables.SpeedOrb;
+import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RainParticle;
@@ -48,6 +49,7 @@ public class SceneLoader {
     public Scene createScene() {
         Scene scene = new Scene(160, 88);
 
+        scene.setMap(createMap(scene));
         scene.setTiles(createWalls(scene));
         scene.setSmallTrees(createSmallTrees(scene));
         scene.setMediumTrees(createMediumTrees(scene));
@@ -73,6 +75,26 @@ public class SceneLoader {
 
     protected int getHeight() {
         return lines.size();
+    }
+
+    private Element[][] createMap(Scene scene) {
+        Element[][] map = new Element[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'x') {
+                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                }
+                else if (line.charAt(x) == 'M') {
+                    map[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE);
+                }
+                else
+                    map[y][x] = null;
+            }
+        }
+
+        return map;
     }
 
     private Tile[][] createWalls(Scene scene) {
