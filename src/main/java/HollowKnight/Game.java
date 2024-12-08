@@ -53,6 +53,10 @@ public class Game {
         int tick = 0;
         while (this.state != null) {    //Game loop
             long startTime = System.currentTimeMillis();
+            if (tick == 0) {
+                for (int i = 0; i < 2e2; i++)
+                    System.out.println(" ");
+            }
 
             state.move(this, gui, tick);
 
