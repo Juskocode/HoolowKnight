@@ -34,5 +34,10 @@ public class ParticleController extends Controller<Scene>{
             particle.setScene(getModel());
             particle.setPosition(particle.moveParticle(getModel(), time));
         }
+        for(Particle particle: getModel().getDashParticles()){
+            particle.setScene(getModel());
+            particle.setPosition(particle.moveParticle(getModel(), time));
+        }
+
     }
 }
