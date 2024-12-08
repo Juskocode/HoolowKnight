@@ -23,6 +23,7 @@ public class DashState extends KnightState{
 
     @Override
     public Vector updateVelocity(Vector velocity) {
+        tickParticles();
         Vector newVelocity = new Vector(
                 velocity.x() * getKnight().getAcceleration(),
                 velocity.y() + getKnight().getScene().getGravity()
@@ -31,6 +32,11 @@ public class DashState extends KnightState{
     }
     @Override
     public KnightState getNextState() {
+        if (getParticlesTimer() == 0)
+        {
+            getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));
+            resetParticlesTimer();
+        }
         if (Math.abs(getKnight().getVelocity().x()) < MIN_VELOCITY)
             return new AfterDashState(getKnight());
         return this;

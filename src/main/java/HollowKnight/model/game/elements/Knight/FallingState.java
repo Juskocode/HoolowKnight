@@ -31,6 +31,7 @@ public class FallingState extends KnightState{
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
+        getKnight().getScene().setDashParticles(getKnight().createDashParticles(10));
         return applyCollisions(newVelocity);
     }
     @Override
