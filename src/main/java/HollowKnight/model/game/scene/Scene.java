@@ -256,6 +256,7 @@ public class Scene {
         }
     }
 
+
     public SpeedOrb[][] getSpeedOrbs() {
         return speedOrbs;
     }

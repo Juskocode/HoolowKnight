@@ -1,14 +1,16 @@
 package HollowKnight.model.game.elements.enemies;
 
+import HollowKnight.model.Vector;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.scene.Scene;
 
 public abstract class Enemies extends Element {
     private int HP;
-    private int Damage;
-
-    public Enemies(int HP, int Damage) {
+    private Scene scene;
+    public Enemies(int x, int y,int HP, Scene scene) {
+        super(x,y);
         this.HP = HP;
-        this.Damage = Damage;
+        this.scene = scene;
     }
     public boolean isAlive(){
         return this.HP >0;
@@ -18,12 +20,14 @@ public abstract class Enemies extends Element {
         return HP;
     }
 
-    public int getDamage() {
-        return Damage;
+    public Scene getScene() {
+        return scene;
     }
 
     public void setHP(int HP) {
         this.HP = HP;
     }
+
+    protected abstract Vector applyCollisions(Vector velocity);
 
 }
