@@ -181,7 +181,8 @@ public class Scene {
     }
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
-        return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
+        return false;
+        //return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
     }
 
     private boolean checkCollision(double x1, double x2, double y1, double y2, Element[][] layer) {
