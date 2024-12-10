@@ -127,8 +127,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
 
     private void dynamicGradientBackground(GUI gui, long time) {
-        int width = getModel().getWidth();
-        int height = getModel().getHeight();
+        int width = 400;//getModel().getWidth();
+        int height = 120;//getModel().getHeight();
 
         double changeRate = 0.04;
         // Calculate dynamic colors based on time

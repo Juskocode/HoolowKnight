@@ -19,8 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game {
-    public static final int PIXEL_WIDTH = 160;
-    public static final int PIXEL_HEIGHT = 90;
+    public static final int PIXEL_WIDTH = 300;
+    public static final int PIXEL_HEIGHT = 120;
     private final LanternaGUI gui;
     private State<?> state;
 
@@ -51,6 +51,8 @@ public class Game {
         int FPS = 30;
         int frameTime = 1000 / FPS;
         int tick = 0;
+        Thread.sleep(100);
+
         while (this.state != null) {    //Game loop
             long startTime = System.currentTimeMillis();
 
