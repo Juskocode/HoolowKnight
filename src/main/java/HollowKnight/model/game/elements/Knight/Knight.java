@@ -30,6 +30,7 @@ public class Knight extends Element {
     private double dashGravity;
     private final int offSetX = 4;
     private final int offSetY = 1;
+    private boolean gotHit;
 
     //General Knight's attributes
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
@@ -47,6 +48,7 @@ public class Knight extends Element {
         this.jumpCounter = 0;
         this.dashBoost = 6;
         this.dashGravity = 0.7;
+        this.gotHit = false;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -167,6 +169,10 @@ public class Knight extends Element {
     public void multiplyDamage(float damage) {
         this.Damage_multiplier = this.Damage_multiplier * damage;
     } // Used for collectables that multiply damage.
+
+    public void setGotHit(boolean gotHit) {
+        this.gotHit = gotHit;
+    }
 
     public Vector updateVelocity() {
         return state.updateVelocity(velocity);

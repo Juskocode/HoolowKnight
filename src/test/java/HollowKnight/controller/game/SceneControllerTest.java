@@ -18,6 +18,7 @@ class SceneControllerTest {
     private Scene scene;
     private PlayerController playerController;
     private ParticleController particleController;
+    private EnemieController enemieController;
     @BeforeEach
     void setUp() {
         this.game = Mockito.mock(Game.class);
@@ -26,7 +27,8 @@ class SceneControllerTest {
         Mockito.when(scene.getPlayer()).thenReturn(knight);
         this.playerController = Mockito.mock(PlayerController.class);
         this.particleController = Mockito.mock(ParticleController.class);
-        this.sceneController = new SceneController(scene, playerController, particleController);
+        this.enemieController = Mockito.mock(EnemieController.class);
+        this.sceneController = new SceneController(scene, playerController, particleController, enemieController);
     }
 
     @Test

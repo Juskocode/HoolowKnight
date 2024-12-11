@@ -1,6 +1,7 @@
 package HollowKnight.state;
 
 import HollowKnight.controller.Controller;
+import HollowKnight.controller.game.EnemieController;
 import HollowKnight.controller.game.ParticleController;
 import HollowKnight.controller.game.PlayerController;
 import HollowKnight.controller.game.SceneController;
@@ -17,7 +18,8 @@ public class GameState extends State<Scene> {
 
     @Override
     protected Controller<Scene> getController() {
-        return new SceneController(getModel(), new PlayerController(getModel()), new ParticleController(getModel()));
+        return new SceneController(getModel(), new PlayerController(getModel()),
+                new ParticleController(getModel()), new EnemieController(getModel()));
     }
 
     @Override
