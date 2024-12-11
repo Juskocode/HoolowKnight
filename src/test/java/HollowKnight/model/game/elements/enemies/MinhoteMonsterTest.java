@@ -3,6 +3,7 @@ package HollowKnight.model.game.elements.enemies;
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.enemies.MinhoteMonster;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MinhoteMonsterTest {
     private MinhoteMonster minhoteMonster;
-
+    private Scene scene;
     @BeforeEach
     void setUp() {
-        minhoteMonster = new MinhoteMonster(10, 20);
+        this.scene = Mockito.mock(Scene.class);
+        minhoteMonster = new MinhoteMonster(10, 20, 10, scene, 15);
     }
 
     @Test

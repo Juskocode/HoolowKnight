@@ -3,6 +3,7 @@ package HollowKnight.model.game.elements.enemies;
 import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.Element;
+import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,7 +15,7 @@ class PurpleMonsterTest {
 
     @BeforeEach
     void setUp() {
-        purpleMonster = new PurpleMonster(30, 40);
+        purpleMonster = new PurpleMonster(30, 40, 30, new Scene(10,10),40);
     }
 
     @Test
