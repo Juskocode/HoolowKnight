@@ -38,6 +38,8 @@ public class LanternaGUI implements RescalableGUI {
     private KeyEvent keyPressed;
     private static final List<Integer> SPAM_KEYS = List.of(VK_LEFT, VK_RIGHT);
 
+    private int fps = 0;
+
     public LanternaGUI(ScreenGenerator screenGenerator, String title) throws IOException, URISyntaxException, FontFormatException {
         this.screenGenerator = screenGenerator;
         this.title = title;
@@ -185,6 +187,16 @@ public class LanternaGUI implements RescalableGUI {
     @Override
     public GUI getGUI() {
         return this;
+    }
+
+    @Override
+    public int getFPS() {
+        return fps;
+    }
+
+    @Override
+    public void setFPS(int fps) {
+        this.fps = fps;
     }
 
     @Override
