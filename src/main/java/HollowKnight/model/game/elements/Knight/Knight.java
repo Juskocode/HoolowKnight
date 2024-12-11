@@ -353,5 +353,9 @@ public class Knight extends Element {
         return scene.collidesDown(positionBelow, playerSize);
     }
 
+    public void PlayerHit(int damage){
+        setHP(this.HP - damage);
+        setGotHit(true);
 
+    }
 }
