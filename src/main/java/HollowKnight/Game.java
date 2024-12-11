@@ -1,6 +1,7 @@
 package HollowKnight;
 
 
+import HollowKnight.gui.GUI;
 import HollowKnight.gui.LanternaGUI;
 import HollowKnight.gui.LanternaScreenGenerator;
 import HollowKnight.gui.ScreenGenerator;
@@ -10,6 +11,7 @@ import HollowKnight.state.GameState;
 import HollowKnight.state.MenuState;
 import HollowKnight.state.State;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import java.awt.*;
@@ -19,8 +21,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game {
-    public static final int PIXEL_WIDTH = 300;
-    public static final int PIXEL_HEIGHT = 120;
+    public static final int PIXEL_WIDTH = 230;
+    public static final int PIXEL_HEIGHT = 130;
+
+    private long fpsLastUpdate = System.currentTimeMillis();
+    private int frames = 0;
+    private int currentFps = 0;
+
     private final LanternaGUI gui;
     private State<?> state;
 
@@ -51,16 +58,28 @@ public class Game {
         int FPS = 30;
         int frameTime = 1000 / FPS;
         int tick = 0;
+
         Thread.sleep(100);
 
-        while (this.state != null) {    //Game loop
+        while (this.state != null) {    // Game loop
             long startTime = System.currentTimeMillis();
+
             if (tick == 0) {
-                for (int i = 0; i < 2e2; i++)
-                    System.out.println(" ");
+                Thread.sleep(100);
             }
 
             state.move(this, gui, tick);
+
+            // Update the FPS counter
+            frames++;
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - fpsLastUpdate >= 1000) {
+                currentFps = frames;
+                frames = 0;
+                fpsLastUpdate = currentTime;
+            }
+
+            gui.setFPS(currentFps);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = frameTime - elapsedTime;
@@ -71,6 +90,7 @@ public class Game {
 
         gui.close();
     }
+
 
     public Object getGUI() {
         return this.gui;
