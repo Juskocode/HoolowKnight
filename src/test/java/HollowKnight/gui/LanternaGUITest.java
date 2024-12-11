@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +27,7 @@ class LanternaGUITest {
     private LanternaGUI gui;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException, URISyntaxException, FontFormatException {
         this.terminal = Mockito.mock(Terminal.class);
         this.screen = Mockito.mock(Screen.class); // Mocking the Screen object
         this.tg = Mockito.mock(TextGraphics.class); // Mocking the TextGraphics object
