@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ParticleViewer implements ElementViewer<Particle>{
     @Override
-    public void draw(Particle model, GUI gui, long time) throws IOException {
+    public void draw(Particle model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         // Get the particle's base color
         TextColor.RGB baseColor = model.getColor();
         double opacity = model.getOpacity();

@@ -1,5 +1,6 @@
 package HollowKnight.view.states;
 
+import HollowKnight.gui.BufferedImageGUI;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
@@ -20,6 +21,7 @@ import HollowKnight.view.text.GameTextViewer;
 import HollowKnight.view.text.TextViewer;
 import com.googlecode.lanterna.TextColor;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private final TextViewer textViewer;
 
+    private static final int CAMERA_WIDTH = 220;
+    private static final int CAMERA_HEIGHT = 100;
     private final EnergyOrbViewer energyOrbViewer;
     private final HealthOrbViewer healthOrbViewer;
     private final SpeedOrbViewer speedOrbViewer;
@@ -45,7 +49,8 @@ public class GameViewer extends ScreenViewer<Scene> {
     private final PurpleMonsterViewer purpleMonsterViewer;
     private final MinhoteMonsterViewer minhoteMonsterViewer;
 
-
+    private BufferedImage staticLayer;
+    private boolean staticLayerUpdated;
     public GameViewer(Scene model) throws IOException {
 
         super(model);
@@ -70,59 +75,132 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.energyOrbViewer = new EnergyOrbViewer();
         this.healthOrbViewer = new HealthOrbViewer();
         this.speedOrbViewer = new SpeedOrbViewer();
+
+        // Initialize the static layer and set it to be updated initially
+        this.staticLayer = null;
+        this.staticLayerUpdated = true;
     }
 
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-
+        // Get camera bounds
+        int[] cameraBounds = calculateCameraBounds();
         dynamicGradientBackground(gui, time);
-        drawElements(gui, getModel().getTiles(), this.tileViewer, time);
-        drawElements(gui, getModel().getParticles(), this.particleViewer, time);
-        drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time);
-        drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time);
-        drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time);
-        drawElements(gui,getModel().getDashParticles(),this.particleViewer,time);
 
+        // Draw static layer (tiles) clipped to the camera
+        if (staticLayerUpdated || staticLayer == null) {
+            updateStaticLayer(cameraBounds);
+        }
+        drawStaticLayer(gui, cameraBounds);
 
+        // Draw dynamic elements
+        drawElements(gui, getModel().getParticles(), this.particleViewer, time, cameraBounds);
+        drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time, cameraBounds);
+        drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time, cameraBounds);
+        drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time, cameraBounds);
+        drawElements(gui, getModel().getDashParticles(), this.particleViewer, time, cameraBounds);
 
-        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time);
-        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time);
+        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time, cameraBounds);
 
-        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time);
-        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time);
+        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time, cameraBounds);
 
-        drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time);
-        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time);
-        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time);
+        drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
+        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
+        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
 
-        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time);
-        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time);
-        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time);
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
 
-        drawElement(gui, getModel().getPlayer(), this.knightViewer, time);
+        drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);
+
         drawPlayerStats(gui, time);
 
         gui.flush();
     }
 
+    private int[] calculateCameraBounds() {
+        int playerX = (int) getModel().getPlayer().getPosition().x();
+        int playerY = (int) getModel().getPlayer().getPosition().y();
 
-    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
-        for (T element : elements)
-            drawElement(gui, element, viewer, time);
+        // Center the camera around the player, ensuring it doesn't exceed map boundaries
+        int left = Math.max(0, playerX - CAMERA_WIDTH / 2);
+        int top = Math.max(0, playerY - CAMERA_HEIGHT / 2);
+        int right = Math.min(getModel().getWidth(), left + CAMERA_WIDTH);
+        int bottom = Math.min(getModel().getHeight(), top + CAMERA_HEIGHT);
+
+        return new int[]{left, top, right, bottom};
     }
 
-    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
-        viewer.draw(element, gui, time);
+    private void updateStaticLayer(int[] cameraBounds) throws IOException {
+        if (staticLayer == null || staticLayer.getWidth() != CAMERA_WIDTH || staticLayer.getHeight() != CAMERA_HEIGHT) {
+            staticLayer = new BufferedImage(CAMERA_WIDTH, CAMERA_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        }
+
+        java.awt.Graphics2D g = staticLayer.createGraphics();
+        g.setColor(new java.awt.Color(0, 0, 0, 0));
+        g.fillRect(0, 0, staticLayer.getWidth(), staticLayer.getHeight());
+        g.dispose();
+
+        GUI tempGUI = new BufferedImageGUI(staticLayer);
+        drawElements(tempGUI, getModel().getTiles(), this.tileViewer, 0, cameraBounds);
+        staticLayerUpdated = false;
     }
 
-    private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount) throws IOException {
+
+    private void drawStaticLayer(GUI gui, int[] cameraBounds) {
+        for (int x = 0; x < CAMERA_WIDTH; x++) {
+            for (int y = 0; y < CAMERA_HEIGHT; y++) {
+                int cameraX = cameraBounds[0] + x;
+                int cameraY = cameraBounds[1] + y;
+
+                if (cameraX >= 0 && cameraX < staticLayer.getWidth() && cameraY >= 0 && cameraY < staticLayer.getHeight()) {
+                    int argb = staticLayer.getRGB(cameraX, cameraY);
+                    int alpha = (argb >> 24) & 0xff;
+
+                    if (alpha != 0) {
+                        int red = (argb >> 16) & 0xff;
+                        int green = (argb >> 8) & 0xff;
+                        int blue = argb & 0xff;
+
+                        gui.drawPixel(x, y, new TextColor.RGB(red, green, blue));
+                    }
+                }
+            }
+        }
+    }
+
+    private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time, int[] cameraBounds) throws IOException {
+        for (T element : elements) {
+            if (isElementInCamera(element, cameraBounds)) {
+                drawElement(gui, viewer, element, time, cameraBounds);
+            }
+        }
+    }
+
+    private <T extends Element> void drawElement(GUI gui, ElementViewer<T> viewer, T element,  long time, int[] cameraBounds) throws IOException {
+        int offsetX = cameraBounds[0];
+        int offsetY = cameraBounds[1];
+        viewer.draw(element, gui, time, offsetX, offsetY);
+    }
+
+    private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount, int[] cameraBounds) throws IOException {
         for (T[] elementLine : elements) {
             for (T element : elementLine) {
                 if (element != null)
-                    drawElement(gui, element, viewer, frameCount);
+                    drawElement(gui, viewer, element, frameCount, cameraBounds);
             }
         }
+    }
+
+
+    private boolean isElementInCamera(Element element, int[] cameraBounds) {
+        int x = (int) element.getPosition().x();
+        int y = (int) element.getPosition().y();
+        return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
     }
 
 
@@ -177,15 +255,17 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         String hp = "hp " + player.getHP();
 
+        String fps = "fps " + gui.getFPS();
+
         // Define a common color for all text
         TextColor.RGB color = new TextColor.RGB(0, 25, 25);
 
         // Draw each piece of information
-        this.textViewer.draw(pos, 4, 0, color, gui);
-        this.textViewer.draw(vel, 4, 8, color, gui);
-        this.textViewer.draw(state, 4, 16, color, gui);
-        this.textViewer.draw(colides, 4, 24, color, gui);
-        this.textViewer.draw(hp, 4, 32, color, gui);
+        //this.textViewer.draw(pos, 4, 0, color, gui);
+        this.textViewer.draw(state, 4, 8, color, gui);
+        this.textViewer.draw(hp, 4, 16, color, gui);
+        this.textViewer.draw(fps, 4, 24, color, gui);
+        //this.textViewer.draw(hp, 4, 32, color, gui);
 
     }
 

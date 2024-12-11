@@ -1,7 +1,6 @@
 package HollowKnight.view.elements.monsters;
 
 import HollowKnight.gui.GUI;
-import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.sprites.Sprite;
@@ -21,7 +20,7 @@ public class SwordMonsterViewer implements ElementViewer<SwordMonster> {
     }
 
     @Override
-    public void draw(SwordMonster model, GUI gui, long time) throws IOException {
+    public void draw(SwordMonster model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         Sprite sprite = getSprite(time);
         sprite.draw(gui, (int)model.getPosition().x() - 4, (int)model.getPosition().y());
     }

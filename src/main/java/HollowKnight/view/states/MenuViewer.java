@@ -10,16 +10,7 @@ import HollowKnight.view.menu.OptionViewer;
 import HollowKnight.view.menu.ParticleViewer;
 import com.googlecode.lanterna.TextColor;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MenuViewer extends ScreenViewer<Menu> {
@@ -46,7 +37,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
 
     private void drawParticles(GUI gui, List<Particle> particles, ParticleViewer viewer, long time) throws IOException {
         for (Particle particle : particles) {
-            viewer.draw(particle, gui, time);
+            viewer.draw(particle, gui, time, 0, 0);
         }
     }
 
@@ -106,7 +97,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
             }
 
             // Debug output for option position
-            System.out.println("Option pos : " + currentPositionX + ", " + (int) option.getPosition().y() + " " + option.getText());
+            //System.out.println("Option pos : " + currentPositionX + ", " + (int) option.getPosition().y() + " " + option.getText());
         }
     }
 
@@ -151,6 +142,6 @@ public class MenuViewer extends ScreenViewer<Menu> {
     }
 
     private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
-        viewer.draw(element, gui, time);
+        viewer.draw(element, gui, time, 0, 0);
     }
 }

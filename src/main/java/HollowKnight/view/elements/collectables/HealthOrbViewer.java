@@ -11,10 +11,10 @@ public class HealthOrbViewer implements ElementViewer<HealthOrb> {
     private final Sprite healthOrbSprite;
 
     public HealthOrbViewer() throws IOException {
-        this.healthOrbSprite = new Sprite("sprites/Collectables/health.png");
+        this.healthOrbSprite = new Sprite("sprites/collectables/health.png");
     }
     @Override
-    public void draw(HealthOrb model, GUI gui, long time) throws IOException {
+    public void draw(HealthOrb model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         healthOrbSprite.draw(gui, (int)model.getPosition().x(),(int) model.getPosition().y());
     }
 }
