@@ -46,7 +46,7 @@ public class Knight extends Element {
         this.isFacingRight = true;
         this.jumpCounter = 0;
         this.dashBoost = 6;
-        this.dashGravity = 0.3;
+        this.dashGravity = 0.7;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -114,6 +114,7 @@ public class Knight extends Element {
     public double getDashGravity() {
         return dashGravity;
     }
+
     //SETTERS
 
     public void setHP(int HP) {
@@ -155,6 +156,9 @@ public class Knight extends Element {
     public void setDashBoost(double dashBoost) {
         this.dashBoost = dashBoost;
     }
+    public void setJumpBoost(double jumpBoost) {
+        this.jumpBoost = jumpBoost;
+    }
 
     public void setState(KnightState state) {
         this.state = state;
@@ -195,6 +199,8 @@ public class Knight extends Element {
         return state.jump();
     }
     public Vector dash(){return state.dash();}
+
+    //public Vector attack(){return state.attack();}
 
 
     ////////////Create Knight Particles ///////////////////////////////////////////////
@@ -316,7 +322,7 @@ public class Knight extends Element {
                     (int)startX, // All particles start from the same X position
                     (int)startY, // All particles start from the same Y position
                     velocity,
-                    new TextColor.RGB(150, 150, 225))); // Adjust color as needed
+                    new TextColor.RGB(0, 0, 0))); // Adjust color as needed
         }
         return particles;
     }
@@ -339,10 +345,6 @@ public class Knight extends Element {
         );
         Position playerSize = new Position(WIDTH, HEIGHT);
         return scene.collidesDown(positionBelow, playerSize);
-    }
-
-    public void setJumpBoost(double jumpBoost) {
-        this.jumpBoost = jumpBoost;
     }
 
 

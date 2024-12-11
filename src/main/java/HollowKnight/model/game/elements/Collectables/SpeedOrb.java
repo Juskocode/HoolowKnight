@@ -6,7 +6,7 @@ import HollowKnight.model.game.elements.Knight.Knight;
 public class SpeedOrb extends Collectables{
     private double speed_boost = 1.1;
     public SpeedOrb(int x, int y, double boost){
-        super(x,y,"Speed");
+        super(x,y);
         this.speed_boost = boost;
     }
 
@@ -21,6 +21,6 @@ public class SpeedOrb extends Collectables{
     @Override
     public void benefit(Knight knight){
         knight.setMaxVelocity(new Vector(knight.getMaxVelocity().x()*speed_boost,
-                knight.getMaxVelocity().y()*speed_boost));
+                knight.getMaxVelocity().y()));
     }
 }
