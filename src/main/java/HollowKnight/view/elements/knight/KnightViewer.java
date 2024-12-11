@@ -4,17 +4,13 @@ import HollowKnight.gui.GUI;
 
 import HollowKnight.model.game.elements.Knight.*;
 import HollowKnight.view.elements.ElementViewer;
-import HollowKnight.view.elements.PairList;
 import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.elements.knight.knightStates.*;
 import HollowKnight.view.sprites.Sprite;
-import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class KnightViewer implements ElementViewer<Knight> {
@@ -45,7 +41,7 @@ public class KnightViewer implements ElementViewer<Knight> {
     }
 
     @Override
-    public void draw(Knight model, GUI gui, long time) throws IOException {
+    public void draw(Knight model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         StateAnimation animation = findAnimationForState(model.getState().getClass());
         if (animation != null) {
             Sprite sprite = animation.getSprite(time, model.isFacingRight());
