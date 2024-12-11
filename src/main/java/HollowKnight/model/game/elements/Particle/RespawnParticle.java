@@ -65,7 +65,7 @@ public class RespawnParticle extends Particle {
         } else {
             vy += 0.2; // Gravity pulls down
         }
-        System.out.println(stickTimer);
+        //System.out.println(stickTimer);
         // Apply collisions to adjust velocity
         Vector adjustedVelocity = applyCollisions(new Vector(vx, vy));
         vx = adjustedVelocity.x();

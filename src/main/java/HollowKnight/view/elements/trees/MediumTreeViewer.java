@@ -14,7 +14,7 @@ public class MediumTreeViewer implements ElementViewer<MediumTree> {
     }
 
     @Override
-    public void draw(MediumTree model, GUI gui, long time) throws IOException {
+    public void draw(MediumTree model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         mediumTreeSprite.draw(gui, (int)model.getPosition().x(), (int)model.getPosition().y());
     }
 }
