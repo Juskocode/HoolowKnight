@@ -32,7 +32,7 @@ public class SceneLoader {
     private final int TILE_SIZE = 8;
 
     public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/levelKnight.lvl");
+        URL resource = getClass().getClassLoader().getResource("levels/level0.lvl");
         assert resource != null;
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
@@ -87,7 +87,7 @@ public class SceneLoader {
                     map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
                 }
                 else if (line.charAt(x) == 'M') {
-                    map[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE);
+                    map[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 1);
                 }
                 else
                     map[y][x] = null;
