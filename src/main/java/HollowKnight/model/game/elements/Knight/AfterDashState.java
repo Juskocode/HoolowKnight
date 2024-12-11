@@ -21,7 +21,7 @@ public class AfterDashState extends KnightState{
     public Vector updateVelocity(Vector velocity) {
         Vector newVelocity = new Vector(
                 velocity.x() * getKnight().getAcceleration(),
-                velocity.y() + getKnight().getScene().getGravity()
+                velocity.y() + getKnight().getDashGravity()
         );
         return limitVelocity(applyCollisions(newVelocity));
     }
