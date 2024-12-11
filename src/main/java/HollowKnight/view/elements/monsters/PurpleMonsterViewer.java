@@ -15,7 +15,7 @@ public class PurpleMonsterViewer implements ElementViewer<PurpleMonster> {
     }
 
     @Override
-    public void draw(PurpleMonster model, GUI gui, long time) throws IOException {
+    public void draw(PurpleMonster model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         purpleMonsterSprite.draw(gui, (int)model.getPosition().x(), (int)model.getPosition().y());
     }
 }
