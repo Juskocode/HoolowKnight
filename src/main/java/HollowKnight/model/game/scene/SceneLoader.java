@@ -210,7 +210,7 @@ public class SceneLoader {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 's') {
-                    speedOrbs[y][x] = new SpeedOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
+                    speedOrbs[y][x] = new SpeedOrb(x * TILE_SIZE, y * TILE_SIZE, 1.2);
                 }
             }
         }

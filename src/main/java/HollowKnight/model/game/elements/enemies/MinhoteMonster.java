@@ -8,14 +8,10 @@ import HollowKnight.model.game.scene.Scene;
 import static java.lang.Math.max;
 
 public class MinhoteMonster extends Enemies {
-    private int damage;
-    public MinhoteMonster(int x, int y,int HP, Scene scene, int damage) {
-        super(x,y,HP,scene);
-        this.damage = damage;
-    }
 
-    public int getDamage() {
-        return damage;
+    public MinhoteMonster(int x, int y,int HP, Scene scene, int damage) {
+        super(x,y,HP,scene,damage);
+
     }
 
     @Override

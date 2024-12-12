@@ -354,8 +354,9 @@ public class Knight extends Element {
     }
 
     public void PlayerHit(int damage){
+        if(gotHit) return;
         setHP(this.HP - damage);
         setGotHit(true);
-
+        setState(new DamagedState(this));
     }
 }

@@ -8,15 +8,10 @@ import HollowKnight.model.game.scene.Scene;
 import static java.lang.Math.max;
 
 public class PurpleMonster extends Enemies {
-    private int damage;
     public PurpleMonster(int x, int y, int HP, Scene scene, int damage) {
-        super(x,y,HP,scene);
-        this.damage = damage;
+        super(x,y,HP,scene,damage);
     }
 
-    public int getDamage() {
-        return damage;
-    }
 
     @Override
     protected Vector applyCollisions(Vector velocity) {
