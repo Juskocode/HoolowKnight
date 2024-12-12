@@ -200,8 +200,7 @@ public class Scene {
                 if (layer[tileY][tileX] != null) {
                     //System.out.println("collides with :" + layer[tileY][tileX].getClass().getSimpleName());
                     if (layer[tileY][tileX].getClass().getSimpleName().equals("MinhoteMonster")) {
-                        player.setHP(player.getHP() - 10);
-                        //System.out.println(player.getHP());
+                        player.PlayerHit(10);
 
                     }
                     return true;
