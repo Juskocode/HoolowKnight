@@ -14,14 +14,14 @@ public class AfterDashAnimation extends StateAnimation{
 
     @Override
     public void loadAnimation(String path) throws IOException {
-        List<Sprite> runningSpriteRight = new ArrayList<>();
-        List<Sprite> runningSpriteLeft = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            runningSpriteRight.add(new Sprite(path + "/movement/running/running-final-" + i + ".png"));
-            runningSpriteLeft.add(new Sprite(path + "/movement/running/running-final-" + i + "-reversed.png"));
+        List<Sprite> DashRight = new ArrayList<>();
+        List<Sprite> DashLeft = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            DashRight.add(new Sprite(path + "/movement/dashing/dashing-" + i + ".png"));
+            DashLeft.add(new Sprite(path + "/movement/dashing/dashing-" + i + "-reversed.png"));
         }
         setState(AfterDashAnimation.class);
-        setAnimation(new PairList<>(runningSpriteLeft, runningSpriteRight));
+        setAnimation(new PairList<>(DashLeft, DashRight));
         setFrames(5);
     }
 }

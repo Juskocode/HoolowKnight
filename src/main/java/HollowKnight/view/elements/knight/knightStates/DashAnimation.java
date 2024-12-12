@@ -14,14 +14,14 @@ public class DashAnimation extends StateAnimation{
 
     @Override
     public void loadAnimation(String path) throws IOException {
-        List<Sprite> maxVelocityRight = new ArrayList<>();
-        List<Sprite> maxVelocityLeft = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            maxVelocityRight.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + ".png"));
-            maxVelocityLeft.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + "-reversed.png"));
+        List<Sprite> DashRight = new ArrayList<>();
+        List<Sprite> DashLeft = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            DashRight.add(new Sprite(path + "/movement/dashing/dashing-" + i + ".png"));
+            DashLeft.add(new Sprite(path + "/movement/dashing/dashing-" + i + "-reversed.png"));
         }
         setState(DashAnimation.class);
-        setAnimation(new PairList<>(maxVelocityLeft, maxVelocityRight));
+        setAnimation(new PairList<>(DashLeft, DashRight));
         setFrames(10);
     }
 }
