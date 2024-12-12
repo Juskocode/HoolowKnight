@@ -10,6 +10,7 @@ import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
+import HollowKnight.model.game.elements.enemies.Enemies;
 import HollowKnight.model.game.elements.enemies.MinhoteMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
@@ -268,6 +269,22 @@ public class Scene {
             }
         }
     }
+
+    public void collideMonsters(Enemies[][] enemies){
+        double x = getPlayer().getPosition().x();
+        double y = getPlayer().getPosition().y();
+        double width = player.getWidth(), height = player.getHeight();
+
+        for (int tileY: List.of((int)y / Tile.SIZE, (int)(y + height - 1) / Tile.SIZE)) {
+            for (int tileX: List.of((int)x / Tile.SIZE, (int)(x + width - 1) / Tile.SIZE)) {
+                if (enemies[tileY][tileX] != null) {
+                    getPlayer().PlayerHit(enemies[tileY][tileX].getDamage());
+                }
+            }
+        }
+    }
+
+
 
 
     public SpeedOrb[][] getSpeedOrbs() {
