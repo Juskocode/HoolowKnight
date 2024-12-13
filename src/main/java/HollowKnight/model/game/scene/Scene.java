@@ -199,11 +199,6 @@ public class Scene {
         for (int tileY: List.of(((int)y1 / Tile.SIZE), ((int)y2 / Tile.SIZE))) {
             for (int tileX: List.of((int)x1 / Tile.SIZE, (int)x2 / Tile.SIZE)) {
                 if (layer[tileY][tileX] != null) {
-                    //System.out.println("collides with :" + layer[tileY][tileX].getClass().getSimpleName());
-                    if (layer[tileY][tileX].getClass().getSimpleName().equals("MinhoteMonster")) {
-                        player.PlayerHit(10);
-
-                    }
                     return true;
                 }
             }
