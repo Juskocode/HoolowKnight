@@ -31,6 +31,10 @@ public class SceneController extends Controller<Scene> {
             getModel().collectOrbs(getModel().getHealthOrbs());
             getModel().collectOrbs(getModel().getSpeedOrbs());
 
+            getModel().collideMonsters(getModel().getMinhoteMonsters());
+            getModel().collideMonsters(getModel().getPurpleMonsters());
+            getModel().collideMonsters(getModel().getSwordMonsters());
+
             particleController.move(game, action,time);
             enemieController.move(game,action,time);
         }

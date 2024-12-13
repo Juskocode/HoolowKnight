@@ -2,7 +2,6 @@ package HollowKnight.model.game.elements.enemies;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
-import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 
 import static java.lang.Math.max;
@@ -10,6 +9,20 @@ import static java.lang.Math.max;
 public class PurpleMonster extends Enemies {
     public PurpleMonster(int x, int y, int HP, Scene scene, int damage) {
         super(x,y,HP,scene,damage);
+    }
+
+    @Override
+    public Position updatePosition() {
+        Vector resolvedVelocity = applyCollisions(getVelocity());
+
+        // Update position with resolved velocity
+        double newX = getPosition().x() + resolvedVelocity.x();
+        double newY = getPosition().y() + resolvedVelocity.y();
+
+        //Position newPosition = new Position(newX, newY);
+
+
+        return new Position(newX, newY);
     }
 
 
@@ -32,5 +45,11 @@ public class PurpleMonster extends Enemies {
             vx = max(vx - 1, 0);
 
         return new Vector(vx, vy);
+    }
+
+    @Override
+    public Position moveMonster() {
+        setVelocity(new Vector(1.5,0));
+        return updatePosition();
     }
 }

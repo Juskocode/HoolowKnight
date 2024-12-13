@@ -7,6 +7,7 @@ public class DamagedState extends KnightState{
     public DamagedState(Knight knight) {
         super(knight);
         this.ticks =0;
+        getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(2));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class DamagedState extends KnightState{
 
     @Override
     public KnightState getNextState() {
-        if(ticks < 10){
+        if(ticks < 15){
             this.ticks++;
             return this;
         }
