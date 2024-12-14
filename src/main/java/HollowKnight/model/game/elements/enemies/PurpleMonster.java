@@ -7,8 +7,12 @@ import HollowKnight.model.game.scene.Scene;
 import static java.lang.Math.max;
 
 public class PurpleMonster extends Enemies {
+
+    private final int offSetX = 0;
+    private final int offSetY = 0;
     public PurpleMonster(int x, int y, int HP, Scene scene, int damage) {
         super(x,y,HP,scene,damage);
+        this.setPosition(new Position(x + offSetX, y + offSetY));
     }
 
     @Override
@@ -30,7 +34,7 @@ public class PurpleMonster extends Enemies {
     protected Vector applyCollisions(Vector velocity) {
         double x = getPosition().x(), y = getPosition().y();
         double vx = velocity.x(), vy = velocity.y();
-        Position knightSize = new Position(1, 1);
+        Position knightSize = new Position(10, 9);
 
         while (vy > 0 && getScene().collidesDown(new Position(x, y + vy), knightSize))
             vy = Math.max(vy - 1, 0);
