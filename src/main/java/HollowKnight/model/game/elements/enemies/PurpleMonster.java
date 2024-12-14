@@ -8,22 +8,16 @@ import static java.lang.Math.max;
 
 public class PurpleMonster extends Enemies {
 
-    private final int offSetX = 0;
-    private final int offSetY = 0;
     public PurpleMonster(int x, int y, int HP, Scene scene, int damage) {
         super(x,y,HP,scene,damage);
-        this.setPosition(new Position(x + offSetX, y + offSetY));
     }
 
     @Override
     public Position updatePosition() {
         Vector resolvedVelocity = applyCollisions(getVelocity());
 
-        // Update position with resolved velocity
         double newX = getPosition().x() + resolvedVelocity.x();
         double newY = getPosition().y() + resolvedVelocity.y();
-
-        //Position newPosition = new Position(newX, newY);
 
 
         return new Position(newX, newY);
@@ -54,7 +48,7 @@ public class PurpleMonster extends Enemies {
 
     @Override
     public Position moveMonster() {
-        setVelocity(new Vector(1.5,0));
+        setVelocity(new Vector(-1.5,0));
         return updatePosition();
     }
 }
