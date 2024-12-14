@@ -24,6 +24,9 @@ public class KnightViewer implements ElementViewer<Knight> {
         this.particleViewer = new ParticleViewer();
 
         // Initialize each animation state
+        animations.add(new DashAnimation(DashState.class, 10));
+        animations.add(new AfterDashAnimation(AfterDashState.class, 5));
+        animations.add(new DamagedAnimation(DamagedState.class, 10));
         animations.add(new IdleAnimation(IdleState.class, 8));
         animations.add(new MaxVelocityAnimation(MaxVelocityState.class, 10));
         animations.add(new RunningAnimation(RunningState.class, 5));
@@ -31,10 +34,8 @@ public class KnightViewer implements ElementViewer<Knight> {
         animations.add(new FallingAnimation(FallingState.class, 10));
         animations.add(new JumpAnimation(JumpState.class, 6));
         animations.add(new RespawnAnimation(RespawnState.class, 0)); // No animation
-        animations.add(new DashAnimation(DashState.class, 10));
-        animations.add(new AfterDashAnimation(AfterDashState.class, 5));
-        animations.add(new DamagedAnimation(DamagedState.class, 10));
         // Load animations for each state
+
         for (StateAnimation animation : animations) {
             animation.loadAnimation("sprites/Knight"); // Base path to sprites
         }
