@@ -48,6 +48,7 @@ public class PurpleMonster extends Enemies {
         while (vx > 0 && getScene().collidesRight(new Position(x + vx, y + vy), knightSize))
             vx = max(vx - 1, 0);
 
+
         return new Vector(vx, vy);
     }
 
