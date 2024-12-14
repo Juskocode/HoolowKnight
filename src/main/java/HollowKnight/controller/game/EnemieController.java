@@ -51,8 +51,6 @@ public class EnemieController extends Controller<Scene> {
     }
 
     private void moveMonster(Enemies enemies, Position position) {
-        if (true) {
-            enemies.setPosition(enemies.moveMonster());
-        }
+        enemies.setPosition(enemies.moveMonster());
     }
 }
