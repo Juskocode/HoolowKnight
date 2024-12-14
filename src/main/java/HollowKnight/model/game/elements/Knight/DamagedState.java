@@ -38,13 +38,14 @@ public class DamagedState extends KnightState{
         //System.out.println(getParticlesTimer());
         Vector newvelocity = new Vector(
                 newVelocity.x() * getKnight().getAcceleration(),
-                newVelocity.y()
+                newVelocity.y() + getKnight().getScene().getGravity()
         );
         return limitVelocity(applyCollisions(newvelocity));
     }
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getHP() <=0) return new RespawnState(getKnight(),5);
         if(ticks < 15){
             this.ticks++;
             return this;
