@@ -22,7 +22,7 @@ public class DashAnimation extends StateAnimation{
             DashLeft.add(new Sprite(path + "/movement/dashing/dashing-" + i + "-reversed.png"));
         }
         setState(DashState.class);
-        setAnimation(new PairList<>(DashLeft, DashRight));
+        setAnimation(new PairList<>(DashRight, DashLeft));
         setFrames(10);
     }
 }
