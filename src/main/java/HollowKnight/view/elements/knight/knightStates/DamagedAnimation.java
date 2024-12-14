@@ -1,5 +1,6 @@
 package HollowKnight.view.elements.knight.knightStates;
 
+import HollowKnight.model.game.elements.Knight.DamagedState;
 import HollowKnight.model.game.elements.Knight.MaxVelocityState;
 import HollowKnight.view.elements.PairList;
 import HollowKnight.view.sprites.Sprite;
@@ -21,7 +22,7 @@ public class DamagedAnimation extends StateAnimation{
             DamagedRight.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + ".png"));
             DamagedLeft.add(new Sprite(path + "/movement/maxVelocity/frame-" + i + "-reversed.png"));
         }
-        setState(DamagedAnimation.class);
+        setState(DamagedState.class);
         setAnimation(new PairList<>(DamagedRight, DamagedLeft));
         setFrames(10);
     }

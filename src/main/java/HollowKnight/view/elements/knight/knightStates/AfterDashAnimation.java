@@ -1,5 +1,6 @@
 package HollowKnight.view.elements.knight.knightStates;
 
+import HollowKnight.model.game.elements.Knight.AfterDashState;
 import HollowKnight.view.elements.PairList;
 import HollowKnight.view.sprites.Sprite;
 
@@ -20,7 +21,7 @@ public class AfterDashAnimation extends StateAnimation{
             DashRight.add(new Sprite(path + "/movement/dashing/dashing-" + i + ".png"));
             DashLeft.add(new Sprite(path + "/movement/dashing/dashing-" + i + "-reversed.png"));
         }
-        setState(AfterDashAnimation.class);
+        setState(AfterDashState.class);
         setAnimation(new PairList<>(DashLeft, DashRight));
         setFrames(5);
     }
