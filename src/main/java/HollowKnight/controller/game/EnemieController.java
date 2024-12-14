@@ -21,7 +21,7 @@ public class EnemieController extends Controller<Scene> {
 
     @Override
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
-        if (time - lastMovement > 5) {
+        if (time - lastMovement > 2) {
             MinhoteMonster[][] minhoteMonsters = getModel().getMinhoteMonsters();
             for (MinhoteMonster[] row : minhoteMonsters) {
                 for (MinhoteMonster enemy : row) {
@@ -51,8 +51,6 @@ public class EnemieController extends Controller<Scene> {
     }
 
     private void moveMonster(Enemies enemies, Position position) {
-        if (true) {
-            enemies.setPosition(enemies.moveMonster());
-        }
+        enemies.setPosition(enemies.moveMonster());
     }
 }

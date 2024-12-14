@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 import com.googlecode.lanterna.TextColor;
 
-public class BufferedImageGUI implements GUI, gui.BufferedImageGUI {
+public class BufferedImageGUI implements GUI {
     private final BufferedImage buffer;
 
     public BufferedImageGUI(BufferedImage buffer) {
