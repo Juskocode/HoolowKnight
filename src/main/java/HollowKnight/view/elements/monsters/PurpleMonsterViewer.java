@@ -17,8 +17,12 @@ public class PurpleMonsterViewer implements ElementViewer<PurpleMonster> {
 
     @Override
     public void draw(PurpleMonster model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
-        purpleMonsterSprite.draw(gui, (int)model.getPosition().x(), (int)model.getPosition().y());
-        gui.drawHitBox((int)model.getPosition().x(), (int)model.getPosition().y(), 10,8,new TextColor.RGB(25,25,100));
-        gui.drawPixel((int)model.getPosition().x(), (int)model.getPosition().y(),new TextColor.RGB(200,105,150));
+        purpleMonsterSprite.draw(gui, (int)model.getPosition().x() - 4, (int)model.getPosition().y() - 1);
+
+        gui.drawHitBox((int)model.getPosition().x(), (int)model.getPosition().y(), 10,8,
+                    new TextColor.RGB(25,25,100));
+
+        gui.drawPixel((int)model.getPosition().x(), (int)model.getPosition().y(),
+                    new TextColor.RGB(200,105,150));
     }
 }
