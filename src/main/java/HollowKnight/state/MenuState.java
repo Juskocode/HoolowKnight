@@ -3,7 +3,6 @@ package HollowKnight.state;
 import HollowKnight.controller.Controller;
 import HollowKnight.controller.menu.MenuController;
 import HollowKnight.controller.menu.ParticleMenuController;
-import HollowKnight.model.menu.HelpMenu;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.view.states.MenuViewer;
 import HollowKnight.view.states.ScreenViewer;
