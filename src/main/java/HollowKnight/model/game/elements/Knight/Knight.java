@@ -27,10 +27,11 @@ public class Knight extends Element {
     private boolean isFacingRight;
     private double jumpBoost;
     private double dashBoost;
-    private double dashGravity;
     private final int offSetX = 4;
     private final int offSetY = 1;
     private boolean gotHit;
+
+    private Position startingPosition;
 
     //General Knight's attributes
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
@@ -47,8 +48,8 @@ public class Knight extends Element {
         this.isFacingRight = true;
         this.jumpCounter = 0;
         this.dashBoost = 6;
-        this.dashGravity = 0.7;
         this.gotHit = false;
+        this.startingPosition= new Position(x,y);
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -113,10 +114,9 @@ public class Knight extends Element {
         return dashBoost;
     }
 
-    public double getDashGravity() {
-        return dashGravity;
+    public Position getStartingPosition() {
+        return startingPosition;
     }
-
     //SETTERS
 
     public void setHP(int HP) {
@@ -172,6 +172,10 @@ public class Knight extends Element {
 
     public void setGotHit(boolean gotHit) {
         this.gotHit = gotHit;
+    }
+
+    public void setStartingPosition(Position startingPosition) {
+        this.startingPosition = startingPosition;
     }
 
     public Vector updateVelocity() {
@@ -354,7 +358,7 @@ public class Knight extends Element {
     }
 
     public void PlayerHit(int damage){
-        if(gotHit) return;
+        if(gotHit) return;  // works as a timeout to prevent multiple collisions on the player almost instantly
         setHP(this.HP - damage);
         setGotHit(true);
         setState(new DamagedState(this));
