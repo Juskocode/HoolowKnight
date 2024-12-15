@@ -4,8 +4,9 @@ import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.scene.SceneLoader;
+import HollowKnight.model.menu.HelpMenu;
 import HollowKnight.state.GameState;
-import HollowKnight.state.State;
+import HollowKnight.state.MenuState;
 import HollowKnight.model.menu.Menu;
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class MenuController extends Controller<Menu> {
                         this.getModel().setInGame(true); //signal the transition state
 
                         game.setState(new GameState(new SceneLoader().createScene()));
+                    }else if (this.getModel().isSelected(2)){
+                        game.setState(new MenuState.HelpMenuState(new HelpMenu()));
                     }
                 }
                 break;
