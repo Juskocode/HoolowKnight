@@ -35,9 +35,8 @@ public class RespawnState extends KnightState {
     public KnightState getNextState()
     {
         if (deathTimer <= 0) {
-            Position respawn = new Position(getKnight().getPosition().x(), 0);
             getKnight().setHP(50);
-            getKnight().setPosition(respawn);
+            getKnight().setPosition(getKnight().getStartingPosition());
             return new FallingState(getKnight());
         }
         return this;
