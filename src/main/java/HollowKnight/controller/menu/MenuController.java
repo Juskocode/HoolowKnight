@@ -6,6 +6,7 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.model.menu.HelpMenu;
 import HollowKnight.state.GameState;
+import HollowKnight.state.HelpMenuState;
 import HollowKnight.state.MenuState;
 import HollowKnight.model.menu.Menu;
 
@@ -38,7 +39,7 @@ public class MenuController extends Controller<Menu> {
 
                         game.setState(new GameState(new SceneLoader().createScene()));
                     }else if (this.getModel().isSelected(2)){
-                        game.setState(new MenuState.HelpMenuState(new HelpMenu()));
+                        game.setState(new HelpMenuState(new HelpMenu()));
                     }
                 }
                 break;

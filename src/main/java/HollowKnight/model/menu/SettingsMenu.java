@@ -1,4 +1,4 @@
 package HollowKnight.model.menu;
 
-public class SettingsMenu {
+public class SettingsMenu extends Menu{
 }

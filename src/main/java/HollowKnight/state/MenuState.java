@@ -26,20 +26,5 @@ public class MenuState extends State<Menu> {
         return new MenuController(getModel(), new ParticleMenuController(getModel()));
     }
 
-    public static class HelpMenuState extends State<HelpMenu> {
 
-        public HelpMenuState(HelpMenu model) throws IOException {
-            super(model);
-        }
-
-        @Override
-        protected ScreenViewer<HelpMenu> getScreenViewer() throws IOException {
-            return null;
-        }
-
-        @Override
-        protected Controller<HelpMenu> getController() {
-            return null;
-        }
-    }
 }
