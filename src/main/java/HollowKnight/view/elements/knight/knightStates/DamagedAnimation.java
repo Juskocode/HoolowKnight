@@ -18,12 +18,12 @@ public class DamagedAnimation extends StateAnimation{
     public void loadAnimation(String path) throws IOException {
         List<Sprite> DamagedRight = new ArrayList<>();
         List<Sprite> DamagedLeft = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            DamagedRight.add(new Sprite(path + "/damaged/Idle/damaged-idle-1.png"));
-            DamagedLeft.add(new Sprite(path + "/damaged/Idle/damaged-idle-2.png"));
+        for (int i = 1; i <= 2; i++) {
+            DamagedRight.add(new Sprite(path + "/damaged/movement/falling/damaged-falling-"+i + ".png"));
+            DamagedLeft.add(new Sprite(path + "/damaged/movement/falling/damaged-falling-"+i+"-reversed.png"));
         }
         setState(DamagedState.class);
         setAnimation(new PairList<>(DamagedRight, DamagedLeft));
-        setFrames(3);
+        setFrames(4);
     }
 }

@@ -5,7 +5,7 @@ import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.state.GameState;
-import HollowKnight.state.State;
+import HollowKnight.state.MenuState;
 import HollowKnight.model.menu.Menu;
 
 import java.io.IOException;

@@ -9,6 +9,7 @@ public abstract class KnightState {
     private final Knight knight;
     private long particlesTimer = 100;
 
+
     public KnightState(Knight knight){
         this.knight = knight;
     }

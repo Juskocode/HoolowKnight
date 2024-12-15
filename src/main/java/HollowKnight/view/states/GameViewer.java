@@ -15,6 +15,7 @@ import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
 import HollowKnight.view.elements.monsters.SwordMonsterViewer;
 import HollowKnight.view.elements.rocks.BigRockViewer;
 import HollowKnight.view.elements.rocks.SmallRockViewer;
+import HollowKnight.view.elements.tile.TileViewer;
 import HollowKnight.view.elements.trees.MediumTreeViewer;
 import HollowKnight.view.elements.trees.SmallTreeViewer;
 import HollowKnight.view.text.GameTextViewer;

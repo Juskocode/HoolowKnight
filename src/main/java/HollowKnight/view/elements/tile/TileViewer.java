@@ -1,10 +1,23 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.tile;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.tile.Tile;
+import HollowKnight.view.elements.ElementViewer;
+import HollowKnight.view.sprites.Sprite;
 import com.googlecode.lanterna.TextColor;
 
-public class TileViewer implements ElementViewer<Tile>  {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class TileViewer implements ElementViewer<Tile> {
+    private final Map<Character,TileTexture> tileMap;
+
+    public TileViewer(){
+        this.tileMap = new HashMap<>();
+        tileMap.put('M', new MetalTexture());
+    }
 
     @Override
     public void draw(Tile model, GUI gui, long time, int offsetX, int offsetY) {
