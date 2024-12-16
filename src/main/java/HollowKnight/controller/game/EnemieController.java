@@ -26,7 +26,7 @@ public class EnemieController extends Controller<Scene> {
             for (MinhoteMonster[] row : minhoteMonsters) {
                 for (MinhoteMonster enemy : row) {
                     if (enemy != null) {
-                        moveMonster(enemy, enemy.getPosition().getRandomNeighbour());
+                        moveMonster(enemy);
                     }
                 }
             }
@@ -34,7 +34,7 @@ public class EnemieController extends Controller<Scene> {
             for (PurpleMonster[] row : purpleMonsters) {
                 for (PurpleMonster enemy : row) {
                     if (enemy != null) {
-                        moveMonster(enemy, enemy.getPosition().getRandomNeighbour());
+                        moveMonster(enemy);
                     }
                 }
             }
@@ -42,7 +42,7 @@ public class EnemieController extends Controller<Scene> {
             for (SwordMonster[] row : swordMonsters) {
                 for (SwordMonster enemy : row) {
                     if (enemy != null) {
-                        moveMonster(enemy, enemy.getPosition().getRandomNeighbour());
+                        moveMonster(enemy);
                     }
                 }
             }
@@ -50,7 +50,7 @@ public class EnemieController extends Controller<Scene> {
         }
     }
 
-    private void moveMonster(Enemies enemies, Position position) {
+    private void moveMonster(Enemies enemies) {
         enemies.setPosition(enemies.moveMonster());
     }
 }

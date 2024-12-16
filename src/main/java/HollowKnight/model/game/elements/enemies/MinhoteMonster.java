@@ -31,13 +31,17 @@ public class MinhoteMonster extends Enemies {
     protected Vector applyCollisions(Vector velocity) {
         double x = getPosition().x(), y = getPosition().y();
         double vx = velocity.x(), vy = velocity.y();
-        Position knightSize = new Position(3, 3);
+        Position knightSize = new Position(4, 4);
 
-        while (vy > 0 && getScene().collidesDown(new Position(x, y + vy), knightSize))
-            vy = Math.max(vy - 1, 0);
+        if (vx < 0 && getScene().collidesDown(new Position(x + vx, y + vy), knightSize)) {
+            vy = Math.min(vy - 1, 0);
+            setVelocity(new Vector(0, -velocity.y()));
+        }
 
-        while (vy < 0 && getScene().collidesUp(new Position(x, y + vy), knightSize))
-            vy = Math.min(vy + 1, 0);
+        if (vx > 0 && getScene().collidesUp(new Position(x + vx, y + vy), knightSize)) {
+            vx = Math.min(vy + 1, 0);
+            setVelocity(new Vector(0, -velocity.y()));
+        }
         return new Vector(vx, vy);
     }
 

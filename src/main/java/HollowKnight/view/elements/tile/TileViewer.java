@@ -6,6 +6,7 @@ import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.sprites.Sprite;
 import com.googlecode.lanterna.TextColor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,14 @@ import java.util.Map;
 public class TileViewer implements ElementViewer<Tile> {
     private final Map<Character,TileTexture> tileMap;
 
-    public TileViewer(){
+    public TileViewer() throws IOException {
         this.tileMap = new HashMap<>();
         tileMap.put('M', new MetalTexture());
+        tileMap.put('G', new GrassTexture());
+
+        for(Map.Entry<Character, TileTexture> entry : tileMap.entrySet()){
+            entry.getValue().loadSprite();
+        }
     }
 
     @Override
