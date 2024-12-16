@@ -21,7 +21,7 @@ public class Menu {
         Option exit = new Option(30, 33, "Exit");
         this.options = Arrays.asList(start, settings, scoreboard, exit);
         this.particles = new ArrayList<>();
-        setParticles(createParticles(200));
+        setParticles(createParticles(250));
 
     }
 
