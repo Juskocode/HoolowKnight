@@ -21,8 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game {
-    public static final int PIXEL_WIDTH = 230;
-    public static final int PIXEL_HEIGHT = 130;
+    public static final int PIXEL_WIDTH = 240;
+    public static final int PIXEL_HEIGHT = 120;
 
     private long fpsLastUpdate = System.currentTimeMillis();
     private int frames = 0;
