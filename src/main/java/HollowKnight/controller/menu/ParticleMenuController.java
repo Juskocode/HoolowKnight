@@ -15,8 +15,8 @@ import java.util.Random;
 public class ParticleMenuController extends Controller<Menu> {
     private double windAngle = 0; // Current wind direction in radians
     private double windSpeed = 2; // Current wind speed
-    private final int screenWidth = 159;
-    private final int screenHeight = 89;
+    private final int screenWidth = 220;
+    private final int screenHeight = 110;
     private final Random random = new Random();
 
     // Colors for the gradient
