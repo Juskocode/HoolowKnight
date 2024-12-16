@@ -310,7 +310,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         String fps = "fps " + gui.getFPS();
 
         // Define a common color for all text
-        TextColor.RGB color = new TextColor.RGB(0, 25, 25);
+        TextColor.RGB color = new TextColor.RGB(0, 225, 75);
 
         // Draw each piece of information
         //this.textViewer.draw(pos, 4, 0, color, gui);
