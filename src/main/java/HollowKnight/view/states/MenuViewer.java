@@ -110,8 +110,8 @@ public class MenuViewer extends ScreenViewer<Menu> {
     }
 
     private void drawRetroDynamicBackground(GUI gui, long time) throws IOException {
-        int screenWidth = 160;
-        int screenHeight = 90;
+        int screenWidth = 230;
+        int screenHeight = 110;
         double changeRate = 0.05;
         // Generate a retro gradient background
         for (int w = 0; w < screenWidth; w++) {
