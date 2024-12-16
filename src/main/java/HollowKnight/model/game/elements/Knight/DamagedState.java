@@ -46,7 +46,7 @@ public class DamagedState extends KnightState{
     @Override
     public KnightState getNextState() {
         if (getKnight().getHP() <=0) return new RespawnState(getKnight(),5);
-        if(ticks < 15){
+        if(ticks < 10){
             this.ticks++;
             return this;
         }
