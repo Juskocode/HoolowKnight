@@ -50,6 +50,7 @@ public class Scene {
     private List<Particle> jumpParticles;
     private List<Particle> respawnParticles;
     private List<Particle> dashParticles;
+    private Position EndPosition;
 
     public Scene(int width, int height) {
         this.width = width;
@@ -187,6 +188,14 @@ public class Scene {
         this.healthOrbs = healthOrbs;
     }
 
+    public Position getEndPosition() {
+        return EndPosition;
+    }
+
+    public void setEndPosition(Position endPosition) {
+        EndPosition = endPosition;
+    }
+
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
         return false;
         //return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
@@ -279,7 +288,10 @@ public class Scene {
         }
     }
 
-
+    public boolean isAtEndPosition() {
+        double x1 = player.getPosition().x();
+        return x1 >= EndPosition.x();
+    }
 
 
     public SpeedOrb[][] getSpeedOrbs() {

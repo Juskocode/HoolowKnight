@@ -34,7 +34,6 @@ public class MenuController extends Controller<Menu> {
                         game.setState(null);
                     } else if (this.getModel().isSelectedStart()) {
                         this.getModel().setInGame(true); //signal the transition state
-
                         game.setState(new GameState(new SceneLoader().createScene()));
                     }
                 }
