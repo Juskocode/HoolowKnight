@@ -30,8 +30,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private final TextViewer textViewer;
 
-    private static final int CAMERA_WIDTH = 220;
-    private static final int CAMERA_HEIGHT = 100;
+    private static final int CAMERA_WIDTH = 230;
+    private static final int CAMERA_HEIGHT = 120;
     private final EnergyOrbViewer energyOrbViewer;
     private final HealthOrbViewer healthOrbViewer;
     private final SpeedOrbViewer speedOrbViewer;
@@ -52,6 +52,7 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private BufferedImage staticLayer;
     private boolean staticLayerUpdated;
+
     public GameViewer(Scene model) throws IOException {
 
         super(model);
@@ -77,7 +78,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.healthOrbViewer = new HealthOrbViewer();
         this.speedOrbViewer = new SpeedOrbViewer();
 
-        // Initialize the static layer and set it to be updated initially
         this.staticLayer = null;
         this.staticLayerUpdated = true;
     }
@@ -85,36 +85,22 @@ public class GameViewer extends ScreenViewer<Scene> {
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-        // Get camera bounds
         int[] cameraBounds = calculateCameraBounds();
         dynamicGradientBackground(gui, time);
 
-        // Draw static layer (tiles) clipped to the camera
         if (staticLayerUpdated || staticLayer == null) {
             updateStaticLayer(cameraBounds);
         }
-        drawStaticLayer(gui, cameraBounds);
+        drawStaticLayer(gui);
 
-        // Draw dynamic elements
         drawElements(gui, getModel().getParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDashParticles(), this.particleViewer, time, cameraBounds);
-
-        drawElements(gui, getModel().getMediumTrees(), this.mediumTreeViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSmallTrees(), this.smallTreeViewer, time, cameraBounds);
-
-        drawElements(gui, getModel().getBigRocks(), this.bigRockViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSmallRocks(), this.smallRockViewer, time, cameraBounds);
-
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
-
-        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
 
         drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);
 
@@ -127,65 +113,107 @@ public class GameViewer extends ScreenViewer<Scene> {
         int playerX = (int) getModel().getPlayer().getPosition().x();
         int playerY = (int) getModel().getPlayer().getPosition().y();
 
-        // Center the camera around the player, ensuring it doesn't exceed map boundaries
-        int left = Math.max(0, playerX - CAMERA_WIDTH / 2);
-        int top = Math.max(0, playerY - CAMERA_HEIGHT / 2);
-        int right = Math.min(getModel().getWidth(), left + CAMERA_WIDTH);
-        int bottom = Math.min(getModel().getHeight(), top + CAMERA_HEIGHT);
+        // Center the camera on the player
+        int left = playerX - CAMERA_WIDTH / 2;
+        int top = playerY - CAMERA_HEIGHT / 2;
 
-        return new int[]{left, top, right, bottom};
+        // Prevent the camera from moving out of map bounds
+        left = Math.max(0, Math.min(left, 340 - CAMERA_WIDTH));
+        top = Math.max(0, Math.min(top, 120 - CAMERA_HEIGHT));
+
+        return new int[]{left, top, left + CAMERA_WIDTH, top + CAMERA_HEIGHT};
     }
 
+
+
     private void updateStaticLayer(int[] cameraBounds) throws IOException {
+        // Resize the static layer if needed
         if (staticLayer == null || staticLayer.getWidth() != CAMERA_WIDTH || staticLayer.getHeight() != CAMERA_HEIGHT) {
-            staticLayer = new BufferedImage(CAMERA_WIDTH, CAMERA_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+            staticLayer = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
         }
 
-        java.awt.Graphics2D g = staticLayer.createGraphics();
-        g.setColor(new java.awt.Color(0, 0, 0, 0));
-        g.fillRect(0, 0, staticLayer.getWidth(), staticLayer.getHeight());
-        g.dispose();
+        // Calculate world offset for rendering static layer
+        int offsetX = cameraBounds[0]; // Camera's top-left corner (world coordinates)
+        int offsetY = cameraBounds[1];
 
+        // Clear the static layer
+        java.awt.Graphics2D g = staticLayer.createGraphics();
+        g.setColor(new java.awt.Color(0, 0, 0, 0)); // Transparent background
+        g.fillRect(0, 0, staticLayer.getWidth(), staticLayer.getHeight());
+
+        // Create a temporary GUI for rendering the static layer tiles
         GUI tempGUI = new BufferedImageGUI(staticLayer);
-        drawElements(tempGUI, getModel().getTiles(), this.tileViewer, 0, cameraBounds);
+
+        // Draw only visible static elements (within the camera bounds)
+        drawElements(tempGUI, getModel().getTiles(), this.tileViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getMediumTrees(), this.mediumTreeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getSmallTrees(), this.smallTreeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getBigRocks(), this.bigRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getSmallRocks(), this.smallRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getEnergyOrbs(), this.energyOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getHealthOrbs(), this.healthOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getSpeedOrbs(), this.speedOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+
+        g.dispose(); // Release graphics resources
         staticLayerUpdated = false;
     }
 
+    private void drawStaticLayer(GUI gui) {
+        // Calculate the camera offset (start of visible region)
+        int offsetX = calculateCameraBounds()[0];
+        int offsetY = calculateCameraBounds()[1];
 
-    private void drawStaticLayer(GUI gui, int[] cameraBounds) {
+        // Render static layer directly onto GUI
         for (int x = 0; x < CAMERA_WIDTH; x++) {
             for (int y = 0; y < CAMERA_HEIGHT; y++) {
-                int cameraX = cameraBounds[0] + x;
-                int cameraY = cameraBounds[1] + y;
+                // Map screen coordinates back to world coordinates
+                int worldX = x + offsetX;
+                int worldY = y + offsetY;
 
-                if (cameraX >= 0 && cameraX < staticLayer.getWidth() && cameraY >= 0 && cameraY < staticLayer.getHeight()) {
-                    int argb = staticLayer.getRGB(cameraX, cameraY);
-                    int alpha = (argb >> 24) & 0xff;
+                // Skip out-of-bounds rendering
+                if (worldX < 0 || worldY < 0 || worldX >= 1000 || worldY >= 1000) continue;
 
-                    if (alpha != 0) {
-                        int red = (argb >> 16) & 0xff;
-                        int green = (argb >> 8) & 0xff;
-                        int blue = argb & 0xff;
+                // Retrieve pixel data from staticLayer
+                int argb = staticLayer.getRGB(x, y);
+                int alpha = (argb >> 24) & 0xff;
 
-                        gui.drawPixel(x, y, new TextColor.RGB(red, green, blue));
-                    }
+                if (alpha != 0) {
+                    int red = (argb >> 16) & 0xff;
+                    int green = (argb >> 8) & 0xff;
+                    int blue = argb & 0xff;
+
+                    // Render pixel to the GUI
+                    gui.drawPixel(x, y, new TextColor.RGB(red, green, blue));
                 }
             }
         }
     }
 
+
+
+
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time, int[] cameraBounds) throws IOException {
-        for (T element : elements) {
-            if (isElementInCamera(element, cameraBounds)) {
-                drawElement(gui, viewer, element, time, cameraBounds);
-            }
-        }
+        elements.stream()
+                .filter(element -> isElementInCamera(element, cameraBounds))
+                .forEach(element -> {
+                    try {
+                        drawElement(gui, viewer, element, time, cameraBounds);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
-    private <T extends Element> void drawElement(GUI gui, ElementViewer<T> viewer, T element,  long time, int[] cameraBounds) throws IOException {
-        int offsetX = cameraBounds[0];
-        int offsetY = cameraBounds[1];
-        viewer.draw(element, gui, time, offsetX, offsetY);
+    private <T extends Element> void drawElement(GUI gui, ElementViewer<T> viewer, T element, long time, int[] cameraBounds) throws IOException {
+        int adjustedX = (int) (element.getPosition().x() - cameraBounds[0]);
+        int adjustedY = (int) (element.getPosition().y() - cameraBounds[1]);
+        viewer.draw(element, gui, time, adjustedX, adjustedY);
+    }
+
+    private boolean isElementInCamera(Element element, int[] cameraBounds) {
+        int x = (int) element.getPosition().x();
+        int y = (int) element.getPosition().y();
+        return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
     }
 
     private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount, int[] cameraBounds) throws IOException {
@@ -197,16 +225,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
     }
 
-
-    private boolean isElementInCamera(Element element, int[] cameraBounds) {
-        int x = (int) element.getPosition().x();
-        int y = (int) element.getPosition().y();
-        return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
-    }
-
-
     private void dynamicGradientBackground(GUI gui, long time) {
-        int width = 400;//getModel().getWidth();
+        int width = 240;//getModel().getWidth();
         int height = 120;//getModel().getHeight();
 
         double changeRate = 0.04;
