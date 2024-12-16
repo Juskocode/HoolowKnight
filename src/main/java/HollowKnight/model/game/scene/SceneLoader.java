@@ -83,12 +83,12 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'x') {
-                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G') {
+                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
-                else if (line.charAt(x) == 'M') {
+                /*else if (line.charAt(x) == 'M') {
                     map[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 1);
-                }
+                }*/
                 else
                     map[y][x] = null;
             }
@@ -103,8 +103,8 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'x') {
-                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G' || line.charAt(x) == 'L') {
+                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
                 else
                     walls[y][x] = null;
@@ -253,7 +253,7 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'M') {
+                if (line.charAt(x) == 'm') {
                     monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 15);
                 }
             }
