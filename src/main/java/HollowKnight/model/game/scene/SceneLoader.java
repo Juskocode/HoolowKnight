@@ -59,7 +59,7 @@ public class SceneLoader {
         scene.setPurpleMonsters(createPurpleMonsters(scene));
         scene.setMinhoteMonsters(createMinhoteMonsters(scene));
         scene.setPlayer(createPlayer());
-        scene.setParticles(createParticles(0, scene));
+        scene.setParticles(createParticles(5, scene));
         scene.setEnergyOrbs(createEnergyOrbs(scene));
         scene.setHealthOrbs(createHealthOrbs(scene));
         scene.setSpeedOrbs(createSpeedOrbs(scene));
@@ -83,11 +83,12 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'x') {
-                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G'|| line.charAt(x) == 'L') {
+                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
-                else if (line.charAt(x) == 'M') {
-                    map[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 1);
+                else if (line.charAt(x) == 'u') {
+                    scene.setEndPosition(new Position(x*TILE_SIZE,y*TILE_SIZE));
+                    System.out.println(scene.getEndPosition().x());
                 }
                 else
                     map[y][x] = null;
@@ -103,8 +104,8 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'x') {
-                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G' || line.charAt(x) == 'L') {
+                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
                 else
                     walls[y][x] = null;
@@ -253,7 +254,7 @@ public class SceneLoader {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'M') {
+                if (line.charAt(x) == 'm') {
                     monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 15);
                 }
             }
@@ -287,4 +288,5 @@ public class SceneLoader {
         }
         return particles;
     }
+
 }

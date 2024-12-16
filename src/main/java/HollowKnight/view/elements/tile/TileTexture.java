@@ -2,6 +2,8 @@ package HollowKnight.view.elements.tile;
 
 import HollowKnight.view.sprites.Sprite;
 
+import java.io.IOException;
+
 public abstract class TileTexture {
     private Sprite texture;
 
@@ -13,5 +15,5 @@ public abstract class TileTexture {
         return texture;
     }
 
-    public abstract Sprite loadSprite(String path);
+    public abstract void loadSprite() throws IOException;
 }
