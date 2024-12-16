@@ -47,7 +47,7 @@ public class SceneLoader {
     }
 
     public Scene createScene() {
-        Scene scene = new Scene(160, 88);
+        Scene scene = new Scene(230, 130);
 
         scene.setMap(createMap(scene));
         scene.setTiles(createWalls(scene));
