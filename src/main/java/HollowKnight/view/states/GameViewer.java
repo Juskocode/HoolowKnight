@@ -101,6 +101,9 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
 
         drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);
 
@@ -150,9 +153,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(tempGUI, getModel().getSmallTrees(), this.smallTreeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
         drawElements(tempGUI, getModel().getBigRocks(), this.bigRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
         drawElements(tempGUI, getModel().getSmallRocks(), this.smallRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getEnergyOrbs(), this.energyOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getHealthOrbs(), this.healthOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getSpeedOrbs(), this.speedOrbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+
 
         g.dispose(); // Release graphics resources
         staticLayerUpdated = false;
