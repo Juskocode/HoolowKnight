@@ -11,7 +11,7 @@ import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
 import HollowKnight.model.game.elements.enemies.Enemies;
-import HollowKnight.model.game.elements.enemies.MinhoteMonster;
+import HollowKnight.model.game.elements.enemies.GhostMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.rocks.BigRock;
@@ -39,7 +39,7 @@ public class Scene {
 
     private SwordMonster[][] swordMonsters;
     private PurpleMonster[][] purpleMonsters;
-    private MinhoteMonster[][] minhoteMonsters;
+    private GhostMonster[][] ghostMonsters;
 
     private double gravity = 0.25;
 
@@ -70,7 +70,7 @@ public class Scene {
         this.smallRocks = new SmallRock[height][width];
         this.swordMonsters = new SwordMonster[height][width];
         this.purpleMonsters = new PurpleMonster[height][width];
-        this.minhoteMonsters = new MinhoteMonster[height][width];
+        this.ghostMonsters = new GhostMonster[height][width];
         this.energyOrbs = new EnergyOrb[height][width];
         this.healthOrbs = new HealthOrb[height][width];
         this.speedOrbs = new SpeedOrb[height][width];
@@ -152,12 +152,12 @@ public class Scene {
         this.purpleMonsters = purpleMonsters;
     }
 
-    public MinhoteMonster[][] getMinhoteMonsters() {
-        return minhoteMonsters;
+    public GhostMonster[][] getMinhoteMonsters() {
+        return ghostMonsters;
     }
 
-    public void setMinhoteMonsters(MinhoteMonster[][] minhoteMonsters) {
-        this.minhoteMonsters = minhoteMonsters;
+    public void setMinhoteMonsters(GhostMonster[][] ghostMonsters) {
+        this.ghostMonsters = ghostMonsters;
     }
 
     public List<Particle> getParticles() {
@@ -280,6 +280,7 @@ public class Scene {
 
         for (int tileY: List.of((int)y / Tile.SIZE, (int)(y + height - 1) / Tile.SIZE)) {
             for (int tileX: List.of((int)x / Tile.SIZE, (int)(x + width - 1) / Tile.SIZE)) {
+                //System.out.println("x :" + tileX + "y :" + tileY);
                 if (enemies[tileY][tileX] != null) {
                     getPlayer().PlayerHit(enemies[tileY][tileX].getDamage());
                 }

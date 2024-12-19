@@ -1,7 +1,6 @@
 package HollowKnight.model.game.scene;
 
 import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Collectables.EnergyOrb;
 import HollowKnight.model.game.elements.Collectables.HealthOrb;
 import HollowKnight.model.game.elements.Collectables.SpeedOrb;
@@ -11,7 +10,7 @@ import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RainParticle;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
-import HollowKnight.model.game.elements.enemies.MinhoteMonster;
+import HollowKnight.model.game.elements.enemies.GhostMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.rocks.BigRock;
@@ -248,14 +247,14 @@ public class SceneLoader {
         return monsters;
     }
 
-    private MinhoteMonster[][] createMinhoteMonsters(Scene scene) {
-        MinhoteMonster[][] monsters = new MinhoteMonster[scene.getHeight()][scene.getWidth()];
+    private GhostMonster[][] createMinhoteMonsters(Scene scene) {
+        GhostMonster[][] monsters = new GhostMonster[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'm') {
-                    monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 15);
+                    monsters[y][x] = new GhostMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 15);
                 }
             }
         }
