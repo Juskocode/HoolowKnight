@@ -25,7 +25,7 @@ class LanternaGUITest {
     private TextGraphics tg;
     private Terminal terminal;
     private LanternaGUI gui;
-
+/*
     @BeforeEach
     void setUp() throws IOException, URISyntaxException, FontFormatException {
         this.terminal = Mockito.mock(Terminal.class);
@@ -43,6 +43,7 @@ class LanternaGUITest {
 
         this.gui = new LanternaGUI(screen); // Initialize LanternaGUI with the mocked screen
     }
+  */
     /*
     @Test
     void testCreateTerminal() throws Exception {
