@@ -10,7 +10,7 @@ import HollowKnight.view.elements.ParticleViewer;
 import HollowKnight.view.elements.collectables.EnergyOrbViewer;
 import HollowKnight.view.elements.collectables.HealthOrbViewer;
 import HollowKnight.view.elements.collectables.SpeedOrbViewer;
-import HollowKnight.view.elements.monsters.MinhoteMonsterViewer;
+import HollowKnight.view.elements.monsters.GhostMonsterViewer;
 import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
 import HollowKnight.view.elements.monsters.SwordMonsterViewer;
 import HollowKnight.view.elements.rocks.BigRockViewer;
@@ -31,7 +31,7 @@ public class GameViewer extends ScreenViewer<Scene> {
     private final TextViewer textViewer;
 
     private static final int CAMERA_WIDTH = 230;
-    private static final int CAMERA_HEIGHT = 120;
+    private static final int CAMERA_HEIGHT = 130;
     private final EnergyOrbViewer energyOrbViewer;
     private final HealthOrbViewer healthOrbViewer;
     private final SpeedOrbViewer speedOrbViewer;
@@ -48,7 +48,7 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private final SwordMonsterViewer swordMonsterViewer;
     private final PurpleMonsterViewer purpleMonsterViewer;
-    private final MinhoteMonsterViewer minhoteMonsterViewer;
+    private final GhostMonsterViewer minhoteMonsterViewer;
 
     private BufferedImage staticLayer;
     private boolean staticLayerUpdated;
@@ -73,7 +73,7 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         this.swordMonsterViewer = new SwordMonsterViewer();
         this.purpleMonsterViewer = new PurpleMonsterViewer();
-        this.minhoteMonsterViewer = new MinhoteMonsterViewer();
+        this.minhoteMonsterViewer = new GhostMonsterViewer();
         this.energyOrbViewer = new EnergyOrbViewer();
         this.healthOrbViewer = new HealthOrbViewer();
         this.speedOrbViewer = new SpeedOrbViewer();
@@ -122,7 +122,7 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         // Prevent the camera from moving out of map bounds
         left = Math.max(0, Math.min(left, 340 - CAMERA_WIDTH));
-        top = Math.max(0, Math.min(top, 120 - CAMERA_HEIGHT));
+        top = Math.max(0, Math.min(top, 130 - CAMERA_HEIGHT));
 
         return new int[]{left, top, left + CAMERA_WIDTH, top + CAMERA_HEIGHT};
     }
@@ -244,6 +244,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         TextColor.RGB color2 = new TextColor.RGB(baseRed2, baseGreen2, baseBlue2);
 
         // Thunderstorm flash effect (every 800 ticks)
+        //Random random = new Random();
+        //int ticks = random.nextInt(1000 - 500 + 1) + 500;
         boolean flashActive = (time % 800 < 20); // Flash active for 20 ticks every 800 ticks
         boolean afterEffectActive = (time % 800 >= 20 && time % 800 < 60); // Aftereffect active for 40 ticks
         double afterEffectFactor = afterEffectActive ? (1.0 - (time % 800 - 20) / 40.0) : 0.0;
