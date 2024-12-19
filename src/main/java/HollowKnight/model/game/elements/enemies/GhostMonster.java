@@ -8,9 +8,7 @@ import static java.lang.Math.max;
 
 import java.util.Random;
 
-import java.util.Random;
-
-public class MinhoteMonster extends Enemies {
+public class GhostMonster extends Enemies {
 
     private final double amplitude;      // Controls the height of the wave
     private final double frequency;      // Controls how fast the wave oscillates
@@ -19,7 +17,7 @@ public class MinhoteMonster extends Enemies {
     private final int screenWidth;       // Width of the game screen
     private final int screenHeight;      // Height of the game screen
 
-    public MinhoteMonster(int x, int y, int HP, Scene scene, int damage) {
+    public GhostMonster(int x, int y, int HP, Scene scene, int damage) {
         super(x, y, HP, scene, damage);
         Random random = new Random();
 

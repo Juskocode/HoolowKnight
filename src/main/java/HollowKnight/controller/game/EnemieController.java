@@ -3,9 +3,8 @@ package HollowKnight.controller.game;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
 import HollowKnight.model.game.elements.enemies.Enemies;
-import HollowKnight.model.game.elements.enemies.MinhoteMonster;
+import HollowKnight.model.game.elements.enemies.GhostMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.scene.Scene;
@@ -22,9 +21,9 @@ public class EnemieController extends Controller<Scene> {
     @Override
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         if (time - lastMovement > 2) {
-            MinhoteMonster[][] minhoteMonsters = getModel().getMinhoteMonsters();
-            for (MinhoteMonster[] row : minhoteMonsters) {
-                for (MinhoteMonster enemy : row) {
+            GhostMonster[][] ghostMonsters = getModel().getMinhoteMonsters();
+            for (GhostMonster[] row : ghostMonsters) {
+                for (GhostMonster enemy : row) {
                     if (enemy != null) {
                         moveMonster(enemy);
                     }
