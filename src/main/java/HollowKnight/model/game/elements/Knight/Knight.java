@@ -117,6 +117,11 @@ public class Knight extends Element {
     public Position getStartingPosition() {
         return startingPosition;
     }
+
+    public boolean isGotHit() {
+        return gotHit;
+    }
+
     //SETTERS
 
     public void setHP(int HP) {
