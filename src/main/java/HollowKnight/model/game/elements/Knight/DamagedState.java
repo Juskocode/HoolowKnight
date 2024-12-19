@@ -2,12 +2,15 @@ package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Vector;
 
+import java.util.Random;
+
 public class DamagedState extends KnightState{
     private int ticks;
-    public DamagedState(Knight knight) {
+    public DamagedState(Knight knight, int particles) {
         super(knight);
         this.ticks =0;
-        getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(2));
+        System.out.println(particles);
+        getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(particles));
     }
 
     @Override
@@ -46,7 +49,7 @@ public class DamagedState extends KnightState{
     @Override
     public KnightState getNextState() {
         if (getKnight().getHP() <=0) return new RespawnState(getKnight(),5);
-        if(ticks < 10){
+        if(ticks < 15){
             this.ticks++;
             return this;
         }
