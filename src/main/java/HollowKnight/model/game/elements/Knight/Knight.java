@@ -359,8 +359,13 @@ public class Knight extends Element {
 
     public void PlayerHit(int damage){
         if(gotHit) return;  // works as a timeout to prevent multiple collisions on the player almost instantly
+        if (this.HP == 0)
+            this.HP = 1;
+        //simply formula that translates more particles when low hp and high dmg hit
+        double ratio = 1.0 - (this.HP / 50.0);
+        double blood = 10.0 * ratio;
+        setState(new DamagedState(this, (int)blood + (damage / 5)));
         setHP(this.HP - damage);
         setGotHit(true);
-        setState(new DamagedState(this));
     }
 }
