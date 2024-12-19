@@ -96,4 +96,16 @@ class PlayerControllerTest {
         verify(knight, times(1)).setPosition(knight.updatePosition());
         verify(knight, times(1)).getNextState();
     }
+
+    @Test
+    public void dash(){
+        playerController.move(game,DASH,0);
+
+        verify(knight, times(1)).setVelocity(knight.jump());
+        verify(knight, never()).setFacingRight(anyBoolean()); // Dash shouldn't affect facing direction
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
+    }
 }

@@ -4,11 +4,15 @@ import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
+import HollowKnight.model.game.scene.SceneLoader;
+import net.jqwik.api.*;
+import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,5 +57,25 @@ class SceneControllerTest {
                 .move(game, GUI.ACTION.NULL, 0);
     }
 
+    @Property
+    void allArenasAreClosed(@ForAll @IntRange(min = 3, max = 50) int width, @ForAll @IntRange(min = 3, max = 50) int height,
+                                @ForAll List<GUI.@From("moveActions") ACTION> actions) throws IOException
+    {
+        SceneLoader sceneLoader = new SceneLoader();
+        Scene newScene = sceneLoader.createScene();
+        PlayerController controller = new PlayerController(newScene);
 
+        for (GUI.ACTION action : actions) {
+            controller.move(null, action, 100);
+            assert (controller.getModel().getPlayer().getPosition().x() > 0);
+            assert (controller.getModel().getPlayer().getPosition().y() > 0);
+            assert (controller.getModel().getPlayer().getPosition().x() < width - 1);
+            assert (controller.getModel().getPlayer().getPosition().y() < height - 1);
+        }
+    }
+
+    @Provide
+    Arbitrary<GUI.ACTION> moveActions() {
+        return Arbitraries.of(GUI.ACTION.UP, GUI.ACTION.RIGHT, GUI.ACTION.DOWN, GUI.ACTION.LEFT);
+    }
 }
