@@ -24,6 +24,7 @@ import java.util.List;
 public class Scene {
     private final int width;
     private final int height;
+    private final int sceneID;
 
     private Element[][] map;
     private Tile[][] tiles;
@@ -51,13 +52,12 @@ public class Scene {
     private List<Particle> respawnParticles;
     private List<Particle> dashParticles;
     private Position EndPosition;
+    private Position startPosition;
 
-    private Position transitionPositionBegin;
-    private Position transitionPositionEnd;
-
-    public Scene(int width, int height) {
+    public Scene(int width, int height, int sceneID) {
         this.width = width;
         this.height = height;
+        this.sceneID = sceneID;
 
         this.doubleJumpParticles = new ArrayList<>();
         this.jumpParticles = new ArrayList<>();
@@ -96,6 +96,10 @@ public class Scene {
     }
 
     public Element[][] getMap() {return map;}
+
+    public int getSceneID() {
+        return sceneID;
+    }
 
     public void setMap(Element[][] map) {this.map = map;}
 
@@ -198,30 +202,6 @@ public class Scene {
     public void setEndPosition(Position endPosition) {
         EndPosition = endPosition;
     }
-
-    public Position getTransitionPositionBegin() {
-        return transitionPositionBegin;
-    }
-
-    public void setTransitionPositionBegin(Position transitionPositionBegin) {
-        this.transitionPositionBegin = transitionPositionBegin;
-    }
-
-    public Position getTransitionPositionEnd() {
-        return transitionPositionEnd;
-    }
-
-    public void setTransitionPositionEnd(Position transitionPositionEnd) {
-        this.transitionPositionEnd = transitionPositionEnd;
-    }
-
-    public boolean isAtTransitionPosition() {
-        double x1 = player.getPosition().x(), x2 = player.getPosition().x() + player.getWidth();
-        double y1 = player.getPosition().y(), y2 = player.getPosition().y() + player.getHeight();
-        return x1 <= transitionPositionEnd.x() && x2 >= transitionPositionBegin.x()
-                && y1 <= transitionPositionEnd.y() && y2 >= transitionPositionBegin.y();
-    }
-
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
         return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
@@ -343,5 +323,13 @@ public class Scene {
 
     public void setParticle(Particle particle) {
         this.particle = particle;
+    }
+
+    public Position getStartPosition() {
+        return startPosition;
+    }
+
+    public void setStartPosition(Position startPosition) {
+        this.startPosition = startPosition;
     }
 }
