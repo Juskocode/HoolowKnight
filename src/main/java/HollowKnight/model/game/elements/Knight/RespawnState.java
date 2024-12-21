@@ -36,7 +36,7 @@ public class RespawnState extends KnightState {
     {
         if (deathTimer <= 0) {
             getKnight().setHP(50);
-            getKnight().setPosition(getKnight().getStartingPosition());
+            getKnight().setPosition(getKnight().getScene().getStartPosition());
             getKnight().setGotHit(false);           //if player dies to damage then he resets the boolean to receive damage
             return new FallingState(getKnight());
         }
