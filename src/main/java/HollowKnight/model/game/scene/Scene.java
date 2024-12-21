@@ -215,6 +215,13 @@ public class Scene {
         this.transitionPositionEnd = transitionPositionEnd;
     }
 
+    public boolean isAtTransitionPosition() {
+        double x1 = player.getPosition().x(), x2 = player.getPosition().x() + player.getWidth();
+        double y1 = player.getPosition().y(), y2 = player.getPosition().y() + player.getHeight();
+        return x1 <= transitionPositionEnd.x() && x2 >= transitionPositionBegin.x()
+                && y1 <= transitionPositionEnd.y() && y2 >= transitionPositionBegin.y();
+    }
+
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
         return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
