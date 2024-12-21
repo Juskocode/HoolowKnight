@@ -1,7 +1,6 @@
 package HollowKnight.model.game.elements.enemies;
 
 import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,7 @@ class SwordMonsterTest {
 
     @BeforeEach
     void setUp() {
-        swordMonster = new SwordMonster(50, 60, 40, new Scene(10,10), 50);
+        swordMonster = new SwordMonster(50, 60, 40, new Scene(10,10, 0), 50);
     }
 
     @Test
