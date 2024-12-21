@@ -52,6 +52,9 @@ public class Scene {
     private List<Particle> dashParticles;
     private Position EndPosition;
 
+    private Position transitionPositionBegin;
+    private Position transitionPositionEnd;
+
     public Scene(int width, int height) {
         this.width = width;
         this.height = height;
@@ -195,6 +198,23 @@ public class Scene {
     public void setEndPosition(Position endPosition) {
         EndPosition = endPosition;
     }
+
+    public Position getTransitionPositionBegin() {
+        return transitionPositionBegin;
+    }
+
+    public void setTransitionPositionBegin(Position transitionPositionBegin) {
+        this.transitionPositionBegin = transitionPositionBegin;
+    }
+
+    public Position getTransitionPositionEnd() {
+        return transitionPositionEnd;
+    }
+
+    public void setTransitionPositionEnd(Position transitionPositionEnd) {
+        this.transitionPositionEnd = transitionPositionEnd;
+    }
+
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
         return x1 < 0 || x2 >= this.width || y1 < 0 || y2 >= this.height;
