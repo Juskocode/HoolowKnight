@@ -24,10 +24,36 @@ class WalkingStateTest {
     }
 
     @Test
+    void jump() {
+        Vector result = walkingState.jump();
+        assertEquals(-Math.PI, result.y());
+    }
+
+    @Test
+    void dashRight() {
+        knight.setFacingRight(true);
+        knight.setVelocity(new Vector(1, 0));
+        Vector result = walkingState.dash();
+
+        assertEquals(7.0, result.x());
+        assertTrue(knight.isFacingRight());
+    }
+
+    @Test
+    void dashLeft() {
+        knight.setFacingRight(false);
+        knight.setVelocity(new Vector(-1, 0));
+        Vector result = walkingState.dash();
+
+        assertEquals(-7.0, result.x());
+        assertFalse(knight.isFacingRight());
+    }
+
+    @Test
     void updateVelocity() {
         when(mockedScene.collidesRight(Mockito.any(), Mockito.any())).thenReturn(false);
         knight.setVelocity(new Vector(1, 0));
-        Vector result = knight.updateVelocity();
+        Vector result = walkingState.updateVelocity(knight.getVelocity());
         assertEquals(0.75, result.x());
         assertEquals(0.0, result.y());
     }
@@ -37,7 +63,7 @@ class WalkingStateTest {
         when(mockedScene.collidesDown(Mockito.any(), Mockito.any())).thenReturn(true);
         knight.setVelocity(new Vector(0.5, 0));
 
-        KnightState nextState = knight.getNextState();
+        KnightState nextState = walkingState.getNextState();
 
         assertInstanceOf(IdleState.class, nextState);
     }
@@ -45,8 +71,28 @@ class WalkingStateTest {
     @Test
     void getNextStateStay(){
         when(mockedScene.collidesDown(Mockito.any(), Mockito.any())).thenReturn(true);
-        KnightState nextState = knight.getNextState();
+        KnightState nextState = walkingState.getNextState();
         assertInstanceOf(WalkingState.class, nextState);
+    }
+
+    @Test
+    void getNextStateDashing() {
+        when(knight.isOnGround()).thenReturn(true);
+        knight.setVelocity(new Vector(10, knight.getVelocity().y()));
+
+        KnightState nextState = walkingState.getNextState();
+
+        assertInstanceOf(DashState.class, nextState);
+    }
+
+    @Test
+    void getNextStateJumping() {
+        when(knight.isOnGround()).thenReturn(false);
+        knight.setVelocity(new Vector(knight.getVelocity().x(), -10));
+
+        KnightState nextState = walkingState.getNextState();
+
+        assertInstanceOf(JumpState.class, nextState);
     }
 
 }

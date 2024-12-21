@@ -53,4 +53,24 @@ class IdleStateTest {
 
         assertSame(idleState, nextState);
     }
+
+    @Test
+    void getNextStateDashing() {
+        when(knight.isOnGround()).thenReturn(true);
+        knight.setVelocity(new Vector(10, knight.getVelocity().y()));
+
+        KnightState nextState = idleState.getNextState();
+
+        assertInstanceOf(DashState.class, nextState);
+    }
+
+    @Test
+    void getNextStateJumping() {
+        when(knight.isOnGround()).thenReturn(false);
+        knight.setVelocity(new Vector(knight.getVelocity().x(), -10));
+
+        KnightState nextState = idleState.getNextState();
+
+        assertInstanceOf(JumpState.class, nextState);
+    }
 }
