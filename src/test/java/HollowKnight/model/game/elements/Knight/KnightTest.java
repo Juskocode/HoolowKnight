@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 
 import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +78,7 @@ class KnightTest {
 
     @Test
     void updatePosition() {
+        when(knightState.applyCollisions(any(Vector.class))).thenReturn(new Vector(1, 1));
         Position updatedPosition = knight.updatePosition();
 
         double X = knight.getPosition().x() + knight.getVelocity().x();

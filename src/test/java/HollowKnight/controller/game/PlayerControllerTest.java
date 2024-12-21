@@ -101,7 +101,7 @@ class PlayerControllerTest {
     public void dash(){
         playerController.move(game,DASH,0);
 
-        verify(knight, times(1)).setVelocity(knight.jump());
+        verify(knight, times(1)).setVelocity(knight.dash());
         verify(knight, never()).setFacingRight(anyBoolean()); // Dash shouldn't affect facing direction
 
         verify(knight, times(1)).setPosition(knight.updatePosition());
