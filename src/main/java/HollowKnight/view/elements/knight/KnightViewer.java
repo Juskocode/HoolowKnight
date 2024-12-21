@@ -57,6 +57,7 @@ public class KnightViewer implements ElementViewer<Knight> {
     private StateAnimation findAnimationForState(Class<?> stateClass) {
         for (StateAnimation animation : animations) {
             if (animation.getState() == stateClass) {
+                System.out.println(animation.getState().getSimpleName());
                 return animation;
             }
         }
