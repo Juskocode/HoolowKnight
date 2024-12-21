@@ -31,7 +31,6 @@ public class Knight extends Element {
     private final int offSetY = 1;
     private boolean gotHit;
 
-    private Position startingPosition;
 
     //General Knight's attributes
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
@@ -49,7 +48,6 @@ public class Knight extends Element {
         this.jumpCounter = 0;
         this.dashBoost = 6;
         this.gotHit = false;
-        this.startingPosition= new Position(x,y);
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -114,10 +112,6 @@ public class Knight extends Element {
         return dashBoost;
     }
 
-    public Position getStartingPosition() {
-        return startingPosition;
-    }
-
     public boolean isGotHit() {
         return gotHit;
     }
@@ -177,10 +171,6 @@ public class Knight extends Element {
 
     public void setGotHit(boolean gotHit) {
         this.gotHit = gotHit;
-    }
-
-    public void setStartingPosition(Position startingPosition) {
-        this.startingPosition = startingPosition;
     }
 
     public Vector updateVelocity() {
