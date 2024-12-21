@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 class SceneControllerTest {
     private Game game;
@@ -41,7 +41,7 @@ class SceneControllerTest {
         Mockito.verify(playerController, Mockito.times(1))
                 .move(game, GUI.ACTION.NULL, 0);
         Mockito.verify(game, Mockito.times(0))
-                .setState(Mockito.any());
+                .setState(any());
         Mockito.verify(particleController, Mockito.times(1))
                 .move(game, GUI.ACTION.NULL, 0);
     }
@@ -61,8 +61,8 @@ class SceneControllerTest {
     void allArenasAreClosed(@ForAll @IntRange(min = 3, max = 50) int width, @ForAll @IntRange(min = 3, max = 50) int height,
                                 @ForAll List<GUI.@From("moveActions") ACTION> actions) throws IOException
     {
-        SceneLoader sceneLoader = new SceneLoader();
-        Scene newScene = sceneLoader.createScene();
+        SceneLoader sceneLoader = new SceneLoader(0);
+        Scene newScene = sceneLoader.createScene(any()); //TODO add knight
         PlayerController controller = new PlayerController(newScene);
 
         for (GUI.ACTION action : actions) {

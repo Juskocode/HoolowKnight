@@ -19,6 +19,7 @@ import HollowKnight.model.game.elements.tile.Tile;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -28,11 +29,16 @@ import java.util.Random;
 
 public class SceneLoader {
     private final List<String> lines;
+    private final int sceneID;
+
     private final int TILE_SIZE = 8;
 
-    public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/level0.lvl");
-        assert resource != null;
+    public SceneLoader(int id) throws IOException {
+        this.sceneID = id;
+        URL resource = getClass().getClassLoader().getResource("levels/level" + id + ".lvl");
+        if (resource == null){
+            throw new FileNotFoundException("Level file not found!");
+        }
         BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
 
         lines = readLines(br);
@@ -45,8 +51,13 @@ public class SceneLoader {
         return lines;
     }
 
-    public Scene createScene() {
-        Scene scene = new Scene(230, 130);
+    public Scene createScene(Knight knight) {
+        Scene scene = new Scene(230, 130, sceneID);
+
+        scene.setPlayer(createPlayer(scene, knight));
+
+        scene.setStartPosition(scene.getPlayer().getPosition());
+
 
         scene.setMap(createMap(scene));
         scene.setTiles(createWalls(scene));
@@ -57,11 +68,11 @@ public class SceneLoader {
         scene.setSwordMonsters(createSwordMonsters(scene));
         scene.setPurpleMonsters(createPurpleMonsters(scene));
         scene.setMinhoteMonsters(createMinhoteMonsters(scene));
-        scene.setPlayer(createPlayer());
         scene.setParticles(createParticles(5, scene));
         scene.setEnergyOrbs(createEnergyOrbs(scene));
         scene.setHealthOrbs(createHealthOrbs(scene));
         scene.setSpeedOrbs(createSpeedOrbs(scene));
+
         return scene;
     }
 
@@ -261,16 +272,19 @@ public class SceneLoader {
         return monsters;
     }
 
-    private Knight createPlayer() {
+    private Knight createPlayer(Scene scene, Knight knight) {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'P') {
-                    return new Knight(x * TILE_SIZE, y * TILE_SIZE - 2, 50, 10, 5);
+                    knight.setPosition(new Position(x * TILE_SIZE, y * TILE_SIZE - 2));
+                    knight.setScene(scene);
+                    return knight;
                 }
             }
         }
-        return null;
+        throw new IllegalStateException("Knight not found within the level file!");
+
     }
 
     private List<Particle> createParticles(int size, Scene scene) {
@@ -287,5 +301,4 @@ public class SceneLoader {
         }
         return particles;
     }
-
 }

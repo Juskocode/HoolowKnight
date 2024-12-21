@@ -3,9 +3,9 @@ package HollowKnight.controller.menu;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
+import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.state.GameState;
-import HollowKnight.state.MenuState;
 import HollowKnight.model.menu.Menu;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class MenuController extends Controller<Menu> {
                         game.setState(null);
                     } else if (this.getModel().isSelectedStart()) {
                         this.getModel().setInGame(true); //signal the transition state
-                        game.setState(new GameState(new SceneLoader().createScene()));
+                        game.setState(new GameState(new SceneLoader(0).createScene(new Knight(0, 0, 50, 1, 10))));
                     }
                 }
                 break;

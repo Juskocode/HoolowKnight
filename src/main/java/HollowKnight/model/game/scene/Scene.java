@@ -24,6 +24,7 @@ import java.util.List;
 public class Scene {
     private final int width;
     private final int height;
+    private final int sceneID;
 
     private Element[][] map;
     private Tile[][] tiles;
@@ -51,10 +52,12 @@ public class Scene {
     private List<Particle> respawnParticles;
     private List<Particle> dashParticles;
     private Position EndPosition;
+    private Position startPosition;
 
-    public Scene(int width, int height) {
+    public Scene(int width, int height, int sceneID) {
         this.width = width;
         this.height = height;
+        this.sceneID = sceneID;
 
         this.doubleJumpParticles = new ArrayList<>();
         this.jumpParticles = new ArrayList<>();
@@ -93,6 +96,10 @@ public class Scene {
     }
 
     public Element[][] getMap() {return map;}
+
+    public int getSceneID() {
+        return sceneID;
+    }
 
     public void setMap(Element[][] map) {this.map = map;}
 
@@ -316,5 +323,13 @@ public class Scene {
 
     public void setParticle(Particle particle) {
         this.particle = particle;
+    }
+
+    public Position getStartPosition() {
+        return startPosition;
+    }
+
+    public void setStartPosition(Position startPosition) {
+        this.startPosition = startPosition;
     }
 }

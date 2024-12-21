@@ -63,6 +63,10 @@ public class Game {
         this.state = state;
     }
 
+    public int getNumberOfLevels() {
+        return 2;
+    }
+
     private void start() throws IOException, InterruptedException {
         int FPS = 30;
         int frameTime = 1000 / FPS;
