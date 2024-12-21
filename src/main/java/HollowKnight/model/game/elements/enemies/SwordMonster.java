@@ -7,8 +7,8 @@ import HollowKnight.model.game.scene.Scene;
 import static java.lang.Math.max;
 
 public class SwordMonster extends Enemies {
-    public SwordMonster(int x, int y, int HP, Scene scene, int damage) {
-        super(x,y,HP,scene,damage);
+    public SwordMonster(int x, int y, int HP, Scene scene, int damage, Position size) {
+        super(x,y,HP,scene,damage, size);
         setVelocity(new Vector(1,0));
     }
 
