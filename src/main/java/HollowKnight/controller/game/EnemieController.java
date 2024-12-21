@@ -10,6 +10,8 @@ import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.scene.Scene;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnemieController extends Controller<Scene> {
     private long lastMovement;
@@ -21,33 +23,21 @@ public class EnemieController extends Controller<Scene> {
     @Override
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         if (time - lastMovement > 2) {
-            GhostMonster[][] ghostMonsters = getModel().getMinhoteMonsters();
-            for (GhostMonster[] row : ghostMonsters) {
-                for (GhostMonster enemy : row) {
-                    if (enemy != null) {
-                        moveMonster(enemy);
-                    }
-                }
+            // Consolidate all enemy lists into a single list
+            List<Enemies> allEnemies = new ArrayList<>();
+            allEnemies.addAll(getModel().getMinhoteMonsters());
+            allEnemies.addAll(getModel().getPurpleMonsters());
+            allEnemies.addAll(getModel().getSwordMonsters());
+
+            // Move each enemy in the list
+            for (Enemies enemy : allEnemies) {
+                moveMonster(enemy);
             }
-            PurpleMonster[][] purpleMonsters = getModel().getPurpleMonsters();
-            for (PurpleMonster[] row : purpleMonsters) {
-                for (PurpleMonster enemy : row) {
-                    if (enemy != null) {
-                        moveMonster(enemy);
-                    }
-                }
-            }
-            SwordMonster[][] swordMonsters = getModel().getSwordMonsters();
-            for (SwordMonster[] row : swordMonsters) {
-                for (SwordMonster enemy : row) {
-                    if (enemy != null) {
-                        moveMonster(enemy);
-                    }
-                }
-            }
+
             this.lastMovement = time;
         }
     }
+
 
     private void moveMonster(Enemies enemies) {
         enemies.setPosition(enemies.moveMonster());
