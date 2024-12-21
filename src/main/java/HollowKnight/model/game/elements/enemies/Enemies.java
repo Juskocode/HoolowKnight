@@ -10,12 +10,15 @@ public abstract class Enemies extends Element {
     private Scene scene;
     private int damage;
     private Vector velocity;
-    public Enemies(int x, int y,int HP, Scene scene, int damage) {
+
+    private Position size;
+    public Enemies(int x, int y,int HP, Scene scene, int damage, Position size) {
         super(x,y);
         this.HP = HP;
         this.scene = scene;
         this.damage = damage;
         this.velocity = new Vector(1.5,1.5);
+        this.size = size;
     }
 
     public void setVelocity(Vector velocity) {
@@ -51,5 +54,7 @@ public abstract class Enemies extends Element {
     protected abstract Vector applyCollisions(Vector velocity);
 
     public abstract Position moveMonster();
-
+    public Position getSize() {
+        return size;
+    }
 }

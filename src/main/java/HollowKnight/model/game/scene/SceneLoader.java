@@ -228,14 +228,16 @@ public class SceneLoader {
         return speedOrbs;
     }
 
-    private SwordMonster[][] createSwordMonsters(Scene scene) {
-        SwordMonster[][] monsters = new SwordMonster[scene.getHeight()][scene.getWidth()];
+    private List<SwordMonster> createSwordMonsters(Scene scene) {
+        List<SwordMonster> monsters = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'E') {
-                    monsters[y][x] = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE,10,scene,15);
+                    SwordMonster swordMonster = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE,
+                                                            10,scene,15, new Position(8, 8));
+                    monsters.add(swordMonster);
                 }
             }
         }
@@ -243,14 +245,16 @@ public class SceneLoader {
         return monsters;
     }
 
-    private PurpleMonster[][] createPurpleMonsters(Scene scene) {
-        PurpleMonster[][] monsters = new PurpleMonster[scene.getHeight()][scene.getWidth()];
+    private List<PurpleMonster> createPurpleMonsters(Scene scene) {
+        List<PurpleMonster> monsters = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'l') {
-                    monsters[y][x] = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE,10,scene,15);
+                    PurpleMonster purpleMonster = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE,
+                                                                10,scene,15, new Position(8, 9));
+                    monsters.add(purpleMonster);
                 }
             }
         }
@@ -258,14 +262,16 @@ public class SceneLoader {
         return monsters;
     }
 
-    private GhostMonster[][] createMinhoteMonsters(Scene scene) {
-        GhostMonster[][] monsters = new GhostMonster[scene.getHeight()][scene.getWidth()];
+    private List<GhostMonster> createMinhoteMonsters(Scene scene) {
+        List<GhostMonster> monsters = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'm') {
-                    monsters[y][x] = new GhostMonster(x * TILE_SIZE, y * TILE_SIZE, 10, scene, 15);
+                    GhostMonster ghostMonster = new GhostMonster(x * TILE_SIZE, y * TILE_SIZE,
+                                                            10, scene, 15, new Position(2, 2));
+                    monsters.add(ghostMonster);
                 }
             }
         }

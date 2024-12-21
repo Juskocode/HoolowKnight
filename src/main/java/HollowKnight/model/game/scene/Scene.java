@@ -38,9 +38,9 @@ public class Scene {
     private BigRock[][] bigRocks;
     private SmallRock[][] smallRocks;
 
-    private SwordMonster[][] swordMonsters;
-    private PurpleMonster[][] purpleMonsters;
-    private GhostMonster[][] ghostMonsters;
+    private List<SwordMonster> swordMonsters;
+    private List<PurpleMonster> purpleMonsters;
+    private List<GhostMonster> ghostMonsters;
 
     private double gravity = 0.25;
 
@@ -71,9 +71,9 @@ public class Scene {
         this.mediumTrees = new MediumTree[height][width];
         this.bigRocks = new BigRock[height][width];
         this.smallRocks = new SmallRock[height][width];
-        this.swordMonsters = new SwordMonster[height][width];
-        this.purpleMonsters = new PurpleMonster[height][width];
-        this.ghostMonsters = new GhostMonster[height][width];
+        this.swordMonsters = new ArrayList<>();
+        this.purpleMonsters = new ArrayList<>();
+        this.ghostMonsters = new ArrayList<>();
         this.energyOrbs = new EnergyOrb[height][width];
         this.healthOrbs = new HealthOrb[height][width];
         this.speedOrbs = new SpeedOrb[height][width];
@@ -143,27 +143,27 @@ public class Scene {
         this.smallRocks = smallRocks;
     }
 
-    public SwordMonster[][] getSwordMonsters() {
+    public List<SwordMonster> getSwordMonsters() {
         return swordMonsters;
     }
 
-    public void setSwordMonsters(SwordMonster[][] swordMonsters) {
+    public void setSwordMonsters(List<SwordMonster> swordMonsters) {
         this.swordMonsters = swordMonsters;
     }
 
-    public PurpleMonster[][] getPurpleMonsters() {
+    public List<PurpleMonster> getPurpleMonsters() {
         return purpleMonsters;
     }
 
-    public void setPurpleMonsters(PurpleMonster[][] purpleMonsters) {
+    public void setPurpleMonsters(List<PurpleMonster> purpleMonsters) {
         this.purpleMonsters = purpleMonsters;
     }
 
-    public GhostMonster[][] getMinhoteMonsters() {
+    public List<GhostMonster> getMinhoteMonsters() {
         return ghostMonsters;
     }
 
-    public void setMinhoteMonsters(GhostMonster[][] ghostMonsters) {
+    public void setMinhoteMonsters(List<GhostMonster> ghostMonsters) {
         this.ghostMonsters = ghostMonsters;
     }
 
@@ -280,20 +280,41 @@ public class Scene {
         }
     }
 
-    public void collideMonsters(Enemies[][] enemies){
-        double x = getPlayer().getPosition().x();
-        double y = getPlayer().getPosition().y();
-        double width = player.getWidth(), height = player.getHeight();
+    public void collideMonsters(List<? extends Enemies> enemies) {
+        double playerX = getPlayer().getPosition().x();
+        double playerY = getPlayer().getPosition().y();
+        double playerWidth = getPlayer().getWidth();
+        double playerHeight = getPlayer().getHeight();
 
-        for (int tileY: List.of((int)y / Tile.SIZE, (int)(y + height - 1) / Tile.SIZE)) {
-            for (int tileX: List.of((int)x / Tile.SIZE, (int)(x + width - 1) / Tile.SIZE)) {
-                //System.out.println("x :" + tileX + "y :" + tileY);
-                if (enemies[tileY][tileX] != null) {
-                    getPlayer().PlayerHit(enemies[tileY][tileX].getDamage());
-                }
+        // Loop through the list of enemies
+        for (Enemies enemy : enemies) {
+            if (checkCollision(getPlayer(), enemy)) {
+                getPlayer().PlayerHit(enemy.getDamage());
             }
         }
     }
+
+    /**
+     * Helper method to check if the player collides with an enemy.
+     */
+    private boolean checkCollision(Knight player, Enemies enemy) {
+        double playerX = player.getPosition().x();
+        double playerY = player.getPosition().y();
+        double playerWidth = player.getWidth();
+        double playerHeight = player.getHeight();
+
+        double enemyX = enemy.getPosition().x();
+        double enemyY = enemy.getPosition().y();
+        double enemyWidth = enemy.getSize().x(); // Assuming Enemies has a getSize() method
+        double enemyHeight = enemy.getSize().y();
+
+        // Check for collision (simple AABB collision)
+        return playerX < enemyX + enemyWidth &&
+                playerX + playerWidth > enemyX &&
+                playerY < enemyY + enemyHeight &&
+                playerY + playerHeight > enemyY;
+    }
+
 
     public boolean isAtEndPosition() {
         double x1 = player.getPosition().x();

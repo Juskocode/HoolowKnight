@@ -17,8 +17,8 @@ public class GhostMonster extends Enemies {
     private final int screenWidth;       // Width of the game screen
     private final int screenHeight;      // Height of the game screen
 
-    public GhostMonster(int x, int y, int HP, Scene scene, int damage) {
-        super(x, y, HP, scene, damage);
+    public GhostMonster(int x, int y, int HP, Scene scene, int damage, Position size) {
+        super(x, y, HP, scene, damage, size);
         Random random = new Random();
 
         // Randomize amplitude (height of sine wave) and frequency

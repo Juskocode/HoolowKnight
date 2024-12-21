@@ -8,8 +8,8 @@ import static java.lang.Math.max;
 
 public class PurpleMonster extends Enemies {
 
-    public PurpleMonster(int x, int y, int HP, Scene scene, int damage) {
-        super(x,y,HP,scene,damage);
+    public PurpleMonster(int x, int y, int HP, Scene scene, int damage, Position size) {
+        super(x,y,HP,scene,damage, size);
         setVelocity(new Vector(-1.5,0));
     }
 
