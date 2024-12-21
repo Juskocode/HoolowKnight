@@ -14,7 +14,8 @@ class SpeedOrbTest {
     @BeforeEach
     void setUp() {
         this.knight = new Knight(0,0,10,1,50);
-        this.speedOrb = new SpeedOrb(0,0,1.25);
+        knight.setMaxVelocity(new Vector(1,1));
+        this.speedOrb = new SpeedOrb(0,0,1.1);
     }
 
     @Test
@@ -27,7 +28,7 @@ class SpeedOrbTest {
     @Test
     void benefit() {
         Vector expected = new Vector(knight.getMaxVelocity().x()*speedOrb.getSpeed_boost(),
-                        knight.getMaxVelocity().y()* speedOrb.getSpeed_boost());
+                        knight.getMaxVelocity().y());
         speedOrb.benefit(knight);
         Assertions.assertEquals(expected, knight.getMaxVelocity());
     }

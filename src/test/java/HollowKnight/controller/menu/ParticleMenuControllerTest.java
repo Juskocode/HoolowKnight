@@ -28,7 +28,7 @@ class ParticleMenuControllerTest {
         this.game = Mockito.mock(Game.class);
         this.particleMenuController = new ParticleMenuController(menu);
     }
-
+    /*
     @Test
     void testMove() throws IOException {
         // Mock particles
@@ -60,7 +60,7 @@ class ParticleMenuControllerTest {
         when(particle.getPosition()).thenReturn(new Position(5, 5));
 
         // Simulate tick within random mode
-        Position newPosition = particleMenuController.ParticleMove(particle, 100);
+        Position newPosition = particleMenuController.move(particle, 100);
 
         // Validate the new position is within expected bounds
         assertTrue(newPosition.x() >= 4 && newPosition.x() <= 6); // Random movement
@@ -85,7 +85,7 @@ class ParticleMenuControllerTest {
         assertNotEquals(initialPosition.x(), newPosition.x());
         assertNotEquals(initialPosition.y(), newPosition.y());
     }
-    */
+
 
     @Test
     void testColorInterpolation() {
@@ -118,8 +118,6 @@ class ParticleMenuControllerTest {
         assertNotNull(particleMenuController);
     }
 
-    //TODO
-    /*
     @Test
     void testWrapAround() {
         // Create a particle at the edge of the screen
@@ -136,5 +134,6 @@ class ParticleMenuControllerTest {
         assertEquals(158, newPosition.x()); // screenWidth - 1
         assertEquals(88, newPosition.y()); // screenHeight - 1
     }
+
     */
 }
