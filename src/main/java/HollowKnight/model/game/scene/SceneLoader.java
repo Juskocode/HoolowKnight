@@ -8,6 +8,7 @@ import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RainParticle;
+import HollowKnight.model.game.elements.Spike;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
 import HollowKnight.model.game.elements.enemies.GhostMonster;
@@ -26,6 +27,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static java.lang.Character.isLetterOrDigit;
+import static java.lang.Character.isSpaceChar;
 
 public class SceneLoader {
     private final List<String> lines;
@@ -61,6 +65,9 @@ public class SceneLoader {
 
         scene.setMap(createMap(scene));
         scene.setTiles(createWalls(scene));
+
+        scene.setSpikes(createSpikes(scene));
+
         scene.setSmallTrees(createSmallTrees(scene));
         scene.setMediumTrees(createMediumTrees(scene));
         scene.setBigRocks(createBigRocks(scene));
@@ -123,6 +130,22 @@ public class SceneLoader {
         }
 
         return walls;
+    }
+
+    private Spike[][] createSpikes(Scene scene) {
+        Spike[][] spikes = new Spike[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (!isLetterOrDigit(line.charAt(x)) && !isSpaceChar(line.charAt(x)) && line.charAt(x) != '*')
+                    spikes[y][x] = new Spike(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
+                else {
+                    spikes[y][x] = null;
+                }
+            }
+        }
+        return spikes;
     }
 
     private SmallTree[][] createSmallTrees(Scene scene) {

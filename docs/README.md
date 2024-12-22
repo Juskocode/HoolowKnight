@@ -8,33 +8,25 @@
 ## Implemented Features
 - **Menu** - The game has a Menu that has
   the following options:
-    - **Start** - Starts a new game.
-    - **Exit** - Exits the game.
+- **Start** - Starts a new game.
+- **Exit** - Exits the game.
 - **Player** - The player has the following characteristics:
-    - **HP (Health Points)**: The player's life is represented by an integer. If it reaches zero, the player dies.
-    - **Energy**: The player accumulates energy to perform a special attack.
-    - **Movement**: the player can move (using the arrow keys) at variable speeds, jump and DoubleJump. The player's movement animations change according to the player's current action and speed.
+- **HP (Health Points)**: The player's life is represented by an integer. If it reaches zero, the player dies.
+- **Energy**: The player accumulates energy to perform a special attack.
+- **Movement**: The player can move (using the arrow keys) at variable speeds, jump and DoubleJump. The player's movement animations change according to the player's current action and speed.
 - **Collectables** - Collectables are "Orbs" that will give the player a "PowerUp" and enhance his abilities. They are scattered around the map and the player can pick them up.
-- **Particles** - Particles accompany a lot of actions, it is like a system within the game. They are present in the Menu giving a kind of "Visual Flair" and also in a lot of 
-player animations such as Jumping and dying. There exists another system that simulates a Fluid's particles, so that they don't disappear into thin air and actually stay around the map
-just like rain would. Currently, we have Death, Jump, DoubleJump and Menu Particles.
+- **Particles** - Particles accompany a lot of actions, it is like a system within the game. They are present in the Menu, giving a kind of "Visual Flair", and also in a lot of
+  player animations, such as Jumping and dying. There exists another system that simulates a Fluid's particles, so they don't disappear into thin air and actually stay around the map
+  just like rain would. Death, Dash, Jump, DoubleJump and Menu have Particles implemented.
 - **Game Physics** - We have applied collisions to all the elements in the game.
-- **Scene Loader** - class to load levels of written text files with specific characters, allowing to generate tiles and other elements for the different scenes/levels and allows for simple layout editions.
+- **Scene Loader** - Class to load levels of written text files with specific characters, allowing to generate tiles and other elements for the different scenes/levels and allows for simple layout editions.
+- **Varied Experiences** - Various levels to provide a more diversified experience.
+- **Interface** - Display of important player stats and information (e.g., health, energy).
+- **Advanced Movement** - Ability to dash, helping the player evade strikes and move quicker.
+- **Enemies** - Logic and hitboxes for each enemy type.
+- **Damage Taken** - When the player gets hit by one of the monsters his health goes down.
 
-## Planned Features
-- **Combat** - The player will be able to attack the enemies using:
-    - **Melee Attack**: Close-range attack.
-    - **Special Attack**: A powerful ability with higher damage or a unique effect.
-- **Game Mechanics** : Creation of varied level layouts in each playthrough. Potential implementation for randomization of levels to allow for 
-a unique experience in each playthrough.
-- **Interface** - Improve display of important player stats and information (e.g., health, energy).
-- **Advanced Movement** - implement a dash or dodge so the player has an enhanced movement.
-- **Enemies** - Introduce the logic and hitboxes of each enemy type.
-- **Graphics** - **Resolution Adjustment**: Optimization and improvement of game resolution.
-- **Damage Taken** - when the player gets hit by one of the monsters his health goes down.
-- **Settings and Scoreboard** - Implement the Settings and ScoreBoard options of the Menu.
-- **Tutorial** - Add a tutorial to the BackGround of the MainMenu.
-- **Attack States** - Implement the attack states of the player and the respective hitboxes for each attack and their effects on the monsters;
+
 ## CONTROLS
 
 `->`: Moves the player to the right.

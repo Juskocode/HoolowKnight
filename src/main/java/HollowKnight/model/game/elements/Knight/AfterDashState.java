@@ -28,6 +28,8 @@ public class AfterDashState extends KnightState{
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getKnight().isOnGround())
             return getNextGroundState();
         return this;

@@ -33,7 +33,7 @@ public class SceneController extends Controller<Scene> {
 
             playerController.move(game, action, time);
 
-            if (getModel().isAtEndPosition()) {
+            if (getModel().isAtEndPosition() && knight.getOrbs() == 3) {
                 if (getModel().getSceneID() + 1 >= game.getNumberOfLevels()) {
                     //Credits credits = new Credits(player);
                     //game.setState(new CreditsState(credits, game.getSpriteLoader()));
