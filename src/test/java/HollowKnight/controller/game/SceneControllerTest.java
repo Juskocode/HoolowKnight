@@ -5,6 +5,8 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.model.game.scene.SceneLoader;
+import HollowKnight.model.menu.MainMenu;
+import HollowKnight.state.MainMenuState;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +54,7 @@ class SceneControllerTest {
         Mockito.verify(playerController, Mockito.times(0))
                 .move(game, GUI.ACTION.NULL, 0);
         Mockito.verify(game, Mockito.times(1))
-                .setState(null);
+                .setState(any(MainMenuState.class));
         Mockito.verify(particleController, Mockito.times(0))
                 .move(game, GUI.ACTION.NULL, 0);
     }
