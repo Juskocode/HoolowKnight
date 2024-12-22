@@ -48,6 +48,8 @@ public class DamagedState extends KnightState{
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getKnight().getHP() <=0) return new RespawnState(getKnight(),5);
         if(ticks < 15){
             this.ticks++;

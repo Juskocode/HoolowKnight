@@ -20,6 +20,7 @@ public class Knight extends Element {
     private int HP;
     private float Damage_multiplier;
     private int Energy;
+    private int orbs = 0;
     private Vector velocity;
     private Vector maxVelocity;
     private double acceleration;
@@ -48,6 +49,7 @@ public class Knight extends Element {
         this.jumpCounter = 0;
         this.dashBoost = 6;
         this.gotHit = false;
+        this.orbs = 0;
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -362,5 +364,17 @@ public class Knight extends Element {
         setState(new DamagedState(this, (int)blood + (damage / 5)));
         setHP(this.HP - damage);
         setGotHit(true);
+    }
+
+    public int getOrbs() {
+        return orbs;
+    }
+
+    public void setOrbs(int orbs) {
+        this.orbs = orbs;
+    }
+
+    public void addOrbs() {
+        orbs++;
     }
 }

@@ -43,6 +43,8 @@ public class MaxVelocityState extends KnightState {
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getParticlesTimer() == 0)
         {
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));

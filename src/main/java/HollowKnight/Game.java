@@ -65,7 +65,7 @@ public class Game {
     }
 
     public int getNumberOfLevels() {
-        return 2;
+        return 4;
     }
 
     private void start() throws IOException, InterruptedException, URISyntaxException, FontFormatException {
