@@ -1,24 +1,16 @@
 package HollowKnight;
 
 
-import HollowKnight.gui.GUI;
-import HollowKnight.gui.LanternaGUI;
-import HollowKnight.gui.LanternaScreenGenerator;
-import HollowKnight.gui.ScreenGenerator;
-import HollowKnight.model.game.scene.SceneLoader;
-import HollowKnight.model.menu.Menu;
+import HollowKnight.gui.*;
+import HollowKnight.model.menu.MainMenu;
 import HollowKnight.sound.MenuSoundPlayer;
 import HollowKnight.sound.SoundLoader;
-import HollowKnight.state.GameState;
-import HollowKnight.state.MenuState;
+import HollowKnight.state.MainMenuState;
 import HollowKnight.state.State;
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -47,7 +39,7 @@ public class Game {
         this.gui = new LanternaGUI(screenCreator, "Soul Knight");
         this.menuSoundPlayer = new MenuSoundPlayer(new SoundLoader().loadSound(AudioSystem
                 .getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sound/demo.wav"))), AudioSystem.getClip()));
-        this.state = new MenuState(new Menu());
+        this.state = new MainMenuState(new MainMenu());
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
@@ -63,11 +55,20 @@ public class Game {
         this.state = state;
     }
 
+    public RescalableGUI.ResolutionScale getResolution() {
+        return gui.getResolutionScale();
+    }
+
+    public void setResolution(RescalableGUI.ResolutionScale resolution)
+            throws IOException, URISyntaxException, FontFormatException {
+        gui.setResolutionScale(resolution);
+    }
+
     public int getNumberOfLevels() {
         return 2;
     }
 
-    private void start() throws IOException, InterruptedException {
+    private void start() throws IOException, InterruptedException, URISyntaxException, FontFormatException {
         int FPS = 30;
         int frameTime = 1000 / FPS;
         int tick = 0;
