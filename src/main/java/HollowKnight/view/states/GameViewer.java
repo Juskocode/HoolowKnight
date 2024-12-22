@@ -320,6 +320,8 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         String fps = "fps " + gui.getFPS();
 
+        String orbs = "Orbs " + player.getOrbs();
+
         // Define a common color for all text
         TextColor.RGB color = new TextColor.RGB(0, 225, 75);
 
@@ -328,7 +330,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.textViewer.draw(state, 4, 8, color, gui);
         this.textViewer.draw(hp, 4, 16, color, gui);
         this.textViewer.draw(fps, 4, 24, color, gui);
-        //this.textViewer.draw(hp, 4, 32, color, gui);
+        this.textViewer.draw(orbs, 4, 32, color, gui);
 
     }
 

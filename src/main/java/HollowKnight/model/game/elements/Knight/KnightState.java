@@ -3,6 +3,8 @@ package HollowKnight.model.game.elements.Knight;
 import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
 
+import java.io.IOException;
+
 import static java.lang.Math.max;
 
 public abstract class KnightState {
@@ -93,5 +95,5 @@ public abstract class KnightState {
     public abstract Vector dash();
     //public abstract Vector attack();
     public abstract Vector updateVelocity(Vector newVelocity);
-    public abstract KnightState getNextState();
+    public abstract KnightState getNextState() throws IOException;
 }

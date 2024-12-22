@@ -83,6 +83,12 @@ public class SceneLoader {
         return scene;
     }
 
+    public void setOrbs(Scene scene) {
+        scene.setEnergyOrbs(createEnergyOrbs(scene));
+        scene.setHealthOrbs(createHealthOrbs(scene));
+        scene.setSpeedOrbs(createSpeedOrbs(scene));
+    }
+
     protected int getWidth() {
         int width = 0;
         for (String line : lines)
@@ -208,7 +214,7 @@ public class SceneLoader {
         return rocks;
     }
 
-    private EnergyOrb[][] createEnergyOrbs(Scene scene){
+    public EnergyOrb[][] createEnergyOrbs(Scene scene){
         EnergyOrb[][] energyOrbs = new EnergyOrb[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
@@ -222,7 +228,7 @@ public class SceneLoader {
         return energyOrbs;
     }
 
-    private HealthOrb[][] createHealthOrbs(Scene scene){
+    public HealthOrb[][] createHealthOrbs(Scene scene){
         HealthOrb[][] healthOrbs = new HealthOrb[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
@@ -237,7 +243,7 @@ public class SceneLoader {
     }
 
 
-    private SpeedOrb[][] createSpeedOrbs(Scene scene) {
+    public SpeedOrb[][] createSpeedOrbs(Scene scene) {
         SpeedOrb[][] speedOrbs = new SpeedOrb[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
