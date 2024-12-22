@@ -106,7 +106,11 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getDashParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
-        drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
+
+        drawElements(gui, getModel().getGhostMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
 
 
         drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);

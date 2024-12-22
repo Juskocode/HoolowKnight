@@ -10,23 +10,22 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DoubleJumpParticleTest {
+class DashParticleTest {
     private Scene scene;
     private int time;
-    private DoubleJumpParticle doubleJumpParticle;
+    private DashParticle dashParticle;
     @BeforeEach
     void setUp() {
         this.scene = Mockito.mock(Scene.class);
         this.time=0;
-        this.doubleJumpParticle = new DoubleJumpParticle(1,1, new Position(1,1)
+        this.dashParticle = new DashParticle(1,1, new Position(1,1)
                 ,new TextColor.RGB(0,0,0));
     }
 
     @Test
     void moveParticle() {
-        Position position = doubleJumpParticle.moveParticle(scene,time);
-        Assertions.assertNotEquals(position.x(), doubleJumpParticle.getPosition().x());
-        Assertions.assertNotEquals(position.y(), doubleJumpParticle.getPosition().y());
-
+        Position position = dashParticle.moveParticle(scene,time);
+        Assertions.assertNotEquals(position.x(), dashParticle.getPosition().x());
+        Assertions.assertNotEquals(position.y(), dashParticle.getPosition().y());
     }
 }
