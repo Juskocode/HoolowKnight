@@ -51,7 +51,7 @@ public class SceneController extends Controller<Scene> {
                 getModel().collectOrbs(getModel().getHealthOrbs());
                 getModel().collectOrbs(getModel().getSpeedOrbs());
 
-                getModel().collideMonsters(getModel().getMinhoteMonsters());
+                getModel().collideMonsters(getModel().getGhostMonsters());
                 getModel().collideMonsters(getModel().getPurpleMonsters());
                 getModel().collideMonsters(getModel().getSwordMonsters());
 
