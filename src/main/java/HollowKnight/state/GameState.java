@@ -17,13 +17,13 @@ public class GameState extends State<Scene> {
     }
 
     @Override
-    protected Controller<Scene> getController() {
+    protected Controller<Scene> createController() {
         return new SceneController(getModel(), new PlayerController(getModel()),
                 new ParticleController(getModel()), new EnemieController(getModel()));
     }
 
     @Override
-    protected ScreenViewer<Scene> getScreenViewer() throws IOException {
+    protected ScreenViewer<Scene> createScreenViewer() throws IOException {
         return new GameViewer(getModel());
     }
 }

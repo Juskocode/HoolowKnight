@@ -1,37 +1,45 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
+import HollowKnight.gui.RescalableGUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Option;
 import HollowKnight.model.menu.Particle;
+import HollowKnight.view.Viewer;
 import HollowKnight.view.elements.ElementViewer;
+import HollowKnight.view.menu.LogoViewer;
 import HollowKnight.view.menu.OptionViewer;
 import HollowKnight.view.menu.ParticleViewer;
+import HollowKnight.view.text.GameTextViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
 import java.util.List;
 
-public class MenuViewer extends ScreenViewer<Menu> {
+public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
 
     private final ParticleViewer particleViewer;
     private static final TextColor.RGB unselectedColor = new TextColor.RGB(26, 62, 108);
     private static final TextColor.RGB selectedColor = new TextColor.RGB(219, 219, 48);
     private final OptionViewer optionViewer;
+    private final LogoViewer logoViewer;
 
-    public MenuViewer(Menu model) throws IOException {
+
+    public MenuViewer(T model) throws IOException {
         super(model);
-        this.optionViewer = new OptionViewer();
+        this.optionViewer = new OptionViewer(new GameTextViewer());
         this.particleViewer = new ParticleViewer();
+        this.logoViewer = new LogoViewer();
     }
 
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
         drawRetroDynamicBackground(gui, time);
+        logoViewer.draw(gui, 90, 30);
         drawParticles(gui, getModel().getParticles(), particleViewer, time);
-        this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
+        this.drawOptions((RescalableGUI) gui, getModel().getOptions(), optionViewer, time);
         gui.flush();
     }
 
@@ -41,7 +49,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
         }
     }
 
-    private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
+    private void drawOptions(RescalableGUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
         int animationDuration = 20; // Number of ticks for the animation
         int maxOffsetX = 40; // Maximum horizontal movement (how far right to start the animation)
 
@@ -72,7 +80,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
             }
 
             // Update the option's position with the new x value
-            Option updatedOption = new Option(currentPositionX, (int) option.getPosition().y(), option.getText());
+            Option updatedOption = new Option(currentPositionX, (int) option.getPosition().y(), option.getType());
 
             // Determine if the option is selected
             boolean isSelected = getModel().isSelected(idx);

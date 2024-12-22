@@ -3,24 +3,25 @@ package HollowKnight.controller.menu;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.game.elements.Knight.Knight;
-import HollowKnight.model.game.scene.SceneLoader;
-import HollowKnight.state.GameState;
 import HollowKnight.model.menu.Menu;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 
-public class MenuController extends Controller<Menu> {
+public abstract class MenuController<T extends Menu> extends Controller<T> {
 
+    private final OptionController optionController;
     private final ParticleMenuController particleMenuController;
-    public MenuController(Menu menu, ParticleMenuController particleMenuController) {
+    public MenuController(T menu, ParticleMenuController particleMenuController, OptionController optionController) {
         super(menu);
         this.particleMenuController = particleMenuController;
+        this.optionController = optionController;
     }
 
     @Override
-    public void move(Game game, GUI.ACTION action, long time) throws IOException {
+    public void move(Game game, GUI.ACTION action, long time) throws IOException, URISyntaxException, FontFormatException {
         switch (action) {
             case UP:
                 this.getModel().previousOption();
@@ -28,18 +29,14 @@ public class MenuController extends Controller<Menu> {
             case DOWN:
                 this.getModel().nextOption();
                 break;
-            case SELECT:
-                if (time >= 80) {
-                    if (this.getModel().isSelectedExit()) {
-                        game.setState(null);
-                    } else if (this.getModel().isSelectedStart()) {
-                        this.getModel().setInGame(true); //signal the transition state
-                        game.setState(new GameState(new SceneLoader(0).createScene(new Knight(0, 0, 50, 1, 10))));
-                    }
-                }
+            case QUIT:
+                onQuit(game);
                 break;
             default:
+                optionController.move(game, action, time);
         }
         particleMenuController.move(game, action, time);
     }
+
+    protected abstract void onQuit(Game game) throws IOException;
 }

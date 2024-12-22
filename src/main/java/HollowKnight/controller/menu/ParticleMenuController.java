@@ -26,8 +26,8 @@ public class ParticleMenuController extends Controller<Menu> {
     private TextColor.RGB nextEndColor = randomColor();
     private int transitionStartTick = -1; // Tick when the transition begins
 
-    public ParticleMenuController(Menu model) {
-        super(model);
+    public ParticleMenuController(Menu menu) {
+        super(menu);
     }
 
     public double getWindAngle() {

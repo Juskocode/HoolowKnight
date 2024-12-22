@@ -4,26 +4,22 @@ import HollowKnight.model.Position;
 
 public class Option {
     private Position position;
-    private String text;
+    public enum Type { START_GAME, SETTINGS, EXIT, RESOLUTION, TO_MAIN_MENU };
 
-    public Option(int x, int y, String text) {
+    private final Type type;
+
+
+    public Option(int x, int y, Type type) {
         this.position = new Position(x, y);
-        this.text = text;
+        this.type = type;
     }
 
     public Position getPosition() {
         return position;
     }
 
-    public String getText() {
-        return text;
+    public Type getType() {
+        return type;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 }
