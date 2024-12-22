@@ -39,6 +39,7 @@ public class GameViewer extends ScreenViewer<Scene> {
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
     private final TileViewer tileViewer;
+    private final SpikeViewer spikeViewer;
 
     private final MediumTreeViewer mediumTreeViewer;
     private final SmallTreeViewer smallTreeViewer;
@@ -64,6 +65,8 @@ public class GameViewer extends ScreenViewer<Scene> {
         this.knightViewer = new KnightViewer();
 
         this.tileViewer = new TileViewer();
+
+        this.spikeViewer = new SpikeViewer();
 
         this.mediumTreeViewer = new MediumTreeViewer();
         this.smallTreeViewer = new SmallTreeViewer();
@@ -92,7 +95,10 @@ public class GameViewer extends ScreenViewer<Scene> {
             updateStaticLayer(cameraBounds);
         }
         drawStaticLayer(gui);
-
+        drawElements(gui, getModel().getSpikes(), this.spikeViewer, time, cameraBounds);
+        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
         drawElements(gui, getModel().getParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time, cameraBounds);
@@ -101,9 +107,7 @@ public class GameViewer extends ScreenViewer<Scene> {
         drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
         drawElements(gui, getModel().getMinhoteMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
-        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
+
 
         drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);
 
