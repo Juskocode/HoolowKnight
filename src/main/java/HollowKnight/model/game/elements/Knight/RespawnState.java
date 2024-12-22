@@ -3,6 +3,14 @@ package HollowKnight.model.game.elements.Knight;
 
 import HollowKnight.model.Position;
 import HollowKnight.model.Vector;
+import HollowKnight.model.game.elements.Collectables.Collectables;
+import HollowKnight.model.game.elements.Collectables.EnergyOrb;
+import HollowKnight.model.game.elements.Collectables.HealthOrb;
+import HollowKnight.model.game.elements.Collectables.SpeedOrb;
+import HollowKnight.model.game.scene.Scene;
+import HollowKnight.model.game.scene.SceneLoader;
+
+import java.io.IOException;
 
 public class RespawnState extends KnightState {
 
@@ -32,11 +40,15 @@ public class RespawnState extends KnightState {
     }
 
     @Override
-    public KnightState getNextState()
-    {
+    public KnightState getNextState() throws IOException {
+        Scene scene = getKnight().getScene();
+
         if (deathTimer <= 0) {
+            SceneLoader sceneLoader = new SceneLoader(scene.getSceneID());
+            sceneLoader.setOrbs(scene);
+            getKnight().setOrbs(0);
             getKnight().setHP(50);
-            getKnight().setPosition(getKnight().getScene().getStartPosition());
+            getKnight().setPosition(scene.getStartPosition());
             getKnight().setGotHit(false);           //if player dies to damage then he resets the boolean to receive damage
             return new FallingState(getKnight());
         }
