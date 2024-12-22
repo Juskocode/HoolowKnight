@@ -25,7 +25,8 @@ class DoubleJumpParticleTest {
     @Test
     void moveParticle() {
         Position position = doubleJumpParticle.moveParticle(scene,time);
-        Assertions.assertNotEquals(position, doubleJumpParticle.getPosition());
+        Assertions.assertNotEquals(position.x(), doubleJumpParticle.getPosition().x());
+        Assertions.assertNotEquals(position.y(), doubleJumpParticle.getPosition().y());
 
     }
 }
