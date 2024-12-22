@@ -8,6 +8,7 @@ import HollowKnight.model.game.elements.Collectables.SpeedOrb;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.model.game.elements.Spike;
 import HollowKnight.model.game.elements.Tree.MediumTree;
 import HollowKnight.model.game.elements.Tree.SmallTree;
 import HollowKnight.model.game.elements.enemies.Enemies;
@@ -28,6 +29,7 @@ public class Scene {
 
     private Element[][] map;
     private Tile[][] tiles;
+    private Spike[][] spikes;
     private SmallTree[][] smallTrees;
     private MediumTree[][] mediumTrees;
 
@@ -109,6 +111,14 @@ public class Scene {
 
     public void setTiles(Tile[][] tiles) {
         this.tiles = tiles;
+    }
+
+    public Spike[][] getSpikes() {
+        return spikes;
+    }
+
+    public void setSpikes(Spike[][] spikes) {
+        this.spikes = spikes;
     }
 
     public SmallTree[][] getSmallTrees() {
@@ -275,6 +285,7 @@ public class Scene {
                 if (Orbs[tileY][tileX] != null) {
                     Orbs[tileY][tileX].benefit(getPlayer());
                     Orbs[tileY][tileX] = null;
+                    getPlayer().addOrbs();
                 }
             }
         }
@@ -292,6 +303,12 @@ public class Scene {
                 getPlayer().PlayerHit(enemy.getDamage());
             }
         }
+    }
+
+    public boolean collideSpike() {
+        final int spikeHeightDiff = Tile.SIZE - Spike.SPIKE_HEIGHT;
+        double x = player.getPosition().x(), y = player.getPosition().y();
+        return checkCollision(x, x + player.getWidth() - 1, y, y + player.getHeight() - 1 - spikeHeightDiff, spikes);
     }
 
     /**
