@@ -7,6 +7,7 @@ import HollowKnight.model.game.elements.Particle.*;
 import HollowKnight.model.game.scene.Scene;
 import com.googlecode.lanterna.TextColor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -54,7 +55,7 @@ public class Knight extends Element {
     }
 
     //GETTERS
-    public KnightState getNextState() {
+    public KnightState getNextState() throws IOException {
         return state.getNextState();
     }
 
@@ -166,10 +167,6 @@ public class Knight extends Element {
     public void setState(KnightState state) {
         this.state = state;
     }
-
-    public void multiplyDamage(float damage) {
-        this.Damage_multiplier = this.Damage_multiplier * damage;
-    } // Used for collectables that multiply damage.
 
     public void setGotHit(boolean gotHit) {
         this.gotHit = gotHit;
