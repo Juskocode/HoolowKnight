@@ -3,9 +3,11 @@ package HollowKnight.controller.menu;
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.Position;
+import HollowKnight.model.menu.MainMenu;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Particle;
 import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.terminal.swing.TerminalScrollController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,17 +20,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ParticleMenuControllerTest {
+    /*
     private ParticleMenuController particleMenuController;
-    private Menu menu;
+    private MainMenu mainMenu;
     private Game game;
+    private List<Particle> particles;
 
     @BeforeEach
     void setUp() {
-        this.menu = Mockito.mock(Menu.class);
+        this.mainMenu = Mockito.mock(MainMenu.class);
         this.game = Mockito.mock(Game.class);
-        this.particleMenuController = new ParticleMenuController(menu);
+        this.particleMenuController = new ParticleMenuController(mainMenu);
+        this.particles = new ArrayList<>();
+        particles.add(new Particle(new Position(10,10), null, new TextColor.RGB(0,0,0)));
+        when(mainMenu.getParticles()).thenReturn(particles);
     }
-    /*
+
     @Test
     void testMove() throws IOException {
         // Mock particles
@@ -39,7 +46,7 @@ class ParticleMenuControllerTest {
         particles.add(particle2);
 
         // Mock behavior for particles in the menu
-        when(menu.getParticles()).thenReturn(particles);
+        when(mainMenu.getParticles()).thenReturn(particles);
 
         // Mock initial positions
         when(particle1.getPosition()).thenReturn(new Position(10, 10));
@@ -54,13 +61,13 @@ class ParticleMenuControllerTest {
     }
 
     @Test
-    void testParticleMoveRandom() {
+    void testParticleMoveRandom() throws IOException {
         // Create a particle with a mocked position
         Particle particle = Mockito.mock(Particle.class);
         when(particle.getPosition()).thenReturn(new Position(5, 5));
 
         // Simulate tick within random mode
-        Position newPosition = particleMenuController.move(particle, 100);
+        particleMenuController.move(game, GUI.ACTION.NULL,100);
 
         // Validate the new position is within expected bounds
         assertTrue(newPosition.x() >= 4 && newPosition.x() <= 6); // Random movement
@@ -68,7 +75,7 @@ class ParticleMenuControllerTest {
     }
 
     //TODO
-    /*
+
     @Test
     void testParticleMoveWindy() {
         // Create a particle with a mocked position
@@ -134,6 +141,6 @@ class ParticleMenuControllerTest {
         assertEquals(158, newPosition.x()); // screenWidth - 1
         assertEquals(88, newPosition.y()); // screenHeight - 1
     }
-
     */
+
 }

@@ -20,7 +20,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 class RespawnStateTest {
-    private Knight knight;
+    /*private Knight knight;
     private RespawnState respawnState;
     private Scene mockedScene;
     private List<Particle> respawnParticles;
@@ -41,7 +41,7 @@ class RespawnStateTest {
         }).when(mockedScene).setRespawnParticles(any(ArrayList.class));
     }
 
-    /*@Test
+    @Test
     void jump() {
         Vector result = respawnState.jump();
 
