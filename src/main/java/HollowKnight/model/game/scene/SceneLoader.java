@@ -67,7 +67,7 @@ public class SceneLoader {
         scene.setSmallRocks(createSmallRocks(scene));
         scene.setSwordMonsters(createSwordMonsters(scene));
         scene.setPurpleMonsters(createPurpleMonsters(scene));
-        scene.setMinhoteMonsters(createMinhoteMonsters(scene));
+        scene.setGhostMonsters(createGhostMonsters(scene));
         scene.setParticles(createParticles(5, scene));
         scene.setEnergyOrbs(createEnergyOrbs(scene));
         scene.setHealthOrbs(createHealthOrbs(scene));
@@ -262,7 +262,7 @@ public class SceneLoader {
         return monsters;
     }
 
-    private List<GhostMonster> createMinhoteMonsters(Scene scene) {
+    private List<GhostMonster> createGhostMonsters(Scene scene) {
         List<GhostMonster> monsters = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {

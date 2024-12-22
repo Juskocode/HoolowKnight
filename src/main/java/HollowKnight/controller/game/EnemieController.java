@@ -4,9 +4,6 @@ import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.enemies.Enemies;
-import HollowKnight.model.game.elements.enemies.GhostMonster;
-import HollowKnight.model.game.elements.enemies.PurpleMonster;
-import HollowKnight.model.game.elements.enemies.SwordMonster;
 import HollowKnight.model.game.scene.Scene;
 
 import java.io.IOException;
@@ -25,21 +22,29 @@ public class EnemieController extends Controller<Scene> {
         if (time - lastMovement > 2) {
             // Consolidate all enemy lists into a single list
             List<Enemies> allEnemies = new ArrayList<>();
-            allEnemies.addAll(getModel().getMinhoteMonsters());
+            allEnemies.addAll(getModel().getGhostMonsters());
             allEnemies.addAll(getModel().getPurpleMonsters());
             allEnemies.addAll(getModel().getSwordMonsters());
 
             // Move each enemy in the list
             for (Enemies enemy : allEnemies) {
-                moveMonster(enemy);
+                enemy.setPosition(enemy.moveMonster());
             }
 
             this.lastMovement = time;
         }
     }
-
-
-    private void moveMonster(Enemies enemies) {
-        enemies.setPosition(enemies.moveMonster());
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

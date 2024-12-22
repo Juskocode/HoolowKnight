@@ -159,11 +159,11 @@ public class Scene {
         this.purpleMonsters = purpleMonsters;
     }
 
-    public List<GhostMonster> getMinhoteMonsters() {
+    public List<GhostMonster> getGhostMonsters() {
         return ghostMonsters;
     }
 
-    public void setMinhoteMonsters(List<GhostMonster> ghostMonsters) {
+    public void setGhostMonsters(List<GhostMonster> ghostMonsters) {
         this.ghostMonsters = ghostMonsters;
     }
 
