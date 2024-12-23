@@ -21,7 +21,5 @@ public interface GUI {
     GUI getGUI();
     int getFPS();
     void setFPS(int fps);
-    public long getDuration();
-    public boolean isJumpHeld();
     void drawText(int x, int y, TextColor.RGB color, String Text);
 }
