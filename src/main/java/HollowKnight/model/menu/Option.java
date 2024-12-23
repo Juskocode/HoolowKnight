@@ -1,6 +1,6 @@
 package HollowKnight.model.menu;
 
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 
 public class Option {
     private Position position;

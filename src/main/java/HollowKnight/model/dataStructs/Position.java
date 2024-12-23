@@ -1,4 +1,4 @@
-package HollowKnight.model;
+package HollowKnight.model.dataStructs;
 
 public record Position(double x, double y) {
     public Position getLeft() {

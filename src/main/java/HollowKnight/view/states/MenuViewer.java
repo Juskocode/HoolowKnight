@@ -11,6 +11,7 @@ import HollowKnight.view.elements.ElementViewer;
 import HollowKnight.view.menu.LogoViewer;
 import HollowKnight.view.menu.OptionViewer;
 import HollowKnight.view.menu.ParticleViewer;
+import HollowKnight.view.sprites.ViewerProvider;
 import HollowKnight.view.text.GameTextViewer;
 import com.googlecode.lanterna.TextColor;
 
@@ -26,11 +27,11 @@ public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
     private final LogoViewer logoViewer;
 
 
-    public MenuViewer(T model) throws IOException {
+    public MenuViewer(T model, ViewerProvider viewerProvider) throws IOException {
         super(model);
-        this.optionViewer = new OptionViewer(new GameTextViewer());
+        this.optionViewer = viewerProvider.getEntryViewer();
         this.particleViewer = new ParticleViewer();
-        this.logoViewer = new LogoViewer();
+        this.logoViewer = viewerProvider.getLogoViewer();
     }
 
     @Override

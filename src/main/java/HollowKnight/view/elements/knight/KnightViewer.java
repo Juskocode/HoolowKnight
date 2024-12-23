@@ -4,9 +4,10 @@ import HollowKnight.gui.GUI;
 
 import HollowKnight.model.game.elements.Knight.*;
 import HollowKnight.view.elements.ElementViewer;
-import HollowKnight.view.elements.ParticleViewer;
+import HollowKnight.view.elements.particle.ParticleViewer;
 import HollowKnight.view.elements.knight.knightStates.*;
 import HollowKnight.view.sprites.Sprite;
+import HollowKnight.view.sprites.SpriteLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,8 +18,11 @@ public class KnightViewer implements ElementViewer<Knight> {
 
     private final List<StateAnimation> animations;
 
-    public KnightViewer() throws IOException {
+    private final ParticleViewer particleViewer;
+
+    public KnightViewer(SpriteLoader spriteLoader) throws IOException {
         this.animations = new ArrayList<>();
+        this.particleViewer = new ParticleViewer();
 
         // Initialize each animation state
         animations.add(new DashAnimation(DashState.class, 10));
@@ -54,7 +58,6 @@ public class KnightViewer implements ElementViewer<Knight> {
     private StateAnimation findAnimationForState(Class<?> stateClass) {
         for (StateAnimation animation : animations) {
             if (animation.getState() == stateClass) {
-                System.out.println(animation.getState().getSimpleName());
                 return animation;
             }
         }

@@ -1,7 +1,7 @@
 package HollowKnight.view.elements.knight.knightStates;
 
 import HollowKnight.model.game.elements.Knight.AfterDashState;
-import HollowKnight.view.elements.PairList;
+import HollowKnight.model.dataStructs.PairList;
 import HollowKnight.view.sprites.Sprite;
 
 import java.io.IOException;

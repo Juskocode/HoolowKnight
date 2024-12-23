@@ -76,8 +76,6 @@ public class BufferedImageGUI implements GUI {
         throw new UnsupportedOperationException("Not supported for BufferedImageGUI");
     }
 
-
-
     @Override
     public void drawHitBox(int x, int y, int width, int height, TextColor.RGB color) {
         throw new UnsupportedOperationException("Not implemented for BufferedImageGUI");

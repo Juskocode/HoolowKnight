@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 
 public class RunningState extends KnightState{
 

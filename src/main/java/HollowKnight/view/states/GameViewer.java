@@ -5,19 +5,15 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.view.elements.*;
+import HollowKnight.view.elements.collectables.OrbViewer;
 import HollowKnight.view.elements.knight.KnightViewer;
-import HollowKnight.view.elements.ParticleViewer;
-import HollowKnight.view.elements.collectables.EnergyOrbViewer;
-import HollowKnight.view.elements.collectables.HealthOrbViewer;
-import HollowKnight.view.elements.collectables.SpeedOrbViewer;
-import HollowKnight.view.elements.monsters.GhostMonsterViewer;
-import HollowKnight.view.elements.monsters.PurpleMonsterViewer;
-import HollowKnight.view.elements.monsters.SwordMonsterViewer;
-import HollowKnight.view.elements.rocks.BigRockViewer;
-import HollowKnight.view.elements.rocks.SmallRockViewer;
+import HollowKnight.view.elements.particle.ParticleViewer;
+import HollowKnight.view.elements.monsters.MonsterViewer;
+import HollowKnight.view.elements.rocks.RockViewer;
+import HollowKnight.view.elements.spike.SpikeViewer;
 import HollowKnight.view.elements.tile.TileViewer;
-import HollowKnight.view.elements.trees.MediumTreeViewer;
-import HollowKnight.view.elements.trees.SmallTreeViewer;
+import HollowKnight.view.elements.tree.TreeViewer;
+import HollowKnight.view.sprites.ViewerProvider;
 import HollowKnight.view.text.GameTextViewer;
 import HollowKnight.view.text.TextViewer;
 import com.googlecode.lanterna.TextColor;
@@ -32,29 +28,19 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     private static final int CAMERA_WIDTH = 230;
     private static final int CAMERA_HEIGHT = 130;
-    private final EnergyOrbViewer energyOrbViewer;
-    private final HealthOrbViewer healthOrbViewer;
-    private final SpeedOrbViewer speedOrbViewer;
 
     private final ParticleViewer particleViewer;
     private final KnightViewer knightViewer;
     private final TileViewer tileViewer;
     private final SpikeViewer spikeViewer;
-
-    private final MediumTreeViewer mediumTreeViewer;
-    private final SmallTreeViewer smallTreeViewer;
-
-    private final BigRockViewer bigRockViewer;
-    private final SmallRockViewer smallRockViewer;
-
-    private final SwordMonsterViewer swordMonsterViewer;
-    private final PurpleMonsterViewer purpleMonsterViewer;
-    private final GhostMonsterViewer minhoteMonsterViewer;
-
+    private final TreeViewer treeViewer;
+    private final OrbViewer orbViewer;
+    private final RockViewer rockViewer;
+    private final MonsterViewer monsterViewer;
     private BufferedImage staticLayer;
     private boolean staticLayerUpdated;
 
-    public GameViewer(Scene model) throws IOException {
+    public GameViewer(Scene model, ViewerProvider viewerProvider) throws IOException {
 
         super(model);
 
@@ -62,24 +48,19 @@ public class GameViewer extends ScreenViewer<Scene> {
 
         this.particleViewer = new ParticleViewer();
 
-        this.knightViewer = new KnightViewer();
+        this.knightViewer = viewerProvider.getPlayerViewer();
 
-        this.tileViewer = new TileViewer();
+        this.tileViewer = viewerProvider.getTileViewer();
 
-        this.spikeViewer = new SpikeViewer();
+        this.spikeViewer = viewerProvider.getSpikeViewer();
 
-        this.mediumTreeViewer = new MediumTreeViewer();
-        this.smallTreeViewer = new SmallTreeViewer();
+        this.treeViewer = viewerProvider.getTreeViewer();
 
-        this.bigRockViewer = new BigRockViewer();
-        this.smallRockViewer = new SmallRockViewer();
+        this.orbViewer = viewerProvider.getOrbViewer();
 
-        this.swordMonsterViewer = new SwordMonsterViewer();
-        this.purpleMonsterViewer = new PurpleMonsterViewer();
-        this.minhoteMonsterViewer = new GhostMonsterViewer();
-        this.energyOrbViewer = new EnergyOrbViewer();
-        this.healthOrbViewer = new HealthOrbViewer();
-        this.speedOrbViewer = new SpeedOrbViewer();
+        this.rockViewer = viewerProvider.getRockViewer();
+
+        this.monsterViewer = viewerProvider.getMonsterViewer();
 
         this.staticLayer = null;
         this.staticLayerUpdated = true;
@@ -95,27 +76,19 @@ public class GameViewer extends ScreenViewer<Scene> {
             updateStaticLayer(cameraBounds);
         }
         drawStaticLayer(gui);
-        drawElements(gui, getModel().getSpikes(), this.spikeViewer, time, cameraBounds);
-        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
+
+
         drawElements(gui, getModel().getParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getRespawnParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDashParticles(), this.particleViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSwordMonsters(), this.swordMonsterViewer, time, cameraBounds);
-        drawElements(gui, getModel().getPurpleMonsters(), this.purpleMonsterViewer, time, cameraBounds);
-
-        drawElements(gui, getModel().getGhostMonsters(), this.minhoteMonsterViewer, time, cameraBounds);
-        drawElements(gui, getModel().getEnergyOrbs(), this.energyOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getHealthOrbs(), this.healthOrbViewer, time, cameraBounds);
-        drawElements(gui, getModel().getSpeedOrbs(), this.speedOrbViewer, time, cameraBounds);
+        drawElements(gui, getModel().getMonsters(), this.monsterViewer, time, cameraBounds);
 
 
         drawElement(gui, this.knightViewer, getModel().getPlayer(), time, cameraBounds);
 
-        drawPlayerStats(gui, time);
+        PlayerStatsViewer.drawPlayerStats(gui, time, getModel(), this.textViewer);
 
         gui.flush();
     }
@@ -156,11 +129,11 @@ public class GameViewer extends ScreenViewer<Scene> {
         GUI tempGUI = new BufferedImageGUI(staticLayer);
 
         // Draw only visible static elements (within the camera bounds)
+        drawElements(tempGUI, getModel().getSpikes(), this.spikeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
         drawElements(tempGUI, getModel().getTiles(), this.tileViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getMediumTrees(), this.mediumTreeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getSmallTrees(), this.smallTreeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getBigRocks(), this.bigRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
-        drawElements(tempGUI, getModel().getSmallRocks(), this.smallRockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getTrees(), this.treeViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getOrbs(), this.orbViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
+        drawElements(tempGUI, getModel().getRocks(), this.rockViewer, 0, new int[]{offsetX, offsetY, offsetX + CAMERA_WIDTH, offsetY + CAMERA_HEIGHT});
 
 
         g.dispose(); // Release graphics resources
@@ -198,6 +171,11 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
     }
 
+    private boolean isElementInCamera(Element element, int[] cameraBounds) {
+        int x = (int) element.getPosition().x();
+        int y = (int) element.getPosition().y();
+        return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
+    }
 
 
 
@@ -217,12 +195,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         int adjustedX = (int) (element.getPosition().x() - cameraBounds[0]);
         int adjustedY = (int) (element.getPosition().y() - cameraBounds[1]);
         viewer.draw(element, gui, time, adjustedX, adjustedY);
-    }
-
-    private boolean isElementInCamera(Element element, int[] cameraBounds) {
-        int x = (int) element.getPosition().x();
-        int y = (int) element.getPosition().y();
-        return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
     }
 
     private <T extends Element> void drawElements(GUI gui, T[][] elements, ElementViewer<T> viewer, long frameCount, int[] cameraBounds) throws IOException {
@@ -296,47 +268,5 @@ public class GameViewer extends ScreenViewer<Scene> {
                 }
             }
         }
-    }
-
-
-    private void drawPlayerStats(GUI gui, long time) throws IOException {
-        // Fetch the player details
-        var player = getModel().getPlayer();
-
-        // Format position and velocity strings
-        String pos = formatVector("pos", player.getPosition().x(), player.getPosition().y());
-        String vel = formatVector("vel", player.getVelocity().x(), player.getVelocity().y());
-
-        // Fetch the player's state class name
-        String state = "state " + player.getState().getClass().getSimpleName();
-
-        // Fetch player collision
-        String colides = "ground " + player.isOnGround();
-
-        // Fetch player jumpBoost
-        String jumpBoost = "jumpBoost " + String.format("%.2f", player.getJumpBoost());
-
-        String hp = "hp " + player.getHP();
-
-        String fps = "fps " + gui.getFPS();
-
-        String orbs = "Orbs " + player.getOrbs();
-
-        // Define a common color for all text
-        TextColor.RGB color = new TextColor.RGB(0, 225, 75);
-
-        // Draw each piece of information
-        //this.textViewer.draw(pos, 4, 0, color, gui);
-        this.textViewer.draw(state, 4, 8, color, gui);
-        this.textViewer.draw(hp, 4, 16, color, gui);
-        this.textViewer.draw(fps, 4, 24, color, gui);
-        this.textViewer.draw(orbs, 4, 32, color, gui);
-
-    }
-
-
-    // Helper method to format position or velocity with truncated decimal values
-    String formatVector(String label, double x, double y) {
-        return String.format("%s %.2fx%.2fy", label, x, y);
     }
 }

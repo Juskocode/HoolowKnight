@@ -1,15 +1,23 @@
 package HollowKnight.model.game.elements.enemies;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.scene.Scene;
 
 import static java.lang.Math.max;
 
 public class SwordMonster extends Enemies {
-    public SwordMonster(int x, int y, int HP, Scene scene, int damage, Position size) {
+
+    private final char symbol;
+    public SwordMonster(int x, int y, int HP, Scene scene, int damage, Position size, char symbol) {
         super(x,y,HP,scene,damage, size);
+        this.symbol = symbol;
         setVelocity(new Vector(1,0));
+    }
+
+    @Override
+    public char getChar() {
+        return symbol;
     }
 
     @Override

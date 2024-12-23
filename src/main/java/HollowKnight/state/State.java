@@ -3,6 +3,8 @@ package HollowKnight.state;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
+import HollowKnight.view.sprites.SpriteLoader;
+import HollowKnight.view.sprites.ViewerProvider;
 import HollowKnight.view.states.ScreenViewer;
 
 import java.awt.*;
@@ -14,13 +16,13 @@ public abstract class State<T> {
     private final Controller<T> controller;
     private final ScreenViewer<T> screenViewer;
 
-    public State(T model) throws IOException {
+    public State(T model, SpriteLoader spriteLoader) throws IOException {
         this.model = model;
-        this.screenViewer = createScreenViewer();
+        this.screenViewer = createScreenViewer(new ViewerProvider(spriteLoader));
         this.controller = createController();
     }
 
-    protected abstract ScreenViewer<T> createScreenViewer() throws IOException;
+    protected abstract ScreenViewer<T> createScreenViewer(ViewerProvider viewerProvider) throws IOException;
     protected abstract Controller<T> createController();
     public T getModel() {
         return model;

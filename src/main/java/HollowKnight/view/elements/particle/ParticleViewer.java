@@ -1,12 +1,13 @@
-package HollowKnight.view.elements;
+package HollowKnight.view.elements.particle;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Particle.Particle;
+import HollowKnight.view.elements.ElementViewer;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.IOException;
 
-public class ParticleViewer implements ElementViewer<Particle>{
+public class ParticleViewer implements ElementViewer<Particle> {
     @Override
     public void draw(Particle model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         // Get the particle's base color

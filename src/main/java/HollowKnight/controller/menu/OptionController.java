@@ -31,12 +31,13 @@ public class OptionController extends Controller<Menu> {
                 if (action == GUI.ACTION.SELECT)
                     game.setState(new GameState(
                                   new SceneLoader(0)
-                                          .createScene(new Knight(0,0, 50, 10, 1))
+                                          .createScene(new Knight(0,0, 50, 10, 1)),
+                            game.getSpriteLoader()
                     ));
                 break;
             case SETTINGS:
                 if (action == GUI.ACTION.SELECT)
-                    game.setState(new SettingsMenuState(new SettingsMenu()));
+                    game.setState(new SettingsMenuState(new SettingsMenu(), game.getSpriteLoader()));
                 break;
             case EXIT:
                 if (action == GUI.ACTION.SELECT)
@@ -59,7 +60,7 @@ public class OptionController extends Controller<Menu> {
                 break;
             case TO_MAIN_MENU:
                 if (action == GUI.ACTION.SELECT)
-                    game.setState(new MainMenuState(new MainMenu()));
+                    game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
         }
     }
 

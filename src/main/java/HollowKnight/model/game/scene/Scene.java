@@ -1,22 +1,14 @@
 package HollowKnight.model.game.scene;
 
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.game.elements.Collectables.Collectables;
-import HollowKnight.model.game.elements.Collectables.EnergyOrb;
-import HollowKnight.model.game.elements.Collectables.HealthOrb;
-import HollowKnight.model.game.elements.Collectables.SpeedOrb;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Spike;
-import HollowKnight.model.game.elements.Tree.MediumTree;
-import HollowKnight.model.game.elements.Tree.SmallTree;
+import HollowKnight.model.game.elements.Tree;
 import HollowKnight.model.game.elements.enemies.Enemies;
-import HollowKnight.model.game.elements.enemies.GhostMonster;
-import HollowKnight.model.game.elements.enemies.PurpleMonster;
-import HollowKnight.model.game.elements.enemies.SwordMonster;
-import HollowKnight.model.game.elements.rocks.BigRock;
-import HollowKnight.model.game.elements.rocks.SmallRock;
+import HollowKnight.model.game.elements.rocks.Rock;
 import HollowKnight.model.game.elements.tile.Tile;
 
 import java.util.ArrayList;
@@ -30,19 +22,13 @@ public class Scene {
     private Element[][] map;
     private Tile[][] tiles;
     private Spike[][] spikes;
-    private SmallTree[][] smallTrees;
-    private MediumTree[][] mediumTrees;
+    private Tree[][] trees;
 
-    private EnergyOrb[][] energyOrbs;
-    private HealthOrb[][] healthOrbs;
-    private SpeedOrb[][] speedOrbs;
+    private Collectables[][] orbs;
 
-    private BigRock[][] bigRocks;
-    private SmallRock[][] smallRocks;
+    private Rock[][] rocks;
 
-    private List<SwordMonster> swordMonsters;
-    private List<PurpleMonster> purpleMonsters;
-    private List<GhostMonster> ghostMonsters;
+    private List<Enemies> monsters;
 
     private double gravity = 0.25;
 
@@ -69,16 +55,6 @@ public class Scene {
 
         this.map = new Element[height][width];
         this.tiles = new Tile[height][width];
-        this.smallTrees = new SmallTree[height][width];
-        this.mediumTrees = new MediumTree[height][width];
-        this.bigRocks = new BigRock[height][width];
-        this.smallRocks = new SmallRock[height][width];
-        this.swordMonsters = new ArrayList<>();
-        this.purpleMonsters = new ArrayList<>();
-        this.ghostMonsters = new ArrayList<>();
-        this.energyOrbs = new EnergyOrb[height][width];
-        this.healthOrbs = new HealthOrb[height][width];
-        this.speedOrbs = new SpeedOrb[height][width];
     }
 
     public int getWidth() {
@@ -96,8 +72,6 @@ public class Scene {
     public void setPlayer(Knight player) {
         this.player = player;
     }
-
-    public Element[][] getMap() {return map;}
 
     public int getSceneID() {
         return sceneID;
@@ -121,61 +95,28 @@ public class Scene {
         this.spikes = spikes;
     }
 
-    public SmallTree[][] getSmallTrees() {
-        return smallTrees;
+    public void setTrees(Tree[][] trees) {
+        this.trees = trees;
     }
 
-    public void setSmallTrees(SmallTree[][] smallTrees) {
-        this.smallTrees = smallTrees;
+    public Tree[][] getTrees() {
+        return trees;
     }
 
-    public MediumTree[][] getMediumTrees() {
-        return mediumTrees;
+    public void setRocks(Rock[][] rocks) {this.rocks = rocks;}
+    public Rock[][] getRocks() {return rocks;}
+
+    public Collectables[][] getOrbs() {
+        return orbs;
     }
 
-    public void setMediumTrees(MediumTree[][] mediumTrees) {
-        this.mediumTrees = mediumTrees;
+    public void setOrbs(Collectables[][] orbs) {
+        this.orbs = orbs;
     }
 
-    public BigRock[][] getBigRocks() {
-        return bigRocks;
-    }
+    public List<Enemies> getMonsters() {return monsters;}
 
-    public void setBigRocks(BigRock[][] bigRocks) {
-        this.bigRocks = bigRocks;
-    }
-
-    public SmallRock[][] getSmallRocks() {
-        return smallRocks;
-    }
-
-    public void setSmallRocks(SmallRock[][] smallRocks) {
-        this.smallRocks = smallRocks;
-    }
-
-    public List<SwordMonster> getSwordMonsters() {
-        return swordMonsters;
-    }
-
-    public void setSwordMonsters(List<SwordMonster> swordMonsters) {
-        this.swordMonsters = swordMonsters;
-    }
-
-    public List<PurpleMonster> getPurpleMonsters() {
-        return purpleMonsters;
-    }
-
-    public void setPurpleMonsters(List<PurpleMonster> purpleMonsters) {
-        this.purpleMonsters = purpleMonsters;
-    }
-
-    public List<GhostMonster> getGhostMonsters() {
-        return ghostMonsters;
-    }
-
-    public void setGhostMonsters(List<GhostMonster> ghostMonsters) {
-        this.ghostMonsters = ghostMonsters;
-    }
+    public void setMonsters(List<Enemies> monsters) {this.monsters = monsters;}
 
     public List<Particle> getParticles() {
         return particles;
@@ -187,26 +128,6 @@ public class Scene {
 
     public double getGravity() {
         return gravity;
-    }
-
-    public EnergyOrb[][] getEnergyOrbs() {
-        return energyOrbs;
-    }
-
-    public void setEnergyOrbs(EnergyOrb[][] energyOrbs) {
-        this.energyOrbs = energyOrbs;
-    }
-
-    public HealthOrb[][] getHealthOrbs() {
-        return healthOrbs;
-    }
-
-    public void setHealthOrbs(HealthOrb[][] healthOrbs) {
-        this.healthOrbs = healthOrbs;
-    }
-
-    public Position getEndPosition() {
-        return EndPosition;
     }
 
     public void setEndPosition(Position endPosition) {
@@ -291,12 +212,7 @@ public class Scene {
         }
     }
 
-    public void collideMonsters(List<? extends Enemies> enemies) {
-        double playerX = getPlayer().getPosition().x();
-        double playerY = getPlayer().getPosition().y();
-        double playerWidth = getPlayer().getWidth();
-        double playerHeight = getPlayer().getHeight();
-
+    public void collideMonsters(List<Enemies> enemies) {
         // Loop through the list of enemies
         for (Enemies enemy : enemies) {
             if (checkCollision(getPlayer(), enemy)) {
@@ -338,15 +254,6 @@ public class Scene {
         return x1 >= EndPosition.x();
     }
 
-
-    public SpeedOrb[][] getSpeedOrbs() {
-        return speedOrbs;
-    }
-
-    public void setSpeedOrbs(SpeedOrb[][] speedOrbs) {
-        this.speedOrbs = speedOrbs;
-    }
-
     public List<Particle> getRespawnParticles() {
         return respawnParticles;
     }
@@ -370,4 +277,5 @@ public class Scene {
     public void setStartPosition(Position startPosition) {
         this.startPosition = startPosition;
     }
+
 }

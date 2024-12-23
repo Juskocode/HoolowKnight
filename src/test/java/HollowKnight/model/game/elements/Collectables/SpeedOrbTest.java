@@ -1,12 +1,10 @@
 package HollowKnight.model.game.elements.Collectables;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.elements.Knight.Knight;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SpeedOrbTest {
     private SpeedOrb speedOrb;
@@ -15,7 +13,7 @@ class SpeedOrbTest {
     void setUp() {
         this.knight = new Knight(0,0,10,1,50);
         knight.setMaxVelocity(new Vector(1,1));
-        this.speedOrb = new SpeedOrb(0,0,1.1);
+        this.speedOrb = new SpeedOrb(0,0,1.1, 's');
     }
 
     @Test

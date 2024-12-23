@@ -4,9 +4,12 @@ import HollowKnight.model.game.elements.Knight.Knight;
 
 public class EnergyOrb extends Collectables{
     private int energy;
-    public EnergyOrb(int x, int y, int energy){
+
+    private final char symbol;
+    public EnergyOrb(int x, int y, int energy, char symbol){
         super(x,y);
         this.energy = energy;
+        this.symbol = symbol;
     }
 
     public int getEnergy() {
@@ -20,6 +23,11 @@ public class EnergyOrb extends Collectables{
     @Override
     public void benefit(Knight knight){
         knight.setEnergy(knight.getEnergy()+ this.energy);
+    }
+
+    @Override
+    public char getChar() {
+        return symbol;
     }
 
 }

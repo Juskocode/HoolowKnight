@@ -1,6 +1,6 @@
 package HollowKnight.model.menu;
 
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.state.particle.RandomState;
 import com.googlecode.lanterna.TextColor;
 

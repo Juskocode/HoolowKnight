@@ -1,4 +1,4 @@
-package HollowKnight.view.elements;
+package HollowKnight.model.dataStructs;
 
 import java.util.ArrayList;
 import java.util.List;

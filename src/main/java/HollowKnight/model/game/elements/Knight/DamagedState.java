@@ -1,8 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
-
-import java.util.Random;
+import HollowKnight.model.dataStructs.Vector;
 
 public class DamagedState extends KnightState{
     private int ticks;

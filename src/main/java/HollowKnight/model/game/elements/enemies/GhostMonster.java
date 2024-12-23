@@ -1,7 +1,7 @@
 package HollowKnight.model.game.elements.enemies;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.scene.Scene;
 
 import static java.lang.Math.max;
@@ -17,8 +17,11 @@ public class GhostMonster extends Enemies {
     private final int screenWidth;       // Width of the game screen
     private final int screenHeight;      // Height of the game screen
 
-    public GhostMonster(int x, int y, int HP, Scene scene, int damage, Position size) {
+    private final char symbol;
+
+    public GhostMonster(int x, int y, int HP, Scene scene, int damage, Position size, char symbol) {
         super(x, y, HP, scene, damage, size);
+        this.symbol = symbol;
         Random random = new Random();
 
         // Randomize amplitude (height of sine wave) and frequency
@@ -33,6 +36,11 @@ public class GhostMonster extends Enemies {
 
         // Set initial velocity
         setVelocity(new Vector(horizontalSpeed, 0));
+    }
+
+    @Override
+    public char getChar() {
+        return symbol;
     }
 
     @Override

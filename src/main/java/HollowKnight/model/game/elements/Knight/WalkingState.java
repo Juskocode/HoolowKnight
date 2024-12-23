@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 
 public class WalkingState extends KnightState{
     public static double MIN_VELOCITY = 0.75;
