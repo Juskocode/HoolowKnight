@@ -6,14 +6,16 @@ import HollowKnight.controller.game.ParticleController;
 import HollowKnight.controller.game.PlayerController;
 import HollowKnight.controller.game.SceneController;
 import HollowKnight.model.game.scene.Scene;
+import HollowKnight.view.sprites.SpriteLoader;
+import HollowKnight.view.sprites.ViewerProvider;
 import HollowKnight.view.states.GameViewer;
 import HollowKnight.view.states.ScreenViewer;
 
 import java.io.IOException;
 
 public class GameState extends State<Scene> {
-    public GameState(Scene model) throws IOException {
-        super(model);
+    public GameState(Scene model, SpriteLoader spriteLoader) throws IOException {
+        super(model, spriteLoader);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class GameState extends State<Scene> {
     }
 
     @Override
-    protected ScreenViewer<Scene> createScreenViewer() throws IOException {
-        return new GameViewer(getModel());
+    protected ScreenViewer<Scene> createScreenViewer(ViewerProvider viewerProvider) throws IOException {
+        return new GameViewer(getModel(), viewerProvider);
     }
 }
