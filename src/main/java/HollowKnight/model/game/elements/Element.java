@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements;
 
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 
 public abstract class Element {
     private Position position;
