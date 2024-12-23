@@ -36,6 +36,7 @@ public class PlayerController extends Controller<Scene> {
                 break;
             case KILL:
                 knight.setState(new RespawnState(knight, 30));
+                break;
             default:
                 knight.setVelocity(knight.updateVelocity());
         }
