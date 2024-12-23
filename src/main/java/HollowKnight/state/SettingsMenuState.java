@@ -6,14 +6,16 @@ import HollowKnight.controller.menu.ParticleMenuController;
 import HollowKnight.controller.menu.SettingsMenuController;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.SettingsMenu;
+import HollowKnight.view.sprites.SpriteLoader;
+import HollowKnight.view.sprites.ViewerProvider;
 import HollowKnight.view.states.MenuViewer;
 import HollowKnight.view.states.ScreenViewer;
 
 import java.io.IOException;
 
 public class SettingsMenuState extends State<SettingsMenu> {
-    public SettingsMenuState(SettingsMenu menu) throws IOException {
-        super(menu);
+    public SettingsMenuState(SettingsMenu menu, SpriteLoader spriteLoader) throws IOException {
+        super(menu, spriteLoader);
     }
 
     @Override
@@ -25,8 +27,8 @@ public class SettingsMenuState extends State<SettingsMenu> {
     }
 
     @Override
-    protected ScreenViewer<SettingsMenu> createScreenViewer() throws IOException {
-        return new MenuViewer<>(getModel());
+    protected ScreenViewer<SettingsMenu> createScreenViewer(ViewerProvider viewerProvider) throws IOException {
+        return new MenuViewer<>(getModel(), viewerProvider);
     }
 
 }
