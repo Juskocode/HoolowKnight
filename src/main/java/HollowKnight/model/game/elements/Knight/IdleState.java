@@ -1,7 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
-import HollowKnight.state.GameState;
+import HollowKnight.model.dataStructs.Vector;
 
 public class IdleState extends KnightState {
 
