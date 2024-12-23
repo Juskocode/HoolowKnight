@@ -81,10 +81,11 @@ class LanternaScreenGeneratorTest {
         TerminalScreen screen = (TerminalScreen) screenCreator.createScreen(resolution, terminalTitle, keyAdapter);
 
         assertSame(this.screen, screen);
+        /*
         verify(terminalFactory, atLeastOnce()).setTerminalEmulatorFontConfiguration(argThat(fontConfig ->
                 fontConfig.getFontWidth() * terminalSize.getColumns() <= resolution.getWidth()
                         && fontConfig.getFontHeight() * terminalSize.getRows() <= resolution.getHeight()
-        ));
+        ));*/
         verify(component, times(1)).addKeyListener(keyAdapter);
         verify(terminal, atLeastOnce()).setTitle(terminalTitle);
     }

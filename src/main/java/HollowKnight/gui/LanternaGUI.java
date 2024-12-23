@@ -78,76 +78,6 @@ public class LanternaGUI implements RescalableGUI {
         };
     }
 
-    private void setupKeyAdapter() {
-        Toolkit.getDefaultToolkit().addAWTEventListener(event -> {
-            if (event instanceof KeyEvent keyEvent) {
-                synchronized (SPAM_KEYS) {
-                    if (keyEvent.getID() == KeyEvent.KEY_PRESSED) {
-                        handleKeyPressed(keyEvent);
-                    } else if (keyEvent.getID() == KeyEvent.KEY_RELEASED) {
-                        handleKeyReleased(keyEvent);
-                    }
-                }
-            }
-        }, AWTEvent.KEY_EVENT_MASK);
-    }
-
-    private boolean isJumpKeyHeld = false; // Tracks if the jump key is currently held
-    private long lastJumpEndTime = 0;
-
-    void handleKeyPressed(KeyEvent keyEvent) {
-        int keyCode = keyEvent.getKeyCode();
-
-        if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime == null) {
-            long currentTime = System.currentTimeMillis();
-
-            if (currentTime - lastJumpEndTime < 50) {
-                System.out.println("Jump ignored due to cooldown");
-                return;
-            }
-
-            jumpPressStartTime = currentTime;
-            isJumpKeyHeld = true; // Mark jump key as held
-            System.out.println("Jump key pressed");
-        }
-
-        if (SPAM_KEYS.contains(keyCode))
-            keyPressed = priorityKeyPressed = keyEvent;
-        else
-            keyPressed = keyEvent;
-    }
-
-    void handleKeyReleased(KeyEvent keyEvent) {
-        int keyCode = keyEvent.getKeyCode();
-
-        if (keyCode == KeyEvent.VK_SPACE && jumpPressStartTime != null) {
-            long currentTime = System.currentTimeMillis();
-
-            long duration = currentTime - jumpPressStartTime;
-            jumpPressStartTime = null;
-            lastJumpEndTime = currentTime;
-            isJumpKeyHeld = false; // Mark jump key as no longer held
-
-            System.out.println("Jump key released (Duration: " + duration + " ms)");
-            handleJump(duration);
-            setDuration(duration);
-        }
-
-        if (SPAM_KEYS.contains(keyCode))
-            keyPressed = priorityKeyPressed = null;
-        else
-            keyPressed = priorityKeyPressed;
-    }
-
-    @Override
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
     @Override
     public ACTION getACTION() throws IOException {
         if (keyPressed == null)
@@ -219,9 +149,7 @@ public class LanternaGUI implements RescalableGUI {
         return resolutionScale;
     }
 
-    public boolean isJumpHeld() {
-        return isJumpKeyHeld;
-    }
+
 
     private void handleJump(long duration) {
         // Example: Adjust jump height or gravity based on duration

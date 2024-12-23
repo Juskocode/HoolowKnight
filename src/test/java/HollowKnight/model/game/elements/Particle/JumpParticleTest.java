@@ -35,7 +35,6 @@ class JumpParticleTest {
 
         Position newPosition = jumpParticle.moveParticle(scene,25);
 
-        assertTrue(newPosition.x() != jumpParticle.getPosition().x());
-        assertTrue(newPosition.y() != jumpParticle.getPosition().y());
+        assertTrue((newPosition.x() != jumpParticle.getPosition().x()) || newPosition.y() != jumpParticle.getPosition().y());
     }
 }

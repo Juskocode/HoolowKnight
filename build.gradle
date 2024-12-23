@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id "net.ltgt.errorprone" version "4.1.0"
+    id 'info.solidsoft.pitest' version '1.6.0'
 }
 
 group = 'HollowKnight'
@@ -19,6 +21,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'  // JUnit 5 Jupiter API
     testImplementation 'org.mockito:mockito-core:3.7.7'    // Mockito for mocking
     testImplementation 'net.jqwik:jqwik:1.5.1'  // Property-based testing (jqwik)
+    errorprone "com.google.errorprone:error_prone_core:2.30.0" // to locate code smells
+
 }
 
 application {
@@ -27,4 +31,8 @@ application {
 
 test {
     useJUnitPlatform()  // Ensure tests use JUnit 5 platform
+}
+
+pitest {
+    junit5PluginVersion = '0.12'
 }
