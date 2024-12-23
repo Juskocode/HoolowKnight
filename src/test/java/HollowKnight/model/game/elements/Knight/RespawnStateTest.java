@@ -1,23 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
-import HollowKnight.model.game.elements.Particle.Particle;
-import HollowKnight.model.game.elements.Particle.RespawnParticle;
-import HollowKnight.model.game.scene.Scene;
-import HollowKnight.view.elements.PairList;
-import com.googlecode.lanterna.TextColor;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
 
 class RespawnStateTest {
     /*private Knight knight;

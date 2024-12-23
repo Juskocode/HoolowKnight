@@ -1,12 +1,7 @@
 package HollowKnight.model.game.elements.Knight;
 
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
-import HollowKnight.model.game.elements.Collectables.Collectables;
-import HollowKnight.model.game.elements.Collectables.EnergyOrb;
-import HollowKnight.model.game.elements.Collectables.HealthOrb;
-import HollowKnight.model.game.elements.Collectables.SpeedOrb;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.model.game.scene.SceneLoader;
 
