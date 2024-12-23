@@ -15,11 +15,13 @@ import java.io.IOException;
 public class RespawnState extends KnightState {
 
     private long deathTimer;
+    private int cntRespawnPart;
 
     public RespawnState(Knight knight, long deathTimer) {
         super(knight);
         this.deathTimer = deathTimer;
-        knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
+        this.cntRespawnPart =0;
+        //knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
     }
 
     @Override
@@ -51,6 +53,10 @@ public class RespawnState extends KnightState {
             getKnight().setPosition(scene.getStartPosition());
             getKnight().setGotHit(false);           //if player dies to damage then he resets the boolean to receive damage
             return new FallingState(getKnight());
+        }
+        if(cntRespawnPart==0){ //this is done exclusively for testing purposes
+            cntRespawnPart++;
+            getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
         }
         return this;
     }

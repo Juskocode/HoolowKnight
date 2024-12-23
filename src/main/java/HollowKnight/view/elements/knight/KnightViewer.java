@@ -17,11 +17,8 @@ public class KnightViewer implements ElementViewer<Knight> {
 
     private final List<StateAnimation> animations;
 
-    private final ParticleViewer particleViewer;
-
     public KnightViewer() throws IOException {
         this.animations = new ArrayList<>();
-        this.particleViewer = new ParticleViewer();
 
         // Initialize each animation state
         animations.add(new DashAnimation(DashState.class, 10));
