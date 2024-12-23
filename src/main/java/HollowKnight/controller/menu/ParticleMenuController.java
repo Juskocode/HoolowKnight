@@ -3,7 +3,7 @@ package HollowKnight.controller.menu;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Particle;
 import HollowKnight.state.particle.*;
