@@ -69,4 +69,5 @@ class RespawnParticleTest {
         Position newPosition = respawnParticle.moveParticle(mockedScene,10);
         assertEquals(newPosition.y(), respawnParticle.getPosition().y());
     }
+
 }
