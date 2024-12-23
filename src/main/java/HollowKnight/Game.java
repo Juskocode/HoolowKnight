@@ -7,6 +7,8 @@ import HollowKnight.sound.MenuSoundPlayer;
 import HollowKnight.sound.SoundLoader;
 import HollowKnight.state.MainMenuState;
 import HollowKnight.state.State;
+import HollowKnight.view.sprites.GameSpriteLoader;
+import HollowKnight.view.sprites.SpriteLoader;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
@@ -22,6 +24,7 @@ public class Game {
     public static final int PIXEL_WIDTH = 230;
     public static final int PIXEL_HEIGHT = 130;
     private final MenuSoundPlayer menuSoundPlayer;
+    private final SpriteLoader spriteLoader;
 
     private long fpsLastUpdate = System.currentTimeMillis();
     private int frames = 0;
@@ -39,7 +42,8 @@ public class Game {
         this.gui = new LanternaGUI(screenCreator, "Soul Knight");
         this.menuSoundPlayer = new MenuSoundPlayer(new SoundLoader().loadSound(AudioSystem
                 .getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sound/demo.wav"))), AudioSystem.getClip()));
-        this.state = new MainMenuState(new MainMenu());
+        this.spriteLoader = new GameSpriteLoader();
+        this.state = new MainMenuState(new MainMenu(), spriteLoader);
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
@@ -66,6 +70,9 @@ public class Game {
 
     public int getNumberOfLevels() {
         return 4;
+    }
+    public SpriteLoader getSpriteLoader() {
+        return spriteLoader;
     }
 
     private void start() throws IOException, InterruptedException, URISyntaxException, FontFormatException {
