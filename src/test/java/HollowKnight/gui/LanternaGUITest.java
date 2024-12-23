@@ -1,4 +1,4 @@
-package timelessodyssey.gui;
+package HollowKnight.gui;
 
 import HollowKnight.gui.GUI;
 import HollowKnight.gui.LanternaGUI;
@@ -85,10 +85,10 @@ public class LanternaGUITest {
     public void drawPixel(@ForAll int x, @ForAll int y, @ForAll @From("color") TextColor.RGB color) throws IOException, URISyntaxException, FontFormatException {
         GUI gui = new LanternaGUI(screenGenerator, "drawPixel test");
 
-        gui.drawPixel(x, y,color );
+        gui.drawPixel(x, y,color);
 
         verify(tg, Mockito.times(1)).setBackgroundColor(color);
-        verify(tg, Mockito.times(1)).setCharacter(x, y, ' ');
+        verify(tg, Mockito.times(1)).putString(x, y, " ");
         verifyNoMoreInteractions(tg);
     }
 
