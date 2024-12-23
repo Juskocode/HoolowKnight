@@ -28,7 +28,7 @@ public class SceneController extends Controller<Scene> {
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         Knight knight = getModel().getPlayer();
         if (action == GUI.ACTION.QUIT)
-            game.setState(new MainMenuState(new MainMenu()));
+            game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
         else {
 
             playerController.move(game, action, time);
@@ -38,22 +38,18 @@ public class SceneController extends Controller<Scene> {
                     //Credits credits = new Credits(player);
                     //game.setState(new CreditsState(credits, game.getSpriteLoader()));
                     //if (getModel().isAtEndPosition())
-                    game.setState(new MainMenuState(new MainMenu()));
+                    game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
 
                 } else {
                     SceneLoader sceneLoader = new SceneLoader((getModel().getSceneID() + 1));
                     Scene newScene = sceneLoader.createScene(new Knight(0, 0, knight.getHP(), 1, 10));
-                    game.setState(new GameState(newScene));
+                    game.setState(new GameState(newScene, game.getSpriteLoader()));
                 }
             }
             else{
-                getModel().collectOrbs(getModel().getEnergyOrbs());
-                getModel().collectOrbs(getModel().getHealthOrbs());
-                getModel().collectOrbs(getModel().getSpeedOrbs());
+                getModel().collectOrbs(getModel().getOrbs());
 
-                getModel().collideMonsters(getModel().getGhostMonsters());
-                getModel().collideMonsters(getModel().getPurpleMonsters());
-                getModel().collideMonsters(getModel().getSwordMonsters());
+                getModel().collideMonsters(getModel().getMonsters());
 
                 particleController.move(game, action,time);
                 enemieController.move(game,action,time);
