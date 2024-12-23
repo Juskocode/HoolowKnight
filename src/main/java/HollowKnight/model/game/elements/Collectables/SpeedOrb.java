@@ -1,13 +1,15 @@
 package HollowKnight.model.game.elements.Collectables;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.elements.Knight.Knight;
 
 public class SpeedOrb extends Collectables{
     private double speed_boost = 1.1;
-    public SpeedOrb(int x, int y, double boost){
+    private final char symbol;
+    public SpeedOrb(int x, int y, double boost, char symbol){
         super(x,y);
         this.speed_boost = boost;
+        this.symbol = symbol;
     }
 
     public double getSpeed_boost() {
@@ -22,5 +24,10 @@ public class SpeedOrb extends Collectables{
     public void benefit(Knight knight){
         knight.setMaxVelocity(new Vector(knight.getMaxVelocity().x()*speed_boost,
                 knight.getMaxVelocity().y()));
+    }
+
+    @Override
+    public char getChar() {
+        return symbol;
     }
 }
