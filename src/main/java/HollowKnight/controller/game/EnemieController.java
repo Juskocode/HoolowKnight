@@ -21,11 +21,7 @@ public class EnemieController extends Controller<Scene> {
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         if (time - lastMovement > 2) {
             // Consolidate all enemy lists into a single list
-            List<Enemies> allEnemies = new ArrayList<>();
-            allEnemies.addAll(getModel().getGhostMonsters());
-            allEnemies.addAll(getModel().getPurpleMonsters());
-            allEnemies.addAll(getModel().getSwordMonsters());
-
+            List<Enemies> allEnemies = new ArrayList<>(getModel().getMonsters());
             // Move each enemy in the list
             for (Enemies enemy : allEnemies) {
                 enemy.setPosition(enemy.moveMonster());
