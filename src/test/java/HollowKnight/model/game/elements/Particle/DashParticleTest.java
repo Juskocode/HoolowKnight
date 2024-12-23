@@ -45,4 +45,5 @@ class DashParticleTest {
 
         assertTrue((newPosition.x() != dashParticle1.getPosition().x()) || newPosition.y() != dashParticle1.getPosition().y());
     }
+
 }

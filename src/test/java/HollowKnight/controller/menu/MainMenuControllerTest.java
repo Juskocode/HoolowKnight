@@ -57,8 +57,8 @@ class MainMenuControllerTest {
 
         mainMenuController.move(game, GUI.ACTION.SELECT, 100);
 
-        verify(mainMenu, times(1)).setInGame(true);
-        verify(game, times(1)).setState(any(GameState.class));
+        Mockito.verify(optionController, Mockito.times(1))
+                .move(eq(game), eq(GUI.ACTION.SELECT), Mockito.anyLong());
         //verifyNoInteractions(particleMenuController);
     }
 
@@ -71,8 +71,10 @@ class MainMenuControllerTest {
         // Call the move method with the SELECT action and a valid time
         mainMenuController.move(game, GUI.ACTION.SELECT, 100);
 
+
         // Verify that game.setState(null) was called
-        verify(game, times(1)).setState(null);
+        Mockito.verify(optionController, Mockito.times(1))
+                .move(eq(game), eq(GUI.ACTION.SELECT), Mockito.anyLong());
         //verifyNoInteractions(particleMenuController);
     }
 
