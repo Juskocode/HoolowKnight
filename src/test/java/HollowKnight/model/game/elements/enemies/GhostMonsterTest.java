@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements.enemies;
 
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;

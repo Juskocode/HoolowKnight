@@ -4,10 +4,6 @@ import HollowKnight.model.game.elements.Knight.Knight;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class EnergyOrbTest {
     private EnergyOrb energyorb;
@@ -15,7 +11,7 @@ class EnergyOrbTest {
     @BeforeEach
     void setUp() {
         this.knight = new Knight(0,0,10,1,50);
-        this.energyorb = new EnergyOrb(0,0,5);
+        this.energyorb = new EnergyOrb(0,0,5, 'e');
     }
 
     @Test

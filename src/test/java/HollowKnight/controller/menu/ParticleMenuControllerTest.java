@@ -1,24 +1,5 @@
 package HollowKnight.controller.menu;
 
-import HollowKnight.Game;
-import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
-import HollowKnight.model.menu.MainMenu;
-import HollowKnight.model.menu.Menu;
-import HollowKnight.model.menu.Particle;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.terminal.swing.TerminalScrollController;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 class ParticleMenuControllerTest {
     /*
     private ParticleMenuController particleMenuController;

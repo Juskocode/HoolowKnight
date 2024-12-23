@@ -2,7 +2,7 @@ package HollowKnight.controller.game;
 
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.game.elements.enemies.GhostMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EnemieControllerTest {

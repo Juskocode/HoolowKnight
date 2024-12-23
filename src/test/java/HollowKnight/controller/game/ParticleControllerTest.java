@@ -2,12 +2,9 @@ package HollowKnight.controller.game;
 
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.game.elements.Particle.Particle;
-import HollowKnight.model.game.elements.Particle.RainParticle;
 import HollowKnight.model.game.scene.Scene;
-import com.googlecode.lanterna.TextColor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,7 +12,6 @@ import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 import static org.mockito.Mockito.*;
 

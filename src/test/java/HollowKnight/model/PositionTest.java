@@ -1,10 +1,9 @@
 package HollowKnight.model;
 
+import HollowKnight.model.dataStructs.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
     private Position position;
