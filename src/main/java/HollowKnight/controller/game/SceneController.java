@@ -25,6 +25,7 @@ public class SceneController extends Controller<Scene> {
         this.enemieController = enemieController;
     }
 
+    @Override
     public void move(Game game, GUI.ACTION action, long time) throws IOException {
         Knight knight = getModel().getPlayer();
         if (action == GUI.ACTION.QUIT)

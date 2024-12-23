@@ -240,9 +240,9 @@ public class GameViewer extends ScreenViewer<Scene> {
                     double interpolationX = (double) w / (width - 1);
                     double interpolationY = (double) h / (height - 1);
 
-                    int red = (int) (((1 - interpolationX) * color1.getRed() + interpolationX * color2.getRed()));
-                    int green = (int) (((1 - interpolationY) * color1.getGreen() + interpolationY * color2.getGreen()));
-                    int blue = (int) (((1 - interpolationX) * color1.getBlue() + interpolationX * color2.getBlue()));
+                    int red = (int) ((1 - interpolationX) * color1.getRed() + interpolationX * color2.getRed());
+                    int green = (int) ((1 - interpolationY) * color1.getGreen() + interpolationY * color2.getGreen());
+                    int blue = (int) ((1 - interpolationX) * color1.getBlue() + interpolationX * color2.getBlue());
 
                     // Blend gradient with a light glow effect
                     red = (int) (red + afterEffectFactor * (255 - red));

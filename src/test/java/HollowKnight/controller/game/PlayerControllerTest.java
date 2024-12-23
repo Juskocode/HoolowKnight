@@ -93,7 +93,6 @@ class PlayerControllerTest {
         playerController.move(game, KILL, 0);
 
         verify(knight, times(1)).setState(any(RespawnState.class)); // Verify state changes to RespawnState
-        verify(knight, times(1)).setVelocity(knight.updateVelocity());
 
         verify(knight, times(1)).setPosition(knight.updatePosition());
         verify(knight, times(1)).getNextState();

@@ -85,8 +85,6 @@ public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
 
             // Determine if the option is selected
             boolean isSelected = getModel().isSelected(idx);
-            boolean isSelectedStart = getModel().isSelectedStart(); // New method to determine if transition is happening
-
             // Apply blink effect for the selected option
             if (isSelected && time >= 80) {
                 boolean isVisible = (time / 8) % 2 == 0; // Toggle visibility every 10 ticks
@@ -111,12 +109,6 @@ public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
     }
 
 
-    // Gradient calculation for the selected option (from green to red)
-    private TextColor.RGB calculateGradient(int idx, int totalOptions) {
-        int r = (int) (255 * (idx / (float) totalOptions));
-        int g = (int) (255 * (1 - (idx / (float) totalOptions)));
-        return new TextColor.RGB(r, g, 0);
-    }
 
     private void drawRetroDynamicBackground(GUI gui, long time) throws IOException {
         int screenWidth = 230;
@@ -144,13 +136,4 @@ public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
         }
     }
 
-
-    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
-        for (T element : elements)
-            drawElement(gui, element, viewer, time);
-    }
-
-    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
-        viewer.draw(element, gui, time, 0, 0);
-    }
 }

@@ -26,13 +26,10 @@ public class LanternaGUI implements RescalableGUI {
     private  Screen screen;
     private final ScreenGenerator screenGenerator;
 
-    private long duration;
-
     String title;
 
     // Track active keys
     private ResolutionScale resolutionScale;
-    private Long jumpPressStartTime = null; // Tracks when the jump key was pressed
     private KeyEvent priorityKeyPressed;
     private KeyAdapter keyAdapter;
     private KeyEvent keyPressed;
@@ -149,21 +146,6 @@ public class LanternaGUI implements RescalableGUI {
         return resolutionScale;
     }
 
-
-
-    private void handleJump(long duration) {
-        // Example: Adjust jump height or gravity based on duration
-        if (duration < 140) {
-            System.out.println("Small jump");
-            // Apply small jump logic (e.g., low gravity or small boost)
-        } else if (duration < 200) {
-            System.out.println("Medium jump");
-            // Apply medium jump logic
-        } else {
-            System.out.println("Big jump");
-            // Apply big jump logic (e.g., high boost or stronger gravity reduction)
-        }
-    }
 
     @Override
     public void drawPixel(int x, int y, TextColor.RGB color) {
