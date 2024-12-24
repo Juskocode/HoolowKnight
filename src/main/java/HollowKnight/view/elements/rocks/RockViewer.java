@@ -23,7 +23,6 @@ public class RockViewer implements ElementViewer<Rock> {
     @Override
     public void draw(Rock model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         Sprite sprite = rockMap.get(model.getChar());
-        System.out.println(model.getChar());
         if (sprite == null) {
             throw new IllegalArgumentException("No sprite for character: " + model.getChar());
         }

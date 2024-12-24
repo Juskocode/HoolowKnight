@@ -46,7 +46,7 @@ public class Game {
         this.state = new MainMenuState(new MainMenu(), spriteLoader);
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+    public static void main(String[] args) {
         Logger logger = Logger.getLogger(Game.class.getName());
         try {
             new Game().start();
@@ -55,7 +55,7 @@ public class Game {
         }
     }
 
-    public void setState(State state) {
+    public void setState(State<?> state) {
         this.state = state;
     }
 
@@ -69,7 +69,7 @@ public class Game {
     }
 
     public int getNumberOfLevels() {
-        return 4;
+        return 1;
     }
     public SpriteLoader getSpriteLoader() {
         return spriteLoader;

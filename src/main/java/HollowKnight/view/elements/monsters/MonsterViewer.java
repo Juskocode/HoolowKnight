@@ -31,9 +31,8 @@ public class MonsterViewer implements ElementViewer<Enemies> {
     public void draw(Enemies model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         char monsterType = model.getChar(); // Assume getType returns a key representing the monster (e.g., 'h', 'e', 'E').
         List<Sprite> sprites = monstersMap.get(monsterType);
-        System.out.println(monsterType);
         if (sprites == null) {
-            return; // No sprite loaded for this monster type
+            throw new IllegalArgumentException("No sprite for character: " + model.getChar());
         }
 
         if (monsterType == 'E') { // SwordMonster logic

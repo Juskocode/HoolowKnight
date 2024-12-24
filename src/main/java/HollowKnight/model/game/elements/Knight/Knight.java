@@ -32,6 +32,8 @@ public class Knight extends Element {
     private final int offSetX = 4;
     private final int offSetY = 1;
     private boolean gotHit;
+    private int deaths;
+    private long birthTime;
 
 
     //General Knight's attributes
@@ -51,6 +53,8 @@ public class Knight extends Element {
         this.dashBoost = 6;
         this.gotHit = false;
         this.orbs = 0;
+        this.deaths = 0;
+        this.birthTime = System.currentTimeMillis();
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
@@ -133,8 +137,8 @@ public class Knight extends Element {
         this.Damage_multiplier = damage;
     }
 
-    public void setEnergy(int energy) {
-        Energy = energy;
+    public void setEnergy(int Energy) {
+        this.Energy = Energy;
     }
 
     public void setJumpCounter(int jumpCounter) {
@@ -204,7 +208,18 @@ public class Knight extends Element {
     }
     public Vector dash(){return state.dash();}
 
-    //public Vector attack(){return state.attack();}
+    public void increaseDeaths() {
+        this.deaths++;
+    }
+    public int getNumberOfDeaths() {
+        return deaths;
+    }
+
+    public long getBirthTime() {
+        return birthTime;
+    }
+    public void setBirthTime(long birthTime) {this.birthTime = birthTime; }
+
 
 
     ////////////Create Knight Particles ///////////////////////////////////////////////

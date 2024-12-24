@@ -15,15 +15,17 @@ import com.googlecode.lanterna.TextColor;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static java.lang.Character.isLetterOrDigit;
 import static java.lang.Character.isSpaceChar;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class SceneLoader {
     private final List<String> lines;
@@ -37,7 +39,7 @@ public class SceneLoader {
         if (resource == null){
             throw new FileNotFoundException("Level file not found!");
         }
-        BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
+        BufferedReader br = Files.newBufferedReader(Paths.get(resource.getFile()), UTF_8);
 
         lines = readLines(br);
     }
@@ -63,7 +65,7 @@ public class SceneLoader {
         scene.setOrbs(createOrbs(scene));
 
         scene.setMonsters(createMonsters(scene));
-        scene.setParticles(createParticles(5, scene));
+        scene.setParticles(createParticles(15, scene));
 
 
         return scene;
@@ -190,7 +192,6 @@ public class SceneLoader {
                 Enemies monster = MonsterFactory.createMonster(x * TILE_SIZE, y * TILE_SIZE, scene, type);
                 if (monster != null) {
                     monsters.add(monster);
-                    //System.out.println(monster.getChar());
                 }
             }
         }

@@ -76,7 +76,7 @@ public abstract class Particle extends Element {
 
     // Random regeneration delay between MIN_REGEN_DELAY and MAX_REGEN_DELAY ticks
     public long getRandomRegenerationDelay() {
-        return MIN_REGEN_DELAY + (int)(Math.random() * (MAX_REGEN_DELAY - MIN_REGEN_DELAY));
+        return (long) MIN_REGEN_DELAY + (int)(Math.random() * (MAX_REGEN_DELAY - MIN_REGEN_DELAY));
     }
 
     protected abstract Vector applyCollisions(Vector velocity);

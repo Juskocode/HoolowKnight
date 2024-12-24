@@ -3,10 +3,12 @@ package HollowKnight.controller.game;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
+import HollowKnight.model.credits.Credits;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.model.menu.MainMenu;
+import HollowKnight.state.CreditsState;
 import HollowKnight.state.GameState;
 import HollowKnight.state.MainMenuState;
 
@@ -36,11 +38,8 @@ public class SceneController extends Controller<Scene> {
 
             if (getModel().isAtEndPosition() && knight.getOrbs() == 3) {
                 if (getModel().getSceneID() + 1 >= game.getNumberOfLevels()) {
-                    //Credits credits = new Credits(player);
-                    //game.setState(new CreditsState(credits, game.getSpriteLoader()));
-                    //if (getModel().isAtEndPosition())
-                    game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
-
+                    Credits credits = new Credits(getModel().getPlayer());
+                    game.setState(new CreditsState(credits, game.getSpriteLoader()));
                 } else {
                     SceneLoader sceneLoader = new SceneLoader((getModel().getSceneID() + 1));
                     Scene newScene = sceneLoader.createScene(new Knight(0, 0, knight.getHP(), 1, 10));
