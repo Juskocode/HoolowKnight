@@ -77,7 +77,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         }
         drawStaticLayer(gui);
 
-
         drawElements(gui, getModel().getParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getDoubleJumpParticles(), this.particleViewer, time, cameraBounds);
         drawElements(gui, getModel().getJumpParticles(), this.particleViewer, time, cameraBounds);

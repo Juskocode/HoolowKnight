@@ -90,4 +90,6 @@ public abstract class Particle extends Element {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
+
 }
