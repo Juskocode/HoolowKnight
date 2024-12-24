@@ -1,7 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.scene.Scene;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,5 +51,25 @@ class IdleStateTest {
         KnightState nextState = idleState.getNextState();
 
         assertSame(idleState, nextState);
+    }
+
+    @Test
+    void getNextStateDashing() {
+        when(knight.isOnGround()).thenReturn(true);
+        knight.setVelocity(new Vector(10, knight.getVelocity().y()));
+
+        KnightState nextState = idleState.getNextState();
+
+        assertInstanceOf(DashState.class, nextState);
+    }
+
+    @Test
+    void getNextStateJumping() {
+        when(knight.isOnGround()).thenReturn(false);
+        knight.setVelocity(new Vector(knight.getVelocity().x(), -10));
+
+        KnightState nextState = idleState.getNextState();
+
+        assertInstanceOf(JumpState.class, nextState);
     }
 }

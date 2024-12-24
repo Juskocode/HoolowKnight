@@ -1,13 +1,16 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
+
+import java.io.IOException;
 
 import static java.lang.Math.max;
 
 public abstract class KnightState {
     private final Knight knight;
     private long particlesTimer = 100;
+
 
     public KnightState(Knight knight){
         this.knight = knight;
@@ -90,6 +93,7 @@ public abstract class KnightState {
 
     public abstract Vector jump();
     public abstract Vector dash();
+    //public abstract Vector attack();
     public abstract Vector updateVelocity(Vector newVelocity);
-    public abstract KnightState getNextState();
+    public abstract KnightState getNextState() throws IOException;
 }

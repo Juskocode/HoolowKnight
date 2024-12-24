@@ -1,7 +1,7 @@
 package HollowKnight.model.game.elements.Particle;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.scene.Scene;
 import com.googlecode.lanterna.TextColor;
 
@@ -65,7 +65,7 @@ public class RespawnParticle extends Particle {
         } else {
             vy += 0.2; // Gravity pulls down
         }
-        System.out.println(stickTimer);
+        //System.out.println(stickTimer);
         // Apply collisions to adjust velocity
         Vector adjustedVelocity = applyCollisions(new Vector(vx, vy));
         vx = adjustedVelocity.x();

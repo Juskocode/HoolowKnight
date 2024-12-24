@@ -1,7 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
-import HollowKnight.state.GameState;
+import HollowKnight.model.dataStructs.Vector;
 
 public class IdleState extends KnightState {
 
@@ -27,13 +26,14 @@ public class IdleState extends KnightState {
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
+        getKnight().getScene().setDashParticles(getKnight().createDashParticles(10));
         return applyCollisions(newVelocity);
     }
 
     @Override
     public Vector updateVelocity(Vector velocity) {
         tickParticles();
-        System.out.println(getParticlesTimer());
+        //System.out.println(getParticlesTimer());
         Vector newVelocity = new Vector(
                 velocity.x() * getKnight().getAcceleration(),
                 velocity.y()
@@ -43,6 +43,8 @@ public class IdleState extends KnightState {
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getParticlesTimer() == 0)
         {
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));

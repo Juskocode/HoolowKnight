@@ -1,56 +1,58 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.GUI;
+import HollowKnight.gui.RescalableGUI;
 import HollowKnight.model.game.elements.Element;
-import HollowKnight.model.menu.Menu;
-import HollowKnight.model.menu.Option;
-import HollowKnight.model.menu.Particle;
+import HollowKnight.model.menu.*;
+import HollowKnight.view.Viewer;
 import HollowKnight.view.elements.ElementViewer;
+import HollowKnight.view.menu.LogoViewer;
 import HollowKnight.view.menu.OptionViewer;
 import HollowKnight.view.menu.ParticleViewer;
+import HollowKnight.view.sprites.ViewerProvider;
+import HollowKnight.view.text.GameTextViewer;
 import com.googlecode.lanterna.TextColor;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class MenuViewer extends ScreenViewer<Menu> {
+public class MenuViewer<T extends Menu> extends ScreenViewer<T>{
 
     private final ParticleViewer particleViewer;
     private static final TextColor.RGB unselectedColor = new TextColor.RGB(26, 62, 108);
     private static final TextColor.RGB selectedColor = new TextColor.RGB(219, 219, 48);
     private final OptionViewer optionViewer;
+    private final LogoViewer logoViewer;
 
-    public MenuViewer(Menu model) throws IOException {
+
+    public MenuViewer(T model, ViewerProvider viewerProvider) throws IOException {
         super(model);
-        this.optionViewer = new OptionViewer();
+        this.optionViewer = viewerProvider.getEntryViewer();
         this.particleViewer = new ParticleViewer();
+        this.logoViewer = viewerProvider.getLogoViewer();
     }
 
     @Override
     public void draw(GUI gui, long time) throws IOException {
         gui.cls();
-        drawRetroDynamicBackground(gui, time);
+        if (getModel() instanceof MainMenu) {
+            drawRetroDynamicBackground(gui, time, true); // Gray gradient
+        } else if (getModel() instanceof SettingsMenu) {
+            drawRetroDynamicBackground(gui, time, false); // Slightly colorful gradient
+        }
+        logoViewer.draw(gui, 90, 30);
         drawParticles(gui, getModel().getParticles(), particleViewer, time);
-        this.drawOptions(gui, getModel().getOptions(), optionViewer, time);
+        this.drawOptions((RescalableGUI) gui, getModel().getOptions(), optionViewer, time);
         gui.flush();
     }
 
     private void drawParticles(GUI gui, List<Particle> particles, ParticleViewer viewer, long time) throws IOException {
         for (Particle particle : particles) {
-            viewer.draw(particle, gui, time);
+            viewer.draw(particle, gui, time, 0, 0);
         }
     }
 
-    private void drawOptions(GUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
+    private void drawOptions(RescalableGUI gui, List<Option> options, OptionViewer viewer, long time) throws IOException {
         int animationDuration = 20; // Number of ticks for the animation
         int maxOffsetX = 40; // Maximum horizontal movement (how far right to start the animation)
 
@@ -81,12 +83,10 @@ public class MenuViewer extends ScreenViewer<Menu> {
             }
 
             // Update the option's position with the new x value
-            Option updatedOption = new Option(currentPositionX, (int) option.getPosition().y(), option.getText());
+            Option updatedOption = new Option(currentPositionX, (int) option.getPosition().y(), option.getType());
 
             // Determine if the option is selected
             boolean isSelected = getModel().isSelected(idx);
-            boolean isSelectedStart = getModel().isSelectedStart(); // New method to determine if transition is happening
-
             // Apply blink effect for the selected option
             if (isSelected && time >= 80) {
                 boolean isVisible = (time / 8) % 2 == 0; // Toggle visibility every 10 ticks
@@ -105,27 +105,28 @@ public class MenuViewer extends ScreenViewer<Menu> {
                 viewer.draw(updatedOption, gui, isSelected ? selectedColor : unselectedColor);
             }
 
-            // Debug output for option position
-            System.out.println("Option pos : " + currentPositionX + ", " + (int) option.getPosition().y() + " " + option.getText());
         }
     }
 
-
-    // Gradient calculation for the selected option (from green to red)
-    private TextColor.RGB calculateGradient(int idx, int totalOptions) {
-        int r = (int) (255 * (idx / (float) totalOptions));
-        int g = (int) (255 * (1 - (idx / (float) totalOptions)));
-        return new TextColor.RGB(r, g, 0);
-    }
-
-    private void drawRetroDynamicBackground(GUI gui, long time) throws IOException {
-        int screenWidth = 160;
-        int screenHeight = 90;
+    private void drawRetroDynamicBackground(GUI gui, long time, boolean isGrayGradient) throws IOException {
+        int screenWidth = 184;
+        int screenHeight = 112;
         double changeRate = 0.05;
+
         // Generate a retro gradient background
         for (int w = 0; w < screenWidth; w++) {
-            int colorValue = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate)); // Oscillating gray shades
-            TextColor.RGB gradientColor = new TextColor.RGB(colorValue, colorValue, colorValue);
+            int red, green, blue;
+
+            if (isGrayGradient) {
+                int gray = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate));
+                red = green = blue = gray; // Use grayscale values
+            } else {
+                red = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate));
+                green = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate + Math.PI / 3)); // Slightly reduced green
+                blue = (int) (128 + 127 * Math.sin((double) w / screenWidth * 2 * Math.PI + time * changeRate + 2 * Math.PI / 3)); // Slightly reduced blue
+            }
+
+            TextColor.RGB gradientColor = new TextColor.RGB(red, green, blue);
 
             for (int h = 0; h < screenHeight; h++) {
                 gui.drawPixel(w, h, gradientColor);
@@ -133,7 +134,7 @@ public class MenuViewer extends ScreenViewer<Menu> {
         }
 
         // Add a retro-style border
-        TextColor.RGB borderColor = new TextColor.RGB(25, 25, 25);
+        TextColor.RGB borderColor = new TextColor.RGB(40, 25, 25);
         for (int w = 0; w < screenWidth; w++) {
             gui.drawPixel(w, 0, borderColor);
             gui.drawPixel(w, screenHeight - 1, borderColor);
@@ -142,15 +143,5 @@ public class MenuViewer extends ScreenViewer<Menu> {
             gui.drawPixel(0, h, borderColor);
             gui.drawPixel(screenWidth - 1, h, borderColor);
         }
-    }
-
-
-    private  <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time) throws IOException {
-        for (T element : elements)
-            drawElement(gui, element, viewer, time);
-    }
-
-    private  <T extends Element> void drawElement(GUI gui, T element, ElementViewer<T> viewer, long time) throws IOException {
-        viewer.draw(element, gui, time);
     }
 }

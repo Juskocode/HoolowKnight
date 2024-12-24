@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.IOException;
+
 import static HollowKnight.gui.GUI.ACTION.*;
 import static org.mockito.Mockito.*;
 
@@ -33,7 +35,7 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void move() {
+    public void move() throws IOException {
         playerController.move(game, NULL, 0);
 
         verify(knight, times(1)).setVelocity(knight.updateVelocity());
@@ -49,7 +51,7 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void moveLeft() {
+    public void moveLeft() throws IOException {
         playerController.move(game, LEFT, 0);
 
         verify(knight, times(1)).setVelocity(knight.moveLeft());
@@ -62,7 +64,7 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void moveRight() {
+    public void moveRight() throws IOException {
         playerController.move(game, RIGHT, 0);
 
         verify(knight, times(1)).setVelocity(knight.moveRight());
@@ -75,7 +77,7 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void jump() {
+    public void jump() throws IOException {
         playerController.move(game, JUMP, 0);
 
         verify(knight, times(1)).setVelocity(knight.jump());
@@ -87,13 +89,24 @@ class PlayerControllerTest {
     }
 
     @Test
-    public void kill() {
+    public void kill() throws IOException {
         playerController.move(game, KILL, 0);
 
         verify(knight, times(1)).setState(any(RespawnState.class)); // Verify state changes to RespawnState
-        verify(knight, times(1)).setVelocity(knight.updateVelocity());
 
         verify(knight, times(1)).setPosition(knight.updatePosition());
         verify(knight, times(1)).getNextState();
+    }
+
+    @Test
+    public void dash() throws IOException {
+        playerController.move(game,DASH,0);
+
+        verify(knight, times(1)).setVelocity(knight.dash());
+        verify(knight, never()).setFacingRight(anyBoolean()); // Dash shouldn't affect facing direction
+
+        verify(knight, times(1)).setPosition(knight.updatePosition());
+        verify(knight, times(1)).getNextState();
+        verify(knight, times(1)).setState(Mockito.any());
     }
 }

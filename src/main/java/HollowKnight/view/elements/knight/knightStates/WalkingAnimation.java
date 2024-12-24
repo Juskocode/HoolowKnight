@@ -1,9 +1,8 @@
 package HollowKnight.view.elements.knight.knightStates;
 
 import HollowKnight.model.game.elements.Knight.WalkingState;
-import HollowKnight.view.elements.PairList;
+import HollowKnight.model.dataStructs.PairList;
 import HollowKnight.view.sprites.Sprite;
-import jdk.jshell.spi.SPIResolutionException;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,17 +1,22 @@
 package HollowKnight.model.game.elements.Knight;
 
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
+import HollowKnight.model.game.scene.Scene;
+import HollowKnight.model.game.scene.SceneLoader;
+
+import java.io.IOException;
 
 public class RespawnState extends KnightState {
 
     private long deathTimer;
+    private int cntRespawnPart;
 
     public RespawnState(Knight knight, long deathTimer) {
         super(knight);
         this.deathTimer = deathTimer;
-        knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
+        this.cntRespawnPart =0;
+        //knight.getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
     }
 
     @Override
@@ -32,12 +37,22 @@ public class RespawnState extends KnightState {
     }
 
     @Override
-    public KnightState getNextState()
-    {
+    public KnightState getNextState() throws IOException {
+        Scene scene = getKnight().getScene();
+
         if (deathTimer <= 0) {
-            Position respawn = new Position(getKnight().getPosition().x(), 0);
-            getKnight().setPosition(respawn);
+            SceneLoader sceneLoader = new SceneLoader(scene.getSceneID());
+            getKnight().increaseDeaths();
+            sceneLoader.setOrbs(scene);
+            getKnight().setOrbs(scene.getSceneID()*3);
+            getKnight().setHP(50);
+            getKnight().setPosition(scene.getStartPosition());
+            getKnight().setGotHit(false);           //if player dies to damage then he resets the boolean to receive damage
             return new FallingState(getKnight());
+        }
+        if(cntRespawnPart==0){ //this is done exclusively for testing purposes
+            cntRespawnPart++;
+            getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(450));
         }
         return this;
     }

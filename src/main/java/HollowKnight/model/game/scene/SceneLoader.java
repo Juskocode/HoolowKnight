@@ -1,39 +1,49 @@
 package HollowKnight.model.game.scene;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.game.elements.Collectables.Collectables;
-import HollowKnight.model.game.elements.Collectables.EnergyOrb;
-import HollowKnight.model.game.elements.Collectables.HealthOrb;
-import HollowKnight.model.game.elements.Collectables.SpeedOrb;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.game.elements.Collectables.*;
+import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RainParticle;
-import HollowKnight.model.game.elements.Tree.MediumTree;
-import HollowKnight.model.game.elements.Tree.SmallTree;
-import HollowKnight.model.game.elements.enemies.MinhoteMonster;
-import HollowKnight.model.game.elements.enemies.PurpleMonster;
-import HollowKnight.model.game.elements.enemies.SwordMonster;
-import HollowKnight.model.game.elements.rocks.BigRock;
-import HollowKnight.model.game.elements.rocks.SmallRock;
+import HollowKnight.model.game.elements.Spike;
+import HollowKnight.model.game.elements.Tree;
+import HollowKnight.model.game.elements.enemies.*;
+import HollowKnight.model.game.elements.rocks.Rock;
 import HollowKnight.model.game.elements.tile.Tile;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Character.isLetterOrDigit;
+import static java.lang.Character.isSpaceChar;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class SceneLoader {
     private final List<String> lines;
+    private final int sceneID;
+
     private final int TILE_SIZE = 8;
 
-    public SceneLoader() throws IOException {
-        URL resource = getClass().getClassLoader().getResource("levels/levelKnight.lvl");
-        assert resource != null;
-        BufferedReader br = new BufferedReader(new FileReader(resource.getFile()));
+    public SceneLoader(int id) throws IOException {
+        this.sceneID = id;
+        URL resource = getClass().getClassLoader().getResource("levels/level" + id + ".lvl");
+        if (resource == null){
+            throw new FileNotFoundException("Level file not found!");
+        }
+        Path path = Paths.get(new File(resource.getFile()).toURI());
+        BufferedReader br = Files.newBufferedReader(path, UTF_8);
+
 
         lines = readLines(br);
     }
@@ -45,23 +55,28 @@ public class SceneLoader {
         return lines;
     }
 
-    public Scene createScene() {
-        Scene scene = new Scene(160, 88);
+    public Scene createScene(Knight knight) {
+        Scene scene = new Scene(230, 130, sceneID);
 
+        scene.setPlayer(createPlayer(scene, knight));
+        scene.setStartPosition(scene.getPlayer().getPosition());
+        scene.setMap(createMap(scene));
         scene.setTiles(createWalls(scene));
-        scene.setSmallTrees(createSmallTrees(scene));
-        scene.setMediumTrees(createMediumTrees(scene));
-        scene.setBigRocks(createBigRocks(scene));
-        scene.setSmallRocks(createSmallRocks(scene));
-        scene.setSwordMonsters(createSwordMonsters(scene));
-        scene.setPurpleMonsters(createPurpleMonsters(scene));
-        scene.setMinhoteMonsters(createMinhoteMonsters(scene));
-        scene.setPlayer(createPlayer());
-        scene.setParticles(createParticles(0, scene));
-        scene.setEnergyOrbs(createEnergyOrbs(scene));
-        scene.setHealthOrbs(createHealthOrbs(scene));
-        scene.setSpeedOrbs(createSpeedOrbs(scene));
+
+        scene.setSpikes(createSpikes(scene));
+        scene.setTrees(createTrees(scene));
+        scene.setRocks(createRocks(scene));
+        scene.setOrbs(createOrbs(scene));
+
+        scene.setMonsters(createMonsters(scene));
+        scene.setParticles(createParticles(15, scene));
+
+
         return scene;
+    }
+
+    public void setOrbs(Scene scene) {
+        scene.setOrbs(createOrbs(scene));
     }
 
     protected int getWidth() {
@@ -75,14 +90,34 @@ public class SceneLoader {
         return lines.size();
     }
 
+    private Element[][] createMap(Scene scene) {
+        Element[][] map = new Element[scene.getHeight()][scene.getWidth()];
+
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G'|| line.charAt(x) == 'L') {
+                    map[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
+                }
+                else if (line.charAt(x) == 'u') {
+                    scene.setEndPosition(new Position(x*TILE_SIZE,y*TILE_SIZE));
+                }
+                else
+                    map[y][x] = null;
+            }
+        }
+
+        return map;
+    }
+
     private Tile[][] createWalls(Scene scene) {
         Tile[][] walls = new Tile[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'x') {
-                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'x' || line.charAt(x) == 'M' || line.charAt(x) == 'G' || line.charAt(x) == 'L') {
+                    walls[y][x] = new Tile(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
                 else
                     walls[y][x] = null;
@@ -92,117 +127,75 @@ public class SceneLoader {
         return walls;
     }
 
-    private SmallTree[][] createSmallTrees(Scene scene) {
-        SmallTree[][] trees = new SmallTree[scene.getHeight()][scene.getWidth()];
+    private Spike[][] createSpikes(Scene scene) {
+        Spike[][] spikes = new Spike[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 't') {
-                    trees[y][x] = new SmallTree(x * TILE_SIZE, y * TILE_SIZE);
+                if (!isLetterOrDigit(line.charAt(x)) && !isSpaceChar(line.charAt(x)) && line.charAt(x) != '*')
+                    spikes[y][x] = new Spike(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
+                else {
+                    spikes[y][x] = null;
                 }
             }
         }
+        return spikes;
+    }
+    private Tree[][] createTrees(Scene scene) {
+        Tree[][] trees = new Tree[scene.getHeight()][scene.getWidth()];
 
+        for (int y = 0; y < lines.size(); y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == 't' || line.charAt(x) == 'T')
+                    trees[y][x] = new Tree(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
+                else {
+                    trees[y][x] = null;
+                }
+            }
+        }
         return trees;
     }
 
-    private MediumTree[][] createMediumTrees(Scene scene) {
-        MediumTree[][] trees = new MediumTree[scene.getHeight()][scene.getWidth()];
+    private Rock[][] createRocks(Scene scene) {
+        Rock[][] rocks = new Rock[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'T') {
-                    trees[y][x] = new MediumTree(x * TILE_SIZE, y * TILE_SIZE);
+                if (line.charAt(x) == 'R' || line.charAt(x) == 'r') {
+                    rocks[y][x] = new Rock(x * TILE_SIZE, y * TILE_SIZE, line.charAt(x));
                 }
             }
         }
-
-        return trees;
-    }
-
-    private BigRock[][] createBigRocks(Scene scene) {
-        BigRock[][] rocks = new BigRock[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'R') {
-                    rocks[y][x] = new BigRock(x * TILE_SIZE, y * TILE_SIZE);
-                }
-            }
-        }
-
         return rocks;
     }
 
-    private SmallRock[][] createSmallRocks(Scene scene) {
-        SmallRock[][] rocks = new SmallRock[scene.getHeight()][scene.getWidth()];
+
+    public Collectables[][] createOrbs(Scene scene) {
+        Collectables[][] orbs = new Collectables[scene.getHeight()][scene.getWidth()];
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'r') {
-                    rocks[y][x] = new SmallRock(x * TILE_SIZE, y * TILE_SIZE);
-                }
+                char type = line.charAt(x);
+                orbs[y][x] = OrbFactory.createOrb(type, x * TILE_SIZE, y * TILE_SIZE);
             }
         }
-
-        return rocks;
+        return orbs;
     }
 
-    private EnergyOrb[][] createEnergyOrbs(Scene scene){
-        EnergyOrb[][] energyOrbs = new EnergyOrb[scene.getHeight()][scene.getWidth()];
+    private List<Enemies> createMonsters(Scene scene) {
+        List<Enemies> monsters = new ArrayList<>();
 
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'e') {
-                    energyOrbs[y][x] = new EnergyOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
-                }
-            }
-        }
-        return energyOrbs;
-    }
-
-    private HealthOrb[][] createHealthOrbs(Scene scene){
-        HealthOrb[][] healthOrbs = new HealthOrb[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'h') {
-                    healthOrbs[y][x] = new HealthOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
-                }
-            }
-        }
-        return healthOrbs;
-    }
-
-
-    private SpeedOrb[][] createSpeedOrbs(Scene scene) {
-        SpeedOrb[][] speedOrbs = new SpeedOrb[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 's') {
-                    speedOrbs[y][x] = new SpeedOrb(x * TILE_SIZE, y * TILE_SIZE, 10);
-                }
-            }
-        }
-        return speedOrbs;
-    }
-
-    private SwordMonster[][] createSwordMonsters(Scene scene) {
-        SwordMonster[][] monsters = new SwordMonster[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'E') {
-                    monsters[y][x] = new SwordMonster(x * TILE_SIZE, y * TILE_SIZE);
+                char type = line.charAt(x);
+                Enemies monster = MonsterFactory.createMonster(x * TILE_SIZE, y * TILE_SIZE, scene, type);
+                if (monster != null) {
+                    monsters.add(monster);
                 }
             }
         }
@@ -210,45 +203,19 @@ public class SceneLoader {
         return monsters;
     }
 
-    private PurpleMonster[][] createPurpleMonsters(Scene scene) {
-        PurpleMonster[][] monsters = new PurpleMonster[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'l') {
-                    monsters[y][x] = new PurpleMonster(x * TILE_SIZE, y * TILE_SIZE);
-                }
-            }
-        }
-
-        return monsters;
-    }
-
-    private MinhoteMonster[][] createMinhoteMonsters(Scene scene) {
-        MinhoteMonster[][] monsters = new MinhoteMonster[scene.getHeight()][scene.getWidth()];
-
-        for (int y = 0; y < lines.size(); y++) {
-            String line = lines.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == 'M') {
-                    monsters[y][x] = new MinhoteMonster(x * TILE_SIZE, y * TILE_SIZE);
-                }
-            }
-        }
-        return monsters;
-    }
-
-    private Knight createPlayer() {
+    private Knight createPlayer(Scene scene, Knight knight) {
         for (int y = 0; y < lines.size(); y++) {
             String line = lines.get(y);
             for (int x = 0; x < line.length(); x++) {
                 if (line.charAt(x) == 'P') {
-                    return new Knight(x * TILE_SIZE, y * TILE_SIZE - 2, 50, 10, 5);
+                    knight.setPosition(new Position(x * TILE_SIZE, y * TILE_SIZE - 2));
+                    knight.setScene(scene);
+                    return knight;
                 }
             }
         }
-        return null;
+        throw new IllegalStateException("Knight not found within the level file!");
+
     }
 
     private List<Particle> createParticles(int size, Scene scene) {

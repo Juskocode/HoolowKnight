@@ -4,13 +4,21 @@ import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
+import HollowKnight.model.game.scene.SceneLoader;
+import HollowKnight.model.menu.MainMenu;
+import HollowKnight.state.MainMenuState;
+import HollowKnight.view.sprites.GameSpriteLoader;
+import net.jqwik.api.*;
+import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class SceneControllerTest {
     private Game game;
@@ -18,6 +26,8 @@ class SceneControllerTest {
     private Scene scene;
     private PlayerController playerController;
     private ParticleController particleController;
+    private EnemieController enemieController;
+    private GameSpriteLoader gameSpriteLoader;
     @BeforeEach
     void setUp() {
         this.game = Mockito.mock(Game.class);
@@ -26,7 +36,10 @@ class SceneControllerTest {
         Mockito.when(scene.getPlayer()).thenReturn(knight);
         this.playerController = Mockito.mock(PlayerController.class);
         this.particleController = Mockito.mock(ParticleController.class);
-        this.sceneController = new SceneController(scene, playerController, particleController);
+        this.enemieController = Mockito.mock(EnemieController.class);
+        this.sceneController = new SceneController(scene, playerController, particleController, enemieController);
+        this.gameSpriteLoader = new GameSpriteLoader();
+        when(game.getSpriteLoader()).thenReturn(gameSpriteLoader);
     }
 
     @Test
@@ -35,7 +48,7 @@ class SceneControllerTest {
         Mockito.verify(playerController, Mockito.times(1))
                 .move(game, GUI.ACTION.NULL, 0);
         Mockito.verify(game, Mockito.times(0))
-                .setState(Mockito.any());
+                .setState(any());
         Mockito.verify(particleController, Mockito.times(1))
                 .move(game, GUI.ACTION.NULL, 0);
     }
@@ -46,10 +59,30 @@ class SceneControllerTest {
         Mockito.verify(playerController, Mockito.times(0))
                 .move(game, GUI.ACTION.NULL, 0);
         Mockito.verify(game, Mockito.times(1))
-                .setState(null);
+                .setState(any(MainMenuState.class));
         Mockito.verify(particleController, Mockito.times(0))
                 .move(game, GUI.ACTION.NULL, 0);
     }
 
+    @Property
+    void allArenasAreClosed(@ForAll @IntRange(min = 3, max = 50) int width, @ForAll @IntRange(min = 3, max = 50) int height,
+                                @ForAll List<GUI.@From("moveActions") ACTION> actions) throws IOException
+    {
+        SceneLoader sceneLoader = new SceneLoader(0);
+        Scene newScene = sceneLoader.createScene(new Knight(1,1,50,5f, 6)); //TODO add knight
+        PlayerController controller = new PlayerController(newScene);
 
+        for (GUI.ACTION action : actions) {
+            controller.move(null, action, 100);
+            assert (controller.getModel().getPlayer().getPosition().x() > 0);
+            assert (controller.getModel().getPlayer().getPosition().y() > 0);
+            /*assert (controller.getModel().getPlayer().getPosition().x() < width+1);
+            assert (controller.getModel().getPlayer().getPosition().y() < height+1);*/
+        }
+    }
+
+    @Provide
+    Arbitrary<GUI.ACTION> moveActions() {
+        return Arbitraries.of( GUI.ACTION.RIGHT, GUI.ACTION.LEFT);
+    }
 }

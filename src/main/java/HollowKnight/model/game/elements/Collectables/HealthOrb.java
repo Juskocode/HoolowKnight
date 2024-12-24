@@ -4,9 +4,11 @@ import HollowKnight.model.game.elements.Knight.Knight;
 
 public class HealthOrb extends Collectables{
     private int health;
-    public HealthOrb(int x, int y, int health){
-        super(x,y,"Health");
+    private final char symbol;
+    public HealthOrb(int x, int y, int health, char symbol){
+        super(x,y);
         this.health = health;
+        this.symbol = symbol;
     }
 
     public int getHealth() {
@@ -20,5 +22,10 @@ public class HealthOrb extends Collectables{
     @Override
     public void benefit(Knight knight){
         knight.setHP(knight.getHP()+ this.health);
+    }
+
+    @Override
+    public char getChar() {
+        return symbol;
     }
 }

@@ -3,7 +3,7 @@ package HollowKnight.controller.menu;
 import HollowKnight.Game;
 import HollowKnight.controller.Controller;
 import HollowKnight.gui.GUI;
-import HollowKnight.model.Position;
+import HollowKnight.model.dataStructs.Position;
 import HollowKnight.model.menu.Menu;
 import HollowKnight.model.menu.Particle;
 import HollowKnight.state.particle.*;
@@ -15,8 +15,8 @@ import java.util.Random;
 public class ParticleMenuController extends Controller<Menu> {
     private double windAngle = 0; // Current wind direction in radians
     private double windSpeed = 2; // Current wind speed
-    private final int screenWidth = 159;
-    private final int screenHeight = 89;
+    private final int screenWidth = 220;
+    private final int screenHeight = 110;
     private final Random random = new Random();
 
     // Colors for the gradient
@@ -26,8 +26,8 @@ public class ParticleMenuController extends Controller<Menu> {
     private TextColor.RGB nextEndColor = randomColor();
     private int transitionStartTick = -1; // Tick when the transition begins
 
-    public ParticleMenuController(Menu model) {
-        super(model);
+    public ParticleMenuController(Menu menu) {
+        super(menu);
     }
 
     public double getWindAngle() {

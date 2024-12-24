@@ -1,15 +1,13 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.elements.Element;
-import HollowKnight.model.game.elements.Particle.DoubleJumpParticle;
-import HollowKnight.model.game.elements.Particle.JumpParticle;
-import HollowKnight.model.game.elements.Particle.Particle;
-import HollowKnight.model.game.elements.Particle.RespawnParticle;
+import HollowKnight.model.game.elements.Particle.*;
 import HollowKnight.model.game.scene.Scene;
 import com.googlecode.lanterna.TextColor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +21,7 @@ public class Knight extends Element {
     private int HP;
     private float Damage_multiplier;
     private int Energy;
+    private int orbs = 0;
     private Vector velocity;
     private Vector maxVelocity;
     private double acceleration;
@@ -32,6 +31,10 @@ public class Knight extends Element {
     private double dashBoost;
     private final int offSetX = 4;
     private final int offSetY = 1;
+    private boolean gotHit;
+    private int deaths;
+    private long birthTime;
+
 
     //General Knight's attributes
     public Knight(int x, int y, int HP, float Damage_multiplier, int Energy){
@@ -47,12 +50,16 @@ public class Knight extends Element {
         this.state = new IdleState(this);
         this.isFacingRight = true;
         this.jumpCounter = 0;
-        this.dashBoost = 5;
+        this.dashBoost = 6;
+        this.gotHit = false;
+        this.orbs = 0;
+        this.deaths = 0;
+        this.birthTime = System.currentTimeMillis();
         //assigns the supplied values (and some other default values) to the Knight's attributes
     }
 
     //GETTERS
-    public KnightState getNextState() {
+    public KnightState getNextState() throws IOException {
         return state.getNextState();
     }
 
@@ -111,6 +118,11 @@ public class Knight extends Element {
     public double getDashBoost() {
         return dashBoost;
     }
+
+    public boolean isGotHit() {
+        return gotHit;
+    }
+
     //SETTERS
 
     public void setHP(int HP) {
@@ -125,16 +137,12 @@ public class Knight extends Element {
         this.Damage_multiplier = damage;
     }
 
-    public void setEnergy(int energy) {
-        Energy = energy;
+    public void setEnergy(int Energy) {
+        this.Energy = Energy;
     }
 
     public void setJumpCounter(int jumpCounter) {
         this.jumpCounter = jumpCounter;
-    }
-
-    public void setAcceleration(double acceleration) {
-        this.acceleration = acceleration;
     }
 
     public void setMaxVelocity(Vector maxVelocity) {
@@ -149,17 +157,13 @@ public class Knight extends Element {
         this.scene = scene;
     }
 
-    public void setDashBoost(double dashBoost) {
-        this.dashBoost = dashBoost;
-    }
-
     public void setState(KnightState state) {
         this.state = state;
     }
 
-    public void multiplyDamage(float damage) {
-        this.Damage_multiplier = this.Damage_multiplier * damage;
-    } // Used for collectables that multiply damage.
+    public void setGotHit(boolean gotHit) {
+        this.gotHit = gotHit;
+    }
 
     public Vector updateVelocity() {
         return state.updateVelocity(velocity);
@@ -192,6 +196,22 @@ public class Knight extends Element {
         return state.jump();
     }
     public Vector dash(){return state.dash();}
+
+    public void increaseDeaths() {
+        this.deaths++;
+    }
+    public int getNumberOfDeaths() {
+        return deaths;
+    }
+
+    public long getBirthTime() {
+        return birthTime;
+    }
+    public void setBirthTime(long birthTime) {this.birthTime = birthTime; }
+
+
+
+    ////////////Create Knight Particles ///////////////////////////////////////////////
 
     public List<Particle> createParticlesDoubleJump(int size, Scene scene) {
         List<Particle> particles = new ArrayList<>();
@@ -283,6 +303,38 @@ public class Knight extends Element {
         return particles;
     }
 
+    public List<Particle> createDashParticles(int size){
+        List<Particle> particles = new ArrayList<>();
+        Random random = new Random();
+
+        double coneAngle = Math.toRadians(90); // Total cone spread (45 degrees)
+        double baseSpeed = -jumpBoost / 2.0;     // Base speed magnitude
+
+        // Starting position (centered at the entity's position)
+        double startX = this.getPosition().x() + getWidth() / 2.0;
+        double startY = this.getPosition().y() + getHeight();
+
+        for (int i = 0; i < size; i++) {
+            // Randomize a position within the cone
+            double factor = random.nextDouble(); // 0.0 to 1.0 (distance from the center)
+            double angle = (random.nextDouble() - 0.5) * coneAngle; // Random angle within the cone
+
+            // Calculate speedX and speedY based on the ^ shape
+            double speedX = baseSpeed * factor * Math.sin(angle) - (getVelocity().x() / 1.10); // Increases with factor
+            double speedY = baseSpeed * (1 - factor); // High upward speed at the center, reduces outward
+
+            Position velocity = new Position(speedX, speedY);
+
+            // Add the particle with calculated properties
+            particles.add(new DashParticle(
+                    (int)startX, // All particles start from the same X position
+                    (int)startY, // All particles start from the same Y position
+                    velocity,
+                    new TextColor.RGB(0, 0, 0))); // Adjust color as needed
+        }
+        return particles;
+    }
+
     public void resetValues(){
         this.isFacingRight = true;
         this.state = new FallingState(this);
@@ -303,8 +355,27 @@ public class Knight extends Element {
         return scene.collidesDown(positionBelow, playerSize);
     }
 
-    public void setJumpBoost(double jumpBoost) {
-        this.jumpBoost = jumpBoost;
+    public void PlayerHit(int damage){
+        if(gotHit) return;  // works as a timeout to prevent multiple collisions on the player almost instantly
+        if (this.HP == 0)
+            this.HP = 1;
+        //simply formula that translates more particles when low hp and high dmg hit
+        double ratio = 1.0 - (this.HP / 50.0);
+        double blood = 10.0 * ratio;
+        setState(new DamagedState(this, (int)blood + (damage / 5)));
+        setHP(this.HP - damage);
+        setGotHit(true);
     }
 
+    public int getOrbs() {
+        return orbs;
+    }
+
+    public void setOrbs(int orbs) {
+        this.orbs = orbs;
+    }
+
+    public void addOrbs() {
+        orbs++;
+    }
 }

@@ -1,7 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
-import HollowKnight.state.GameState;
+import HollowKnight.model.dataStructs.Vector;
 
 public class MaxVelocityState extends KnightState {
 
@@ -28,6 +27,7 @@ public class MaxVelocityState extends KnightState {
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
+        getKnight().getScene().setDashParticles(getKnight().createDashParticles(10));
         return applyCollisions(newVelocity);
     }
     @Override
@@ -42,6 +42,8 @@ public class MaxVelocityState extends KnightState {
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getParticlesTimer() == 0)
         {
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));

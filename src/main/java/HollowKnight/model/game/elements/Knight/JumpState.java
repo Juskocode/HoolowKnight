@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 
 public class JumpState extends KnightState {
 
@@ -32,6 +32,7 @@ public class JumpState extends KnightState {
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
+        getKnight().getScene().setDashParticles(getKnight().createDashParticles(10));
         return applyCollisions(newVelocity);
     }
 
@@ -58,6 +59,8 @@ public class JumpState extends KnightState {
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getParticlesTimer() == 0)
         {
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));

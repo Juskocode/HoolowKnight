@@ -1,6 +1,6 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Vector;
 
 public class FallingState extends KnightState{
     public FallingState(Knight knight){
@@ -14,7 +14,7 @@ public class FallingState extends KnightState{
                 getKnight().setJumpCounter(getKnight().getJumpCounter() + 1);
                 Vector newVelocity = new Vector(
                         getKnight().getVelocity().x(),
-                        getKnight().getVelocity().y() - (getKnight().getJumpBoost())
+                        getKnight().getVelocity().y() - getKnight().getJumpBoost()
                 );
                 getKnight().getScene().setDoubleJumpParticles(getKnight().createParticlesDoubleJump(20, getKnight().getScene()));
                 //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");
@@ -31,6 +31,7 @@ public class FallingState extends KnightState{
                         -getKnight().getDashBoost()),
                 getKnight().getVelocity().y()
         );
+        getKnight().getScene().setDashParticles(getKnight().createDashParticles(10));
         return applyCollisions(newVelocity);
     }
     @Override
@@ -58,6 +59,8 @@ public class FallingState extends KnightState{
 
     @Override
     public KnightState getNextState() {
+        if (getKnight().getScene().collideSpike())
+            return new RespawnState(getKnight(), 10);
         if (getParticlesTimer() == 0)
         {
             getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(0));

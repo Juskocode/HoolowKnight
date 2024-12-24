@@ -1,10 +1,9 @@
 package HollowKnight.model.game.elements.Particle;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.elements.Element;
 import HollowKnight.model.game.scene.Scene;
-import HollowKnight.model.menu.Menu;
 import com.googlecode.lanterna.TextColor;
 
 import static java.lang.Math.max;
@@ -77,7 +76,7 @@ public abstract class Particle extends Element {
 
     // Random regeneration delay between MIN_REGEN_DELAY and MAX_REGEN_DELAY ticks
     public long getRandomRegenerationDelay() {
-        return MIN_REGEN_DELAY + (int)(Math.random() * (MAX_REGEN_DELAY - MIN_REGEN_DELAY));
+        return (long) MIN_REGEN_DELAY + (int)(Math.random() * (MAX_REGEN_DELAY - MIN_REGEN_DELAY));
     }
 
     protected abstract Vector applyCollisions(Vector velocity);
@@ -91,4 +90,6 @@ public abstract class Particle extends Element {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
+
+
 }

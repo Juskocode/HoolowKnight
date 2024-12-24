@@ -1,39 +1,52 @@
 package HollowKnight;
 
 
-import HollowKnight.gui.LanternaGUI;
-import HollowKnight.model.game.scene.SceneLoader;
-import HollowKnight.model.menu.Menu;
-import HollowKnight.state.GameState;
-import HollowKnight.state.MenuState;
+import HollowKnight.gui.*;
+import HollowKnight.model.menu.MainMenu;
+import HollowKnight.sound.MenuSoundPlayer;
+import HollowKnight.sound.SoundLoader;
+import HollowKnight.state.MainMenuState;
 import HollowKnight.state.State;
+import HollowKnight.view.sprites.GameSpriteLoader;
+import HollowKnight.view.sprites.SpriteLoader;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
+import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game {
+    public static final int PIXEL_WIDTH = 230;
+    public static final int PIXEL_HEIGHT = 130;
+    private final MenuSoundPlayer menuSoundPlayer;
+    private final SpriteLoader spriteLoader;
+
+    private long fpsLastUpdate = System.currentTimeMillis();
+    private int frames = 0;
+    private int currentFps = 0;
+
     private final LanternaGUI gui;
-    private State state;
+    private State<?> state;
 
-    private Game() throws IOException, URISyntaxException, FontFormatException {
-        int SCREEN_WIDTH = 200;
-        int SCREEN_HEIGHT = 88;
-
-        Rectangle screenSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-        double maxFontWidth = width / SCREEN_WIDTH;
-        double maxFontHeight = height / SCREEN_HEIGHT;
-        int fontSize = (int) Math.min(maxFontWidth, maxFontHeight);
-
-        this.gui = new LanternaGUI(SCREEN_WIDTH, SCREEN_HEIGHT, 10);
-        this.state = new MenuState(new Menu());
+    private Game() throws Exception {
+        ScreenGenerator screenCreator = new LanternaScreenGenerator(
+                new DefaultTerminalFactory(),
+                new TerminalSize(PIXEL_WIDTH, PIXEL_HEIGHT),
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
+        );
+        this.gui = new LanternaGUI(screenCreator, "Soul Knight");
+        this.menuSoundPlayer = new MenuSoundPlayer(new SoundLoader().loadSound(AudioSystem
+                .getAudioInputStream(Objects.requireNonNull(getClass().getClassLoader().getResource("sound/demo.wav"))), AudioSystem.getClip()));
+        this.spriteLoader = new GameSpriteLoader();
+        this.state = new MainMenuState(new MainMenu(), spriteLoader);
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+    public static void main(String[] args) {
         Logger logger = Logger.getLogger(Game.class.getName());
         try {
             new Game().start();
@@ -42,18 +55,52 @@ public class Game {
         }
     }
 
-    public void setState(State state) {
+    public void setState(State<?> state) {
         this.state = state;
     }
 
-    private void start() throws IOException, InterruptedException {
+    public RescalableGUI.ResolutionScale getResolution() {
+        return gui.getResolutionScale();
+    }
+
+    public void setResolution(RescalableGUI.ResolutionScale resolution)
+            throws IOException, URISyntaxException, FontFormatException {
+        gui.setResolutionScale(resolution);
+    }
+
+    public int getNumberOfLevels() {
+        return 4;
+    }
+    public SpriteLoader getSpriteLoader() {
+        return spriteLoader;
+    }
+
+    private void start() throws IOException, InterruptedException, URISyntaxException, FontFormatException {
         int FPS = 30;
         int frameTime = 1000 / FPS;
         int tick = 0;
-        while (this.state != null) {    //Game loop
+
+        Thread.sleep(100);
+        menuSoundPlayer.start();
+        while (this.state != null) {    // Game loop
             long startTime = System.currentTimeMillis();
 
+            if (tick == 0) {
+                Thread.sleep(100);
+            }
+
             state.move(this, gui, tick);
+
+            // Update the FPS counter
+            frames++;
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - fpsLastUpdate >= 1000) {
+                currentFps = frames;
+                frames = 0;
+                fpsLastUpdate = currentTime;
+            }
+
+            gui.setFPS(currentFps);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = frameTime - elapsedTime;
@@ -64,6 +111,7 @@ public class Game {
 
         gui.close();
     }
+
 
     public Object getGUI() {
         return this.gui;

@@ -5,15 +5,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class HealthOrbTest {
     private HealthOrb healthOrb;
     private Knight knight;
     @BeforeEach
     void setUp() {
         this.knight = new Knight(0,0,10,1,50);
-        this.healthOrb = new HealthOrb(0,0,10);
+        this.healthOrb = new HealthOrb(0,0,10, 'h');
     }
     @Test
     void setHealthOrb(){
