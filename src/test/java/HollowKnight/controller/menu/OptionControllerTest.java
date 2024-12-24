@@ -9,6 +9,8 @@ import HollowKnight.state.GameState;
 import HollowKnight.state.MainMenuState;
 import HollowKnight.state.SettingsMenuState;
 import HollowKnight.state.State;
+import HollowKnight.view.sprites.GameSpriteLoader;
+import HollowKnight.view.sprites.SpriteLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,12 +27,14 @@ class OptionControllerTest {
     private Game game;
     private Menu menu;
     private OptionController optionController;
+    private GameSpriteLoader gameSpriteLoader;
 
     @BeforeEach
     public void setup(){
         this.game = Mockito.mock(Game.class);
         this.menu = Mockito.mock(Menu.class);
         doNothing().when(game).setState(isA(State.class));
+        this.gameSpriteLoader = new GameSpriteLoader();
 
         this.optionController = new OptionController(menu);
     }
@@ -39,6 +43,7 @@ class OptionControllerTest {
     public void StartGame() throws IOException, URISyntaxException, FontFormatException {
         Option e = new Option(0,0, Option.Type.START_GAME);
         when(menu.getCurrentOption()).thenReturn(e);
+        when(game.getSpriteLoader()).thenReturn(gameSpriteLoader);
 
         optionController.move(game, GUI.ACTION.NULL, 0);
         verify(game, Mockito.times(0))
@@ -53,6 +58,7 @@ class OptionControllerTest {
     public void stepSettings() throws IOException, URISyntaxException, FontFormatException {
         Option e = new Option(0,0, Option.Type.SETTINGS);
         when(menu.getCurrentOption()).thenReturn(e);
+        when(game.getSpriteLoader()).thenReturn(gameSpriteLoader);
 
         optionController.move(game, GUI.ACTION.NULL, 0);
         verify(game, Mockito.times(0))
@@ -81,6 +87,7 @@ class OptionControllerTest {
     public void stepMainMenu() throws IOException, URISyntaxException, FontFormatException {
         Option e = new Option(0,0, Option.Type.TO_MAIN_MENU);
         when(menu.getCurrentOption()).thenReturn(e);
+        when(game.getSpriteLoader()).thenReturn(gameSpriteLoader);
 
         optionController.move(game, GUI.ACTION.NULL, 0);
         verify(game, Mockito.times(0))

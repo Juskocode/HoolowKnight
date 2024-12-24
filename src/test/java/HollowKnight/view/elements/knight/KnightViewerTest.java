@@ -4,7 +4,9 @@ import HollowKnight.gui.GUI;
 import HollowKnight.model.game.elements.Knight.FallingState;
 import HollowKnight.model.game.elements.Knight.Knight;
 import HollowKnight.model.game.scene.Scene;
+import HollowKnight.view.sprites.GameSpriteLoader;
 import HollowKnight.view.sprites.Sprite;
+import HollowKnight.view.sprites.SpriteLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +19,13 @@ class KnightViewerTest {
 
     private Scene scene;
     private GUI gui;
+    private GameSpriteLoader gameSpriteLoader;
 
     @BeforeEach
     public void setup() {
         this.scene = mock(Scene.class);
         this.gui = mock(GUI.class);
+        this.gameSpriteLoader = mock(GameSpriteLoader.class);
     }
 
     @Test
@@ -29,8 +33,10 @@ class KnightViewerTest {
         Sprite sprite1 = mock(Sprite.class);
         Knight player = new Knight(20,30,50,3f, 50);
 
-        KnightViewer knightViewer = new KnightViewer();
+        KnightViewer knightViewer = new KnightViewer(gameSpriteLoader);
         long frameCount = 1000;
+
+        when(gameSpriteLoader.get("sprites/Knight/movement-left-7.png")).thenReturn(sprite1);
 
         player.setFacingRight(false);
         player.setState(new FallingState(player));

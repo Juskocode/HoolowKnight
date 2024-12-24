@@ -3,6 +3,7 @@ package HollowKnight.controller.game;
 import HollowKnight.Game;
 import HollowKnight.gui.GUI;
 import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.game.elements.enemies.Enemies;
 import HollowKnight.model.game.elements.enemies.GhostMonster;
 import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.enemies.SwordMonster;
@@ -30,26 +31,21 @@ class EnemieControllerTest {
 
     @Test
     void move() throws IOException {
-        List<PurpleMonster> purpleMonsters = new ArrayList<>();
-        List<SwordMonster> swordMonsters = new ArrayList<>();
-        List<GhostMonster> ghostMonsters = new ArrayList<>();
-
+        List<Enemies> monsters = new ArrayList<>();
         SwordMonster swordMonster = mock(SwordMonster.class);
         GhostMonster ghostMonster = mock(GhostMonster.class);
         PurpleMonster purpleMonster = mock(PurpleMonster.class);
 
 
-        purpleMonsters.add(purpleMonster);
-        swordMonsters.add(swordMonster);
-        ghostMonsters.add(ghostMonster);
+        monsters.add(purpleMonster);
+        monsters.add(swordMonster);
+        monsters.add(ghostMonster);
 
         when(purpleMonster.moveMonster()).thenReturn(new Position(5, 6));
         when(ghostMonster.moveMonster()).thenReturn(new Position(6, 7));
         when(swordMonster.moveMonster()).thenReturn(new Position(6,6));
 
-        when(scene.getPurpleMonsters()).thenReturn(purpleMonsters);
-        when(scene.getSwordMonsters()).thenReturn(swordMonsters);
-        when(scene.getGhostMonsters()).thenReturn(ghostMonsters);
+        when(scene.getMonsters()).thenReturn(monsters);
 
         enemieController.move(game, GUI.ACTION.NULL,20);
 
