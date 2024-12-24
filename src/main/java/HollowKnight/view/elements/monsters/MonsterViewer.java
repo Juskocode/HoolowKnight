@@ -56,7 +56,6 @@ public class MonsterViewer implements ElementViewer<Enemies> {
     private void drawGhostSpecificElements(GUI gui, Enemies model) {
         gui.drawHitBox((int) model.getPosition().x(), (int) model.getPosition().y(), 4, 4,
                 new TextColor.RGB(25, 25, 100));
-        gui.drawPixel((int) model.getPosition().x(), (int) model.getPosition().y(),
-                new TextColor.RGB(200, 105, 150));
+        //gui.drawPixel((int) model.getPosition().x(), (int) model.getPosition().y(), new TextColor.RGB(200, 105, 150));
     }
 }

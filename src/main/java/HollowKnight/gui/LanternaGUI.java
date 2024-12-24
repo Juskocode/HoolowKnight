@@ -167,7 +167,7 @@ public class LanternaGUI implements RescalableGUI {
 
     @Override
     public void drawHitBox(int x, int y, int width, int height, TextColor.RGB color) {
-        /*TextGraphics tg = screen.newTextGraphics();
+        TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(color);
 
         // Draw the top and bottom edges
@@ -180,7 +180,7 @@ public class LanternaGUI implements RescalableGUI {
         for (int dy = 1; dy < height - 1; dy++) {
             tg.putString(x, y + dy, " "); // Left edge
             tg.putString(x + width - 1, y + dy, " "); // Right edge
-        }*/
+        }
     }
 
     @Override

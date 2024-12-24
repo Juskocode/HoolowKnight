@@ -69,7 +69,7 @@ public class Game {
     }
 
     public int getNumberOfLevels() {
-        return 1;
+        return 4;
     }
     public SpriteLoader getSpriteLoader() {
         return spriteLoader;
