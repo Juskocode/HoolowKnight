@@ -19,15 +19,15 @@ public class Credits {
         this.seconds = (int) ((duration / 1000) % 60);
         this.minutes = (int) ((duration / 1000) / 60);
 
-        String[] messages = new String[2];
+        String[] messages = new String[1];
         messages[0] = "Game Over!";
-        messages[1] = "Thank you for playing :)";
         this.messages = messages;
 
-        String[] names = new String[3];
-        names[0] = "Andre Freitas";
-        names[1] = "   Joao Furtado";
-        names[2] = "    Joao Santos";
+        String[] names = new String[4];
+        names[0] = "Made By:";
+        names[1] = "Andre Freitas";
+        names[2] = "Joao Furtado";
+        names[3] = "Joao Santos";
         this.names = names;
     }
 
