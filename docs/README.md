@@ -63,6 +63,10 @@ Controller - interpret user inputs.
 
 #### Implementation
 The source code of the application has been divided into folders with names such as "model", "view" and "controller".
+The following diagram illustrates this structure:
+<p align="center">
+  <img src="uml/mvc.png"/>
+</p>
 
 #### Consequences
 This design patters ensures the code is organized and well separated. This reduces the number of conflicts, as we are only changing snippets of code at a time, making the process of developing softare more convenient.
@@ -82,6 +86,9 @@ We set a target for the amount of frames to be displayed in a second (in this ca
 
 #### Implementation:
 Our implementation of a Game Loop can be found in the Game Class, which is the entry point for our application.
+<p align="center">
+  <img src="uml/game-loop.png"/>
+</p>
 
 #### Consequences
 The positive consequences of choosing this design pattern are, as mentioned above, smooth and similar experiences across various user systems, as well as giving us, the developers, the capability of configuring the speed of execution of the game, to make the gameplay more relaxed or more fast paced.
@@ -103,6 +110,9 @@ This design pattern massively improves code scalability, as you can add function
 
 #### Implementation
 Our implementation of a State Pattern can be found in the HollowKnight.state package. It includes the abstract State class, as well its derived classes.
+<p align="center">
+  <img src="uml/gstate.png"/>
+</p>
 
 #### Consequences
 The State Design Pattern allows for increased modularity and ease of expandability. Also, the need for very long conditional statements is abolished. Finally, each screen is independent from the others, which makes our code compliant with the SOLID design principles.
@@ -137,6 +147,9 @@ By creating an Adapter, and interacting with it, instead of interacting directly
 
 #### Implementation
 The classes that serve as our implementation of an Adapter pattern can be found in HollowKnight.gui.
+<p align="center">
+  <img src="uml/adapter.png"/>
+</p>
 
 #### Consequences
 Using the Adapter Pattern makes the code easier to write, more modular, and generally, prettier looking.
@@ -155,6 +168,9 @@ The State Pattern allowed us to overcome all these hurdles. We started by creati
 #### Implementation
 The parent class KnightState and its child classes can be found in HollowKnight.model.game.elements.Knight. The child classes that implement the different states the knight can alternate between, AfterDashState.java, IdleState.java, MaxVelocityState.java, DamagedState.java, JumpState.java, RespawnState.java, DashState.java, RunningState.java, FallingState.java and      WalkingState.java.
 Each of these states implements independently methods such as jump(), dash(), updateVelocity(), among others.
+<p align="center">
+  <img src="uml/KnightStateStruct.png"/>
+</p>
 
 #### Consequences
 The code is much more organised and intuitive to read. The state pattern allows for a precise player's behaviour control, without needing to write overly messy code. Using this Design Pattern, it is easier to expand the game, implementing more states as needed.
@@ -169,6 +185,9 @@ In order to achieve these goals, we used the Flyweight Pattern. This Design Patt
 
 #### Implementation
 Our implementation of the Flyweight Pattern can be found on the GameSpriteLoader class and on all of the implementations of the interface ElementViewer.
+<p align="center">
+  <img src="uml/flyweight.png"/>
+</p>
 
 #### Consequences
 This Design Pattern helped us make our game more efficient, as it now demands less memory to run. Also, unit testing was simplified with this change.
