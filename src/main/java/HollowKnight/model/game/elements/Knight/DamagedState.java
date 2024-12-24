@@ -7,7 +7,6 @@ public class DamagedState extends KnightState{
     public DamagedState(Knight knight, int particles) {
         super(knight);
         this.ticks =0;
-        System.out.println(particles);
         getKnight().getScene().setRespawnParticles(getKnight().createRespawnParticles(particles));
     }
 

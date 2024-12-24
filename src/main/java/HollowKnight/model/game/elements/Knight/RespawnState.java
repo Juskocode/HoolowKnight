@@ -44,7 +44,7 @@ public class RespawnState extends KnightState {
             SceneLoader sceneLoader = new SceneLoader(scene.getSceneID());
             getKnight().increaseDeaths();
             sceneLoader.setOrbs(scene);
-            getKnight().setOrbs(0);
+            getKnight().setOrbs(scene.getSceneID()*3);
             getKnight().setHP(50);
             getKnight().setPosition(scene.getStartPosition());
             getKnight().setGotHit(false);           //if player dies to damage then he resets the boolean to receive damage

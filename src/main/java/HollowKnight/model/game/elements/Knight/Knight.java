@@ -145,10 +145,6 @@ public class Knight extends Element {
         this.jumpCounter = jumpCounter;
     }
 
-    public void setAcceleration(double acceleration) {
-        this.acceleration = acceleration;
-    }
-
     public void setMaxVelocity(Vector maxVelocity) {
         this.maxVelocity = maxVelocity;
     }
@@ -159,13 +155,6 @@ public class Knight extends Element {
 
     public void setScene(Scene scene) {
         this.scene = scene;
-    }
-
-    public void setDashBoost(double dashBoost) {
-        this.dashBoost = dashBoost;
-    }
-    public void setJumpBoost(double jumpBoost) {
-        this.jumpBoost = jumpBoost;
     }
 
     public void setState(KnightState state) {

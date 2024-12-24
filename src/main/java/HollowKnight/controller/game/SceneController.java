@@ -36,13 +36,14 @@ public class SceneController extends Controller<Scene> {
 
             playerController.move(game, action, time);
 
-            if (getModel().isAtEndPosition() && knight.getOrbs() == 3) {
+            if (getModel().isAtEndPosition() && knight.getOrbs() == 3 * (getModel().getSceneID() + 1)) {
                 if (getModel().getSceneID() + 1 >= game.getNumberOfLevels()) {
                     Credits credits = new Credits(getModel().getPlayer());
                     game.setState(new CreditsState(credits, game.getSpriteLoader()));
                 } else {
                     SceneLoader sceneLoader = new SceneLoader((getModel().getSceneID() + 1));
-                    Scene newScene = sceneLoader.createScene(new Knight(0, 0, knight.getHP(), 1, 10));
+                    Scene newScene = sceneLoader.createScene(knight);
+                    knight.getOrbs();
                     game.setState(new GameState(newScene, game.getSpriteLoader()));
                 }
             }
