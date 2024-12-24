@@ -12,18 +12,8 @@ public class PlayerStatsViewer{
         // Fetch the player details
         var player = scene.getPlayer();
 
-        // Format position and velocity strings
-        String pos = formatVector("pos", player.getPosition().x(), player.getPosition().y());
-        String vel = formatVector("vel", player.getVelocity().x(), player.getVelocity().y());
-
         // Fetch the player's state class name
         String state = "state " + player.getState().getClass().getSimpleName();
-
-        // Fetch player collision
-        String colides = "ground " + player.isOnGround();
-
-        // Fetch player jumpBoost
-        String jumpBoost = "jumpBoost " + String.format("%.2f", player.getJumpBoost());
 
         String hp = "hp " + player.getHP();
 
@@ -34,8 +24,6 @@ public class PlayerStatsViewer{
         // Define a common color for all text
         TextColor.RGB color = new TextColor.RGB(0, 225, 75);
 
-        // Draw each piece of information
-        //this.textViewer.draw(pos, 4, 0, color, gui);
         textViewer.draw(state, 4, 8, color, gui);
         textViewer.draw(hp, 4, 16, color, gui);
         textViewer.draw(fps, 4, 24, color, gui);
