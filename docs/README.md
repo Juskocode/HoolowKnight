@@ -49,117 +49,130 @@
 ## Design
 
 ### Code Structure
-
 #### Problem in Context
 
-When developing software that interacts with a user interface, it's critical to establish an appropriate structural design. The code needs to be organized and separated effectively to adhere to the **Single Responsibility Principle**.  
-This is especially important in games, where different components (such as handling user input, rendering visuals, or managing game logic) must be dealt with independently.
+To ensure that our software has the proper structural design, we relied heavily on the SOLID design principles. The code must then be neatly modularized and divided to follow the Single Responsibility Principle.
+
+We will manage the several elements of the game independently, like input, game logic and rendering.
 
 #### The Pattern
-
-To address this, we implemented the **Model/View/Controller (MVC)** pattern, a well-known approach in Graphical User Interface (GUI) design. This pattern divides the codebase into three distinct sections:
-- **Model**: Manages the data, rules, and core game logic.
-- **View**: Handles the display of the model and routes user actions to the controller.
-- **Controller**: Bridges the model and view, interpreting user actions and updating the model accordingly.
+The pattern we found was the most appropriate for this project was the Model | View | Controler Pattern, as it is widely used in applications that feature a Graphical User Interface (GUI). This pattern mandates that the code should be segmented in 3 different sections:
+Model - general game logic;
+View - rendering, and visual related tasks;
+Controller - interpret user inputs.
 
 #### Implementation
-The following diagram illustrates this structure:
-<p align="center">
-  <img src="uml/mvc.png"/>
-</p>
+The source code of the application has been divided into folders with names such as "model", "view" and "controller".
 
 #### Consequences
+This design patters ensures the code is organized and well separated. This reduces the number of conflicts, as we are only changing snippets of code at a time, making the process of developing softare more convenient.
 
-Adopting this architecture pattern has allowed us to maintain well-organized, modular code. Changes made to one component can be implemented with minimal risk of breaking functionality elsewhere. This segregation of responsibilities is particularly beneficial for scaling or enhancing the game in the future.
 
----
 
 ### Game Loop
-
 #### Problem in Context
 
-When creating a game, it’s crucial to have a mechanism that updates the state of every entity over time. Early in development, you might only want the game to run continuously without requiring input. However, as the game becomes more complex and includes more entities, you'll need to regulate how quickly it runs and how often visuals are updated on screen.  
-This is also essential for ensuring consistent performance across systems with varying hardware capabilities. Without such control, the game speed might fluctuate depending on the system.
+Our main point of concern during the first stages of development was to create a simple program that ran. At this point, we were not taking into account user input yet.
+However, as the game advanced, we needed to ensure that we could receive and process user input, as well as present images of screen at a fixed speed.  
+As these tasks' speed can vary depending on the users's systems,there was a lot of emphasis on making it possible to standardize the speed at which the game is executed by users' computers.
 
 #### The Pattern
+To reach these targets, we decided to implement a Game Loop, which is a while loop that keeps running until it is time to exit the game.
+We set a target for the amount of frames to be displayed in a second (in this case 30). The idea behind this is to calculate the time that needs to be waited before proceeding to the next iteration of the loop (and generating another frame).
 
-A widely used solution for this challenge is the **Game Loop** pattern. This is essentially a while-loop that continues running as long as the game is active (for example, until the user exits).  
-Within this loop, a target FPS (frames per second) is defined, representing how often the visuals should update in a second. Using the target FPS, we can calculate how long the main execution thread needs to pause before proceeding to the next iteration.  
-This ensures the game runs consistently, providing a smooth experience for players on different systems.
-
-#### Implementation
-The following diagram illustrates the flow of this pattern:
-<p align="center">
-  <img src="uml/game-loop.png"/>
-</p>
+#### Implementation:
+Our implementation of a Game Loop can be found in the Game Class, which is the entry point for our application.
 
 #### Consequences
+The positive consequences of choosing this design pattern are, as mentioned above, smooth and similar experiences across various user systems, as well as giving us, the developers, the capability of configuring the speed of execution of the game, to make the gameplay more relaxed or more fast paced.
 
-Implementing the Game Loop pattern provides several benefits, including smooth and consistent gameplay across various systems and the ability to precisely control the execution speed of the game.  
-However, some linters may flag the use of thread-sleeping commands inside loops as bad practice, since they involve idle waiting. While this is true in general programming, it’s a standard and expected practice in game development to achieve consistent timing.
+(adicionar cena relacionada com "On the other hand, some linters may flag the command to make the main thread sleep as a bad practice since it is used inside a loop and relies on busy waiting. However, this is considered normal and is expected to happen when running a game.")
+
+### Multiplicity of Game States
+#### Problem in Context
+
+The application needs to know whether it is in the menu or running the game.
+While this could be done using a boolean variable and conditional logic to adjust the application's behavior, this method becomes impractical as the application grows.
+Adding new screens would require modifying the already existing logic, which goes against the Open/Closed Principle from the SOLID Design Principles.
+Moreover, this method would lead to unrefined code, filled with large conditional blocks, as it would constantly check the current screen to determine the correct actions. This not only creates messy code, but also goes against the Single Responsibility Principle, something we wished to avoid.
+
+#### The Pattern
+To avoid all of these issues, we implemented the State Pattern.
+First, we created an abstract State Class. The subclasses that extend this class are the different possible states that the application can run into. Each subclass of the State Class has an implementation of the logic behind a state, being responsible for its respective transitions to other states, based on user inputs.
+This design pattern massively improves code scalability, as you can add functionality to a given screen without needing to change the operation of the other screens.
+
+#### Implementation
+Our implementation of a State Pattern can be found in the HollowKnight.state package. It includes the abstract State class, as well its derived classes.
+
+#### Consequences
+The State Design Pattern allows for increased modularity and ease of expandability. Also, the need for very long conditional statements is abolished. Finally, each screen is independent from the others, which makes our code compliant with the SOLID design principles.
+
+
+### The Behavior of the Game States
+#### Problem in Context
+
+As previously discussed, we are using the State Design pattern to keep track of the game state. As game states are relatively similar objects, we can use the Abstract Factory Design Pattern to create a baseline and extend it in other (concrete) classes.
+
+#### The Pattern
+The Abstract Factory relies on creating related objects. Each variant of the factory overrides methods, thus creating slightly different objects.
+
+#### Implementation
+In our project, we created an abstract State class, which was extended by GameState, MainMenuState and SettingsMenuState. These classes can be found in HollowKnight.state.
+
+#### Consequences
+Using polymorphism, we can avoid interacting with state logic via long conditional statements, which leads to a major simplification of the development process.
+This way of coding is also less prone to result in bugs and unexpected behaviour.
+
+
+
+### Simplification of Lanterna's interface
+#### Problem in Context
+
+In order to make the development of the game faster, we needed a convenient way to draw characters to the terminal screen and receive user inputs using Lanterna.
+In order to interact with Lanterna's API, we would need chunky code, that would need to be written several times throughout the project.
+
+#### The Pattern
+As the above mentioned problem would mean that we would have code with very poor modularity, we decided to use the Adapter Pattern to solve these issues, instead of naively duplicating code.
+By creating an Adapter, and interacting with it, instead of interacting directly with Lanterna's API, we simplified our code, removing the need for duplication of code snippets.
+
+#### Implementation
+The classes that serve as our implementation of an Adapter pattern can be found in HollowKnight.gui.
+
+#### Consequences
+Using the Adapter Pattern makes the code easier to write, more modular, and generally, prettier looking.
+The fact that the classes that use this adapter do not have to be concerned about the exact operations that are being done with Lanterna, also makes this part of our code compliant with SOLID's Single Responsability Principle.
 
 ### Player States
-
 #### Problem in Context
 
-While implementing the player's movement, we wanted to restrict its movement while it's performing certain actions. For example, the player should not be able to jump right after jumping, it should not dash right after dashing, etc. Also, determining in what state the player is is useful for its respective animations.
-Initially, we had the player's state stored in a lot of **flags** inside of the Player class, which not only was confusing to understand from those flags what exactly the player was doing but also made the code that updated the player's movement very long and messy. It also didn't favor the Open/Closed Principle very well, as we realized that slight alterations to one part of the movement impacted others in unpredictable ways.
+Depending on what the "Knight" is doing, we want to restrict some actions. For example, we don't want to allow the player to dash right immediately dashing, as it would go against our plans for game mechanics.
+Moreover, thanks to the particle system we implemented, determining which state the player is in would be crucial, so we can display the right animations at the right time.
+If we opted to store the state of the player in variables (flags), we would be going against SOLID's Open/Closed Principle, as increasing the number of states would likely require major code changes in order to maintain functionality in other states.
 
 #### The Pattern
-
-For this problem, we recurred to the **State** Pattern once again. As stated before, this pattern suggests creating an abstract class for the player state and implementing each one of the concrete states as their own subclass, with their own implementation of the needed player's actions and state transitions.
+The State Pattern allowed us to overcome all these hurdles. We started by creating an abstract class, that was our base player state. All of the concrete states that the player could go through extended this abstract state class. The specific details of each state are only implemented in the child classes.
 
 #### Implementation
-
-The implementation of this pattern can be found in the [abstract class KnightState](/src/main/java/HollowKnight/model/game/elements/Knight/KnightState.java),
-as well as its subclasses: [IdleState](/src/main/java/HollowKnight/model/game/elements/Knight/IdleState.java),
-[WalkingState](/src/main/java/HollowKnight/model/game/elements/Knight/WalkingState.java),
-[RunningState](/src/main/java/HollowKnight/model/game/elements/Knight/RunningState.java),
-[JumpingState](/src/main/java/HollowKnight/model/game/elements/Knight/JumpState.java),
-[FallingState](/src/main/java/HollowKnight/model/game/elements/Knight/FallingState.java),
-  and [RespawnState](/src/main/java/HollowKnight/model/game/elements/Knight/RespawnState.java).
-
-This way, the player redirects the logic of movement to the state, and the state deals with the movement's actualization, with methods such as `movePlayerLeft()`, `jump()` or `updateVelocity()`.
-
-A UML diagram describing the pattern implementation can be found below:
-
-<p align="center">
-  <img src="uml/KnightStateStruct.png"/>
-</p>
+The parent class KnightState and its child classes can be found in HollowKnight.model.game.elements.Knight. The child classes that implement the different states the knight can alternate between, AfterDashState.java, IdleState.java, MaxVelocityState.java, DamagedState.java, JumpState.java, RespawnState.java, DashState.java, RunningState.java, FallingState.java and      WalkingState.java.
+Each of these states implements independently methods such as jump(), dash(), updateVelocity(), among others.
 
 #### Consequences
+The code is much more organised and intuitive to read. The state pattern allows for a precise player's behaviour control, without needing to write overly messy code. Using this Design Pattern, it is easier to expand the game, implementing more states as needed.
 
-With this pattern, all the phases of the player's movement became well segregated and intuitively identified, as well as more securely defined than with the flag fields. Also, the transitions between each state become much clearer and, if we were to add more states in the future, it would be as easy as adding another subclass (no need to potentially alter the behavior of other states to add another). It also allows for more flexible player movement, by allowing to make state-specific operations.
-
-### Simplification of Lanterna's Interface
-
+### Sprite Loading
 #### Problem in Context
-
-To handle the visuals of our game, we needed a way to draw characters on the terminal and process inputs using Lanterna. However, Lanterna's API lacks straightforward functions for these tasks.
-One solution would be to manually implement these functionalities every time we need them, but this approach leads to repetitive, non-modular code that is difficult to maintain.
+To reduce memory consumption, it would be beneficial to store a sprite only once, even if the sprite needs to be presented, instead of loading the memory with repeated information.
+Unifying the access to sprites would also be helpful for mocking in unit testing.
 
 #### The Pattern
-
-To address this, we implemented the **Adapter** pattern. This design pattern involves creating a specialized object that acts as a bridge, translating the interface of one system (Lanterna) into a format that another system (our application) can easily use.
-By introducing an adapter ,LanternaGUI, we provide our application's classes with a more intuitive and user-friendly interface for interacting with Lanterna's features.
+In order to achieve these goals, we used the Flyweight Pattern. This Design Pattern relies on the usage of a hash map to check if the sprite has already been loaded.
 
 #### Implementation
-
-<p align="center">
-  <img src="uml/adapter.png"/>
-</p>
+Our implementation of the Flyweight Pattern can be found on the GameSpriteLoader class and on all of the implementations of the interface ElementViewer.
 
 #### Consequences
+This Design Pattern helped us make our game more efficient, as it now demands less memory to run. Also, unit testing was simplified with this change.
 
-Using the Adapter Pattern provides several benefits such as:
-
-1. **Encapsulation of Lanterna-Specific Logic**  
-   Our application classes no longer need to manage the intricacies of Lanterna, adhering to the **Single Responsibility Principle**.
-
-2. **Improved Modularity**  
-   By abstracting Lanterna's functionality, the codebase becomes more adaptable and easier to update or extend in the future.
-
-This pattern simplifies interactions with Lanterna and supports long-term maintainability.
 
 
 ## TESTING
