@@ -16,7 +16,7 @@ class SwordMonsterTest {
     void setUp() {
         swordMonster = new SwordMonster(50, 60, 40,
                 new Scene(10,10, 0),
-                50, new Position(8, 8));
+                50, new Position(8, 8), 's');
     }
 
     @Test
