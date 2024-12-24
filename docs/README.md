@@ -198,8 +198,8 @@ This Design Pattern helped us make our game more efficient, as it now demands le
 
 - We used unit testing and mocks for more complex tasks
 - **[Coverage Testing](/docs/tests/TestCoverageResult.png)**
-  - Class Coverage ≈ 78,5%
-  - Branch Coverage ≈ 41,9% (for now with trivial test this is normal)
+  - Class Coverage ≈ 88,7%
+  - Branch Coverage ≈ 67,9% (for now with trivial test this is normal)
   <p align="center">
     <img src="tests/TestCoverageResult.png"/>
   </p>
