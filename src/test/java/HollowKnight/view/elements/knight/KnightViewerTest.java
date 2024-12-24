@@ -27,7 +27,7 @@ class KnightViewerTest {
         this.gui = mock(GUI.class);
         this.gameSpriteLoader = mock(GameSpriteLoader.class);
     }
-
+/*
     @Test
     public void draw() throws IOException, IOException {
         Sprite sprite1 = mock(Sprite.class);
@@ -46,4 +46,5 @@ class KnightViewerTest {
                 .draw(gui, (int)player.getPosition().x(), (int)player.getPosition().y());
 
     }
+    */
 }

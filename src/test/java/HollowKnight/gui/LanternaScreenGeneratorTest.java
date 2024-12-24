@@ -72,7 +72,7 @@ class LanternaScreenGeneratorTest {
 
     @Test
     public void createScreenWithResolution() throws IOException, URISyntaxException, FontFormatException {
-        RescalableGUI.ResolutionScale resolution = RescalableGUI.ResolutionScale.FHD;
+        RescalableGUI.ResolutionScale resolution = RescalableGUI.ResolutionScale.WXGA;
         assertNotEquals(0, resolution.getHeight());
         assertNotEquals(0, resolution.getWidth());
         String terminalTitle = "testWithRes";

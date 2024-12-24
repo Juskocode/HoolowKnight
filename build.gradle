@@ -2,11 +2,13 @@ plugins {
     id 'java'
     id 'application'
     id "net.ltgt.errorprone" version "4.1.0"
-    id 'info.solidsoft.pitest' version '1.6.0'
+    id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'HollowKnight'
 version = '1.0'
+
 
 repositories {
     mavenCentral()
@@ -29,10 +31,29 @@ application {
     mainClass.set('HollowKnight.Game')
 }
 
+
 test {
-    useJUnitPlatform()  // Ensure tests use JUnit 5 platform
+    useJUnitPlatform {
+        includeEngines ('junit-jupiter', 'jqwik')
+    }
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    finalizedBy jacocoTestReport
+}
+
+compileJava {
+    options.compilerArgs << "-Werror"
+}
+
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
 
 pitest {
     junit5PluginVersion = '0.12'
+    jvmArgs = ['-Xmx2g', '-Xms1g', '-XX:MaxPermSize=1g', '-XX:+UseG1GC']
 }
+
+

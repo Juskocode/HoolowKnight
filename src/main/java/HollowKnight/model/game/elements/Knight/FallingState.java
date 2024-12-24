@@ -14,7 +14,7 @@ public class FallingState extends KnightState{
                 getKnight().setJumpCounter(getKnight().getJumpCounter() + 1);
                 Vector newVelocity = new Vector(
                         getKnight().getVelocity().x(),
-                        getKnight().getVelocity().y() - (getKnight().getJumpBoost())
+                        getKnight().getVelocity().y() - getKnight().getJumpBoost()
                 );
                 getKnight().getScene().setDoubleJumpParticles(getKnight().createParticlesDoubleJump(20, getKnight().getScene()));
                 //System.out.println(getKnight().getScene().getDoubleJumpParticles().size() + " jump particles");

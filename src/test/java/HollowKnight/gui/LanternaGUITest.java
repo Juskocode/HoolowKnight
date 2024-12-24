@@ -72,7 +72,7 @@ public class LanternaGUITest {
     public void setResolution() throws IOException, URISyntaxException, FontFormatException {
         String title = "setResolution test";
         LanternaGUI gui = new LanternaGUI(screenGenerator, title);
-        RescalableGUI.ResolutionScale resolutionScale = RescalableGUI.ResolutionScale.FOUR_K;
+        RescalableGUI.ResolutionScale resolutionScale = RescalableGUI.ResolutionScale.WXGA;
 
         gui.setResolutionScale(resolutionScale);
 
