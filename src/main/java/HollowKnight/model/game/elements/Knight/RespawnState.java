@@ -42,6 +42,7 @@ public class RespawnState extends KnightState {
 
         if (deathTimer <= 0) {
             SceneLoader sceneLoader = new SceneLoader(scene.getSceneID());
+            getKnight().increaseDeaths();
             sceneLoader.setOrbs(scene);
             getKnight().setOrbs(0);
             getKnight().setHP(50);
