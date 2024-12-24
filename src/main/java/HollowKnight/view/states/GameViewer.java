@@ -21,6 +21,8 @@ import com.googlecode.lanterna.TextColor;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameViewer extends ScreenViewer<Scene> {
 
@@ -39,6 +41,8 @@ public class GameViewer extends ScreenViewer<Scene> {
     private final MonsterViewer monsterViewer;
     private BufferedImage staticLayer;
     private boolean staticLayerUpdated;
+
+    private static final Logger LOGGER = Logger.getLogger(GameViewer.class.getName());
 
     public GameViewer(Scene model, ViewerProvider viewerProvider) throws IOException {
 
@@ -177,8 +181,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         return x >= cameraBounds[0] && x < cameraBounds[2] && y >= cameraBounds[1] && y < cameraBounds[3];
     }
 
-
-
     private <T extends Element> void drawElements(GUI gui, List<T> elements, ElementViewer<T> viewer, long time, int[] cameraBounds) throws IOException {
         elements.stream()
                 .filter(element -> isElementInCamera(element, cameraBounds))
@@ -186,7 +188,9 @@ public class GameViewer extends ScreenViewer<Scene> {
                     try {
                         drawElement(gui, viewer, element, time, cameraBounds);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        // Log the exception at a WARNING level
+                        LOGGER.log(Level.WARNING, "Failed to draw element: {0}", e.getMessage());
+                        LOGGER.log(Level.FINE, "Stack Trace: ", e);
                     }
                 });
     }
@@ -223,9 +227,6 @@ public class GameViewer extends ScreenViewer<Scene> {
         TextColor.RGB color1 = new TextColor.RGB(baseRed1, baseGreen1, baseBlue1);
         TextColor.RGB color2 = new TextColor.RGB(baseRed2, baseGreen2, baseBlue2);
 
-        // Thunderstorm flash effect (every 800 ticks)
-        //Random random = new Random();
-        //int ticks = random.nextInt(1000 - 500 + 1) + 500;
         boolean flashActive = (time % 800 < 20); // Flash active for 20 ticks every 800 ticks
         boolean afterEffectActive = (time % 800 >= 20 && time % 800 < 60); // Aftereffect active for 40 ticks
         double afterEffectFactor = afterEffectActive ? (1.0 - (time % 800 - 20) / 40.0) : 0.0;
