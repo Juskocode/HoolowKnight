@@ -7,6 +7,7 @@ import HollowKnight.model.game.scene.Scene;
 import HollowKnight.model.game.scene.SceneLoader;
 import HollowKnight.model.menu.MainMenu;
 import HollowKnight.state.MainMenuState;
+import HollowKnight.view.sprites.GameSpriteLoader;
 import net.jqwik.api.*;
 import net.jqwik.api.constraints.IntRange;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class SceneControllerTest {
     private Game game;
@@ -25,6 +27,7 @@ class SceneControllerTest {
     private PlayerController playerController;
     private ParticleController particleController;
     private EnemieController enemieController;
+    private GameSpriteLoader gameSpriteLoader;
     @BeforeEach
     void setUp() {
         this.game = Mockito.mock(Game.class);
@@ -35,6 +38,8 @@ class SceneControllerTest {
         this.particleController = Mockito.mock(ParticleController.class);
         this.enemieController = Mockito.mock(EnemieController.class);
         this.sceneController = new SceneController(scene, playerController, particleController, enemieController);
+        this.gameSpriteLoader = new GameSpriteLoader();
+        when(game.getSpriteLoader()).thenReturn(gameSpriteLoader);
     }
 
     @Test

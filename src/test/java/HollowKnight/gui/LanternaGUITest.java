@@ -92,30 +92,6 @@ public class LanternaGUITest {
         verifyNoMoreInteractions(tg);
     }
 
-    @Property
-    public void drawRectangle(
-            @ForAll int x,
-            @ForAll int y,
-            @ForAll int width,
-            @ForAll int height,
-            @ForAll @From("color") TextColor.RGB color
-    ) throws IOException, URISyntaxException, FontFormatException {
-        GUI gui = new LanternaGUI(screenGenerator, "drawRectangle test");
-
-        gui.drawRectangle(x, y, width, height, color);
-
-        if (width > 0 && height > 0) {
-            verify(tg, Mockito.times(1)).setBackgroundColor(color);
-            verify(tg, Mockito.times(1))
-                    .fillRectangle(new TerminalPosition(x, y), new TerminalSize(width, height), ' ');
-        }
-        else {
-            verify(tg, Mockito.times(0)).setBackgroundColor(any(TextColor.class));
-            verify(tg, Mockito.times(0))
-                    .fillRectangle(any(TerminalPosition.class), any(TerminalSize.class), anyChar());
-        }
-        verifyNoMoreInteractions(tg);
-    }
 
     @Test
     public void cls() throws IOException, URISyntaxException, FontFormatException {
@@ -148,4 +124,51 @@ public class LanternaGUITest {
                 Arbitraries.integers().between(0, 255)
         ).as(TextColor.RGB::new);
     }
+
+    @Test
+    public void drawText() throws IOException, URISyntaxException, FontFormatException {
+        LanternaGUI gui = new LanternaGUI(screenGenerator, "draw text test");
+        when(screen.newTextGraphics()).thenReturn(tg);
+        gui.drawText(1,1,new TextColor.RGB(0,0,0),"teste");
+        verify(tg, times(1)).putString(1,1,"teste");
+    }
+
+
+    @Test
+    public void getNextActionWithoutKeySpam() throws IOException, URISyntaxException, FontFormatException {
+        LanternaGUI gui = new LanternaGUI(screenGenerator, "getNextAction without key spam test");
+        KeyAdapter keyAdapter = gui.getKeyAdapter();
+
+        Map<Integer, GUI.ACTION> keyToAction = new HashMap<>();
+        keyToAction.put(VK_LEFT, GUI.ACTION.LEFT);
+        keyToAction.put(VK_RIGHT, GUI.ACTION.RIGHT);
+        keyToAction.put(VK_UP, GUI.ACTION.UP);
+        keyToAction.put(VK_DOWN, GUI.ACTION.DOWN);
+        keyToAction.put(VK_ESCAPE, GUI.ACTION.QUIT);
+        keyToAction.put(VK_ENTER, GUI.ACTION.SELECT);
+        keyToAction.put(VK_SPACE, GUI.ACTION.JUMP);
+        keyToAction.put(VK_X, GUI.ACTION.DASH);
+        keyToAction.put(VK_T, GUI.ACTION.NULL);
+
+        gui.getACTION();
+        GUI.ACTION action1 = gui.getACTION();
+        assertEquals(GUI.ACTION.NULL, action1);
+
+        for (Map.Entry<Integer, GUI.ACTION> entry: keyToAction.entrySet()) {
+            KeyEvent event = mock(KeyEvent.class);
+            when(event.getKeyCode()).thenReturn(entry.getKey());
+
+            keyAdapter.keyPressed(event);
+            GUI.ACTION action2 = gui.getACTION();
+            GUI.ACTION action3 = gui.getACTION();
+            keyAdapter.keyReleased(event);
+            keyAdapter.keyPressed(event);
+            keyAdapter.keyReleased(event);
+            GUI.ACTION action4 = gui.getACTION();
+
+            assertEquals(entry.getValue(), action2);
+            assertEquals(GUI.ACTION.NULL, action4);
+        }
+    }
+
 }

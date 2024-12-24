@@ -17,7 +17,7 @@ class GhostMonsterTest {
         this.scene = Mockito.mock(Scene.class);
         ghostMonster = new GhostMonster(10, 20, 10,
                 scene,
-                15, new Position(2, 2));
+                15, new Position(2, 2), 'x');
     }
 
     @Test

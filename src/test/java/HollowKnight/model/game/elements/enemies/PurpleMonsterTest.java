@@ -16,7 +16,7 @@ class PurpleMonsterTest {
     void setUp() {
         purpleMonster = new PurpleMonster(30, 40, 30,
                 new Scene(10,10, 0),
-                40, new Position(8, 9));
+                40, new Position(8, 9), 'p');
     }
 
     @Test

@@ -1,11 +1,10 @@
 package HollowKnight.model.game.elements.Knight;
 
-import HollowKnight.model.Position;
-import HollowKnight.model.Vector;
+
+import HollowKnight.model.dataStructs.Vector;
 import HollowKnight.model.game.elements.Particle.Particle;
 import HollowKnight.model.game.elements.Particle.RespawnParticle;
 import HollowKnight.model.game.scene.Scene;
-import HollowKnight.view.elements.PairList;
 import com.googlecode.lanterna.TextColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
