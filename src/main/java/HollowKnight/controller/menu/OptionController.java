@@ -28,12 +28,13 @@ public class OptionController extends Controller<Menu> {
     public void move(Game game, GUI.ACTION action, long frameCount) throws IOException, URISyntaxException, FontFormatException {
         switch (getModel().getCurrentOption().getType()) {
             case START_GAME:
-                if (action == GUI.ACTION.SELECT)
+                if (action == GUI.ACTION.SELECT) {
                     game.setState(new GameState(
-                                  new SceneLoader(0)
-                                          .createScene(new Knight(0,0, 50, 10, 1)),
+                            new SceneLoader(0)
+                                    .createScene(new Knight(0, 0, 50, 10, 1)),
                             game.getSpriteLoader()
                     ));
+                }
                 break;
             case SETTINGS:
                 if (action == GUI.ACTION.SELECT)

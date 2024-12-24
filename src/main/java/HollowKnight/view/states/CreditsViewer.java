@@ -22,11 +22,11 @@ public class CreditsViewer extends ScreenViewer<Credits> {
         this.logoViewer = viewerProvider.getLogoViewer();
     }
 
-    public static final TextColor messageColor = new TextColor.RGB(234, 234, 234);
-    public static final TextColor nameColor = new TextColor.RGB(155,173,183);
-    public static final TextColor scoreColor = new TextColor.RGB(91,110,225);
-    public static final TextColor deathColor = new TextColor.RGB(95,133,240);
-    public static final TextColor timeColor = new TextColor.RGB(99,155,255);
+    public static final TextColor messageColor = new TextColor.RGB(25, 25, 25);
+    public static final TextColor nameColor = new TextColor.RGB(15,22,25);
+    public static final TextColor scoreColor = new TextColor.RGB(40,55,130);
+    public static final TextColor deathColor = new TextColor.RGB(45,65,140);
+    public static final TextColor timeColor = new TextColor.RGB(49,75,155);
 
     @Override
     public void draw(GUI gui, long frameCount) throws IOException {
@@ -37,18 +37,19 @@ public class CreditsViewer extends ScreenViewer<Credits> {
         drawScore(gui);
         drawDeaths(gui);
         drawDuration(gui);
-        logoViewer.draw(gui, 44, 16);
+        logoViewer.draw(gui, 60, 16);
         gui.flush();
     }
 
     private void drawMessages(GUI gui) {
+        int xAlignment = 72;
         int yAlignment = 6;
         int spacing = getCharHeight() * 8;
         for (int idx = 0; idx < getModel().getMessages().length ; idx++){
             String message = getModel().getMessages()[idx];
             int messageLength = message.length() * getCharWidth() + (message.length() - 1) * getSpacing();
             textViewer.draw(message,
-                    ((double) gui.getWidth() / 2) - ((double) messageLength / 2),
+                    xAlignment,
                     yAlignment + spacing * idx,
                     messageColor, gui);
         }
@@ -56,7 +57,7 @@ public class CreditsViewer extends ScreenViewer<Credits> {
     }
 
     private void drawNames(GUI gui) {
-        int xAlignment = 95;
+        int xAlignment = 118;
         int yAlignment = 60;
         int spacing = getCharHeight() * 2;
         for (int idx = 0; idx < getModel().getNames().length ; idx++){
@@ -69,7 +70,7 @@ public class CreditsViewer extends ScreenViewer<Credits> {
 
     private void drawScore(GUI gui) {
         int xAlignment = 10;
-        int yAlignment = 60;
+        int yAlignment = 70;
         textViewer.draw("Score:  " + String.format("%1$" + 2 + "s", getModel().getScore()).replace(' ', '0'),
                 xAlignment,
                 yAlignment,
@@ -78,7 +79,7 @@ public class CreditsViewer extends ScreenViewer<Credits> {
 
     private void drawDeaths(GUI gui) {
         int xAlignment = 10;
-        int yAlignment = 70;
+        int yAlignment = 80;
         textViewer.draw("Deaths: " + String.format("%1$" + 2 + "s", getModel().getDeaths()).replace(' ', '0'),
                 xAlignment,
                 yAlignment,
@@ -88,7 +89,7 @@ public class CreditsViewer extends ScreenViewer<Credits> {
 
     private void drawDuration(GUI gui) {
         int xAlignment = 10;
-        int yAlignment = 80;
+        int yAlignment = 90;
         textViewer.draw(
                 "Time:   "
                         + String.format("%1$" + 2 + "s", getModel().getMinutes()).replace(' ', '0')
