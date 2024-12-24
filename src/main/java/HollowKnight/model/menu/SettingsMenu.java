@@ -12,8 +12,9 @@ public class SettingsMenu extends Menu{
     private final int size = 100;
     @Override
     protected List<Option> createEntries() {
-        Option exit = new Option(30, 33, Option.Type.EXIT);
-        return List.of(exit);
+        Option resolution = new Option(30, 30, Option.Type.RESOLUTION);
+        Option exit = new Option(30, 40, Option.Type.TO_MAIN_MENU);
+        return List.of(resolution, exit);
     }
 
     @Override
@@ -44,5 +45,4 @@ public class SettingsMenu extends Menu{
         }
         return particles;
     }
-
 }
