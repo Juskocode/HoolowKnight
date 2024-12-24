@@ -1,73 +1,108 @@
 package HollowKnight.view.states;
 
 import HollowKnight.gui.RescalableGUI;
+import HollowKnight.model.dataStructs.Position;
+import HollowKnight.model.game.elements.Collectables.Collectables;
 import HollowKnight.model.game.elements.Collectables.SpeedOrb;
 import HollowKnight.model.game.elements.Knight.Knight;
+import HollowKnight.model.game.elements.Spike;
+import HollowKnight.model.game.elements.enemies.Enemies;
+import HollowKnight.model.game.elements.enemies.PurpleMonster;
 import HollowKnight.model.game.elements.tile.Tile;
 import HollowKnight.model.game.scene.Scene;
+import HollowKnight.view.elements.collectables.OrbViewer;
+import HollowKnight.view.elements.monsters.MonsterViewer;
 import HollowKnight.view.elements.particle.ParticleViewer;
 import HollowKnight.view.elements.knight.KnightViewer;
+import HollowKnight.view.elements.rocks.RockViewer;
+import HollowKnight.view.elements.spike.SpikeViewer;
 import HollowKnight.view.elements.tile.TileViewer;
+import HollowKnight.view.elements.tree.TreeViewer;
 import HollowKnight.view.sprites.ViewerProvider;
 import com.googlecode.lanterna.TextColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
 class GameViewerTest {
-    /*
+
     private Scene scene;
-    private ParticleViewer particleViewer;
     private ViewerProvider viewerProvider;
+    private ParticleViewer particleViewer;
     private KnightViewer playerViewer;
-    private OrbViewer speedOrbViewer;
+    private SpikeViewer spikeViewer;
+    private OrbViewer orbViewer;
     private TileViewer tileViewer;
-    private RescalableGUI rescalableGUI;
+    private RescalableGUI gui;
+    private TreeViewer treeViewer;
+    private RockViewer rockViewer;
+    private MonsterViewer monsterViewer;
 
     @BeforeEach
     public void setup() {
-        this.scene = new Scene(2, 2, 0);
+        this.scene = new Scene(10, 10, 0);
         scene.setPlayer(new Knight(0, 0, 50,0,0));
+        scene.getPlayer().setScene(scene);
         scene.setTiles(new Tile[][] { { null, null },
                 { new Tile(0, 8, 'T') }});
-        scene.setSpeedOrbs(new SpeedOrb[][] { { null, new SpeedOrb(8, 0,60, 's') }, { null, null }});
+
+        scene.setSpikes(new Spike[][] { { null, null },
+                { null, new Spike(8, 8, '^') }});
+        scene.setOrbs(new Collectables[][] { { null, new SpeedOrb(8, 0,1.1,'s') }, { null, null }});
+        List<Enemies> monsters = new ArrayList<>();
+        monsters.add(new PurpleMonster(0,0,50,scene,0,new Position(0,0),'p'));
+        scene.setMonsters(monsters);
 
         this.viewerProvider = mock(ViewerProvider.class);
         this.particleViewer = mock(ParticleViewer.class);
         this.playerViewer = mock(KnightViewer.class);
-        //this.spikeViewer = mock(SpikeViewer.class);
-        this.speedOrbViewer = mock(SpeedOrbViewer.class);
+        this.spikeViewer = mock(SpikeViewer.class);
+        this.orbViewer = mock(OrbViewer.class);
         this.tileViewer = mock(TileViewer.class);
-        this.rescalableGUI = mock(RescalableGUI.class);
+        this.treeViewer = mock(TreeViewer.class);
+        this.rockViewer = mock(RockViewer.class);
+        this.gui = mock(RescalableGUI.class);
 
-        /*when(viewerProvider.getParticleViewer()).thenReturn(particleViewer);
+        when(viewerProvider.getParticleViewer()).thenReturn(particleViewer);
         when(viewerProvider.getPlayerViewer()).thenReturn(playerViewer);
         when(viewerProvider.getSpikeViewer()).thenReturn(spikeViewer);
-        when(viewerProvider.getStarViewer()).thenReturn(starViewer);
+        when(viewerProvider.getOrbViewer()).thenReturn(orbViewer);
         when(viewerProvider.getTileViewer()).thenReturn(tileViewer);
+        when(viewerProvider.getMonsterViewer()).thenReturn(monsterViewer);
+        when(viewerProvider.getTreeViewer()).thenReturn(treeViewer);
+        when(viewerProvider.getRockViewer()).thenReturn(rockViewer);
+
+        scene.setParticles(new ArrayList<>());
+        scene.setRespawnParticles(new ArrayList<>());
+        scene.setDashParticles(new ArrayList<>());
+        scene.setJumpParticles(new ArrayList<>());
+        scene.setDoubleJumpParticles(new ArrayList<>());
     }
 
-    @Test
+    /*@Test
     public void draw() throws IOException {
         GameViewer gameViewer = new GameViewer(scene, viewerProvider);
         long frameCount = 100;
         int screenWidth = 16, screenHeight = 16;
-        when(rescalableGUI.getWidth()).thenReturn(screenWidth);
-        when(rescalableGUI.getHeight()).thenReturn(screenHeight);
+        when(gui.getWidth()).thenReturn(screenWidth);
+        when(gui.getHeight()).thenReturn(screenHeight);
 
-        gameViewer.draw(rescalableGUI, frameCount);
+        gameViewer.draw(gui, frameCount);
 
-        verify(rescalableGUI, times(1)).cls();
-        verify(rescalableGUI, times(1))
-                .drawRectangle(0, 0, screenWidth, screenHeight, new TextColor.RGB(0,0,0));
-        verify(playerViewer, times(1)).draw(scene.getPlayer(), rescalableGUI, frameCount,0,0);
-        verify(tileViewer, times(1)).draw(scene.getTiles()[1][0], rescalableGUI, frameCount,0,0);
-        //verify(spikeViewer, times(1)).draw(scene.getSpikes()[1][1], gui, frameCount);
-        verify(speedOrbViewer, times(1)).draw(scene.getSpeedOrbs()[0][1], rescalableGUI, frameCount,0,0);
-        verify(rescalableGUI, times(1)).flush();
+        verify(gui, times(1)).cls();
+        verify(gui, times(1))
+                .drawRectangle(0, 0, screenWidth, screenHeight, any(TextColor.RGB.class));
+        verify(playerViewer, times(1)).draw(scene.getPlayer(), gui, frameCount, any(),any());
+        verify(monsterViewer,times(1)).draw(scene.getMonsters().get(0),gui,frameCount,any(),any());
+        verify(tileViewer, times(1)).draw(scene.getTiles()[1][0], gui, frameCount,any(),any());
+        verify(spikeViewer, times(1)).draw(scene.getSpikes()[1][1], gui, frameCount,any(),any());
+        verify(orbViewer, times(1)).draw(scene.getOrbs()[0][1], gui, frameCount,any(),any());
+        verify(gui, times(1)).flush();
     }*/
 
 }

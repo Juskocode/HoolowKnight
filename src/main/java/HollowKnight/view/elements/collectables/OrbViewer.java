@@ -24,7 +24,6 @@ public class OrbViewer implements ElementViewer<Collectables> {
     @Override
     public void draw(Collectables model, GUI gui, long time, int offsetX, int offsetY) throws IOException {
         Sprite sprite = orbMap.get(model.getChar());
-        //System.out.println(model.getChar());
         if (sprite == null) {
             throw new IllegalArgumentException("No sprite for character: " + model.getChar());
         }
