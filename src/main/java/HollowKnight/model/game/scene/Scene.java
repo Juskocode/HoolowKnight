@@ -130,8 +130,8 @@ public class Scene {
         return gravity;
     }
 
-    public void setEndPosition(Position endPosition) {
-        EndPosition = endPosition;
+    public void setEndPosition(Position EndPosition) {
+        this.EndPosition = EndPosition;
     }
 
     private boolean isOutSideScene(double x1, double x2, double y1, double y2) {
@@ -196,16 +196,16 @@ public class Scene {
         this.dashParticles = dashParticles;
     }
 
-    public void collectOrbs(Collectables[][] Orbs){
+    public void collectOrbs(Collectables[][] orbs){
         double x = getPlayer().getPosition().x();
         double y = getPlayer().getPosition().y();
         double width = player.getWidth(), height = player.getHeight();
 
         for (int tileY: List.of((int)y / Tile.SIZE, (int)(y + height - 1) / Tile.SIZE)) {
             for (int tileX: List.of((int)x / Tile.SIZE, (int)(x + width - 1) / Tile.SIZE)) {
-                if (Orbs[tileY][tileX] != null) {
-                    Orbs[tileY][tileX].benefit(getPlayer());
-                    Orbs[tileY][tileX] = null;
+                if (orbs[tileY][tileX] != null) {
+                    orbs[tileY][tileX].benefit(getPlayer());
+                    orbs[tileY][tileX] = null;
                     getPlayer().addOrbs();
                 }
             }
