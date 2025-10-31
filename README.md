@@ -1,5 +1,5 @@
 <h1 align="center">
-  LDTS_T02G07 - Soul Knight
+Soul Knight
 </h1>
 
 <p align="center">
