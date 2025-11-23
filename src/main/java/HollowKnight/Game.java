@@ -19,6 +19,7 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Locale;
 
 public class Game {
     public static final int PIXEL_WIDTH = 230;
@@ -34,10 +35,17 @@ public class Game {
     private State<?> state;
 
     private Game() throws Exception {
+        Rectangle bounds;
+        try {
+            bounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        } catch (HeadlessException e) {
+            // Fallback for headless environments (e.g., Docker without a display)
+            bounds = new Rectangle(1024, 768);
+        }
         ScreenGenerator screenCreator = new LanternaScreenGenerator(
                 new DefaultTerminalFactory(),
                 new TerminalSize(PIXEL_WIDTH, PIXEL_HEIGHT),
-                GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()
+                bounds
         );
         this.gui = new LanternaGUI(screenCreator, "Soul Knight");
         this.menuSoundPlayer = new MenuSoundPlayer(new SoundLoader().loadSound(AudioSystem
@@ -49,6 +57,12 @@ public class Game {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Game.class.getName());
         try {
+            // On macOS, ensure AWT is enabled so Lanterna uses an AWT terminal instead of a TTY.
+            // In Linux/containers, keep default headless setting to allow TTY operation.
+            String osName = System.getProperty("os.name", "").toLowerCase(Locale.ROOT);
+            if (osName.contains("mac")) {
+                System.setProperty("java.awt.headless", "false");
+            }
             new Game().start();
         } catch (Exception e) {
             logger.log(Level.INFO, "An error occurred while running Game.start()", e);
