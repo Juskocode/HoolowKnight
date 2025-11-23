@@ -6,35 +6,13 @@ Soul Knight
   <img src="docs/mockups/SoulKnight.gif"/>
 </p>
 
-## Deployment (Docker)
+## Deployment
 
-If native I/O isn’t working in your environment, you can run the game on Linux in a container. The game uses a TTY when headless, so run the container interactively.
+Deployment instructions (Docker, Compose, CI/CD schema) have moved to:
 
-Quick start
-- Build the image: `docker build -t hollowknight .`
-- Run interactively: `docker run --rm -it hollowknight`
+- docs/deployment/README.md
 
-Using Docker Compose
-1) Use the provided docker-compose.yml in the repo (see below for its contents).
-2) Start: `docker compose up --build`
-3) Stop: `docker compose down`
-
-docker-compose.yml
-```
-services:
-  game:
-    build: .
-    image: hollowknight:local
-    container_name: hollowknight
-    tty: true            # allocate a TTY so Lanterna can use the terminal
-    stdin_open: true     # keep STDIN open for key events
-    environment:
-      - TERM=xterm-256color
-```
-
-Notes
-- The container runs in headless/TTY mode; an AWT window is not used. Use an interactive terminal for best results.
-- On macOS, running directly with Gradle/IntelliJ is still recommended (see below). Docker is most useful for Linux.
+This includes Docker quick start, docker-compose usage, and a Mermaid diagram describing the CI workflow and optional Docker image build.
 
 ## Build and Run (macOS)
 
