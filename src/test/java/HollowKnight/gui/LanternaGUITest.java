@@ -160,7 +160,7 @@ public class LanternaGUITest {
 
             keyAdapter.keyPressed(event);
             GUI.ACTION action2 = gui.getACTION();
-            GUI.ACTION action3 = gui.getACTION();
+            gui.getACTION();
             keyAdapter.keyReleased(event);
             keyAdapter.keyPressed(event);
             keyAdapter.keyReleased(event);
