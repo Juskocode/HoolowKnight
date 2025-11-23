@@ -46,9 +46,8 @@ services:
 
 The repository includes a CI workflow that runs on every push and pull request:
 
-- Builds and tests the project on Ubuntu with Temurin JDK 21
-- Uploads the HTML test report as an artifact
-- On non-PR events (e.g., direct push), it also builds the Docker image (no push by default)
+- Pull requests: Only builds and runs tests (fast feedback). No coverage report or artifacts are uploaded.
+- Pushes (non‑PR): Builds, tests, generates JaCoCo coverage report, uploads the HTML test report as an artifact, and also builds the Docker image (no push by default).
 
 Workflow file: `.github/workflows/ci.yml`
 
@@ -56,13 +55,14 @@ Workflow file: `.github/workflows/ci.yml`
 
 ```mermaid
 flowchart LR
-  A[Developer Push / PR] --> B[CI: Build & Test (JDK 21)
-     - Gradle clean build test
-     - JaCoCo report]
-  B --> C[Artifacts: Test Report]
-  B --> D{Event is PR?}
-  D -- Yes --> E[End (no Docker build)]
-  D -- No (push) --> F[Build Docker image (local tag)
+  A[Developer Push / PR] --> B{Event type}
+  B -- PR --> C[Build & Test (JDK 21)
+     - ./gradlew clean build test]
+  C --> Z[End]
+  B -- Push --> D[Build, Test & Coverage (JDK 21)
+     - ./gradlew clean build test jacocoTestReport]
+  D --> E[Artifacts: Test Report]
+  D --> F[Build Docker image (local tag)
      - docker/build-push-action (no push)]
   F --> G[Developer can run locally via
      docker run / docker compose]
@@ -81,4 +81,4 @@ flowchart LR
 ## Troubleshooting
 
 - If you see terminal-related errors, ensure you’re running the container interactively (`-it`) or via `docker compose up` with `tty: true` and `stdin_open: true`.
-- In CI, check the uploaded artifact “test-report” for detailed test output.
+- In CI, the HTML test report artifact is available on push workflows (not on PRs).
