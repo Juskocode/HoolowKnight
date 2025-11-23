@@ -1,0 +1,22 @@
+# General VCS and IDE
+.git
+.gitignore
+.idea
+*.iml
+
+# Gradle
+.gradle
+gradle/buildOutputCleanup/cache.properties
+
+# Build outputs
+build/
+out/
+
+# OS/editor artifacts
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Test reports
+**/build/reports/

@@ -1,0 +1,9 @@
+services:
+  game:
+    build: .
+    image: hollowknight:local
+    container_name: hollowknight
+    tty: true            # Allocate a TTY so Lanterna can use the terminal
+    stdin_open: true     # Keep STDIN open for key events
+    environment:
+      - TERM=xterm-256color
