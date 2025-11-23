@@ -1,16 +1,58 @@
 <h1 align="center">
-  LDTS_T02G07 - Soul Knight
+Soul Knight
 </h1>
 
 <p align="center">
   <img src="docs/mockups/SoulKnight.gif"/>
 </p>
 
+## Deployment
+
+Deployment instructions (Docker, Compose, CI/CD schema) have moved to:
+
+- docs/deployment/README.md
+
+This includes Docker quick start, docker-compose usage, and a Mermaid diagram describing the CI workflow and optional Docker image build.
+
+## Build and Run (macOS)
+
+Prereqs
+- Install a JDK (21 or newer recommended; tested up to JDK 23)
+- Ensure you open/run the project via Gradle in IntelliJ (do not create a plain Java run config without the module classpath)
+
+Using Gradle (recommended)
+- Build: `./gradlew clean build`
+- Run: `./gradlew run`
+  - Note: Lanterna opens an AWT terminal window. Run from a normal macOS session (not a headless/CI shell).
+- Create a fat JAR: `./gradlew shadowJar`
+  - Then run: `java -jar build/libs/HollowKnight-1.0-all.jar`
+
+Using IntelliJ IDEA
+1) Open the project as a Gradle project (File > Open > select the build.gradle).
+2) Set the Gradle JVM and Project SDK to the same installed JDK (Settings > Build Tools > Gradle and Project Structure > SDKs).
+3) Preferred: Run the Gradle task Run (Gradle tool window > Tasks > application > run).
+4) Alternatively, create an Application configuration:
+   - Main class: `HollowKnight.Game`
+   - Use classpath of module: `HollowKnight.main`
+   - Working directory: project root (default is OK)
+   - JRE: your configured JDK 21+ (e.g., Temurin 21/23)
+
+Troubleshooting “Could not find or load main class HollowKnight.Game” in IntelliJ
+- Ensure you’re using an Application configuration with “Use classpath of module” set to `HollowKnight.main`. If this field is empty or set to a wrong module, the class won’t be found.
+- Prefer running via Gradle (the Gradle run task guarantees the correct classpath).
+- Reimport Gradle project: In the Gradle tool window, click “Reload All Gradle Projects”.
+- Rebuild the project: Build > Rebuild Project.
+- Invalidate caches: File > Invalidate Caches… > Invalidate and Restart.
+- Verify capitalization: the package name is exactly `HollowKnight` (case-sensitive on some filesystems).
+- Delete generated outputs if needed: remove the `build/` and `.gradle/` folders, then `./gradlew clean build`.
+
+Known environment notes on macOS
+- If running from a headless shell or CI, Lanterna may fail with a `/dev/tty` error. Run the game from a normal macOS user session (Terminal/iTerm or inside IntelliJ) so the AWT window can be created.
+- On Apple Silicon, ensure the JDK build matches your CPU (arm64). Temurin, Oracle, or Zulu JDKs work fine.
+- Audio uses Java Sound (javax.sound). If you don’t hear audio, check the system output device/volume.
+
 ## Project Description
 **Soul Knight** is a game inspired by platformer games like *Hollow Knight*, but with some distinct ideas. In this world, everything is trying to kill you, and you are a warrior of great prestige and renown. Your goal is to survive and traverse this underground world to escape.
-><p align="center">
->This project is being developed by <a href="https://github.com/JuskoCode">André Freitas</a> (up202007189@fe.up.pt), <a href="https://github.com/frutastontas">João Furtado</a> (up202305812@fe.up.pt) and <a href="https://github.com/jonas291205">João Santos</a> (up202303908@fe.up.pt) for LDTS 2024/25
-></p>
 
 ## Mockups
 

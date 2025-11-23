@@ -4,6 +4,8 @@ plugins {
     id "net.ltgt.errorprone" version "4.1.0"
     id 'jacoco'
     id 'info.solidsoft.pitest' version '1.15.0'
+    // Creates a self-contained (fat) JAR so you can run the game with a single file
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'HollowKnight'
@@ -44,6 +46,24 @@ test {
 
 compileJava {
     options.compilerArgs << "-Werror"
+}
+
+
+// Ensure generated JARs have a Main-Class so they can be launched easily
+jar {
+    manifest {
+        attributes 'Main-Class': 'HollowKnight.Game'
+    }
+}
+
+// Configure the fat JAR task produced by the Shadow plugin
+// Usage: ./gradlew shadowJar
+// Then run: java -jar build/libs/${rootProject.name}-${version}-all.jar
+shadowJar {
+    archiveClassifier.set('all')
+    manifest {
+        attributes 'Main-Class': 'HollowKnight.Game'
+    }
 }
 
 

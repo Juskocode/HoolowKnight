@@ -108,7 +108,7 @@ public class LanternaGUI implements RescalableGUI {
 
     @Override
     public int getHeight() {
-        return screenGenerator.getWidth();
+        return screenGenerator.getHeight();
     }
 
     @Override

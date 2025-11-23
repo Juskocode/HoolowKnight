@@ -5,17 +5,20 @@ import com.googlecode.lanterna.TextColor;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
+import java.util.Objects;
 
 public class Sprite {
     private final BufferedImage image;
 
     public Sprite(String spritePath) throws IOException {
-        URL resource = getClass().getClassLoader().getResource(spritePath);
-        assert resource != null;
-        image = ImageIO.read(new File(resource.getFile()));
+        try (InputStream stream = Objects.requireNonNull(
+                getClass().getClassLoader().getResourceAsStream(spritePath),
+                "Resource not found on classpath: " + spritePath
+        )) {
+            image = ImageIO.read(stream);
+        }
     }
     public BufferedImage getImage() {return image;}
 

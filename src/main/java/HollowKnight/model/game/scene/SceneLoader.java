@@ -14,13 +14,10 @@ import HollowKnight.model.game.elements.tile.Tile;
 import com.googlecode.lanterna.TextColor;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,8 +38,8 @@ public class SceneLoader {
         if (resource == null){
             throw new FileNotFoundException("Level file not found!");
         }
-        Path path = Paths.get(new File(resource.getFile()).toURI());
-        BufferedReader br = Files.newBufferedReader(path, UTF_8);
+        // Read level from classpath using a stream so it works inside JARs/Docker without filesystem paths
+        BufferedReader br = new BufferedReader(new InputStreamReader(resource.openStream(), UTF_8));
 
 
         lines = readLines(br);
