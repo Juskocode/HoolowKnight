@@ -35,11 +35,16 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Build and test
+      - name: Build and test (PR)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: ./gradlew clean build test --no-daemon
+
+      - name: Build, test and coverage (push)
+        if: ${{ github.event_name != 'pull_request' }}
         run: ./gradlew clean build test jacocoTestReport --no-daemon
 
       - name: Upload test report (artifact)
-        if: always()
+        if: ${{ github.event_name != 'pull_request' && always() }}
         uses: actions/upload-artifact@v4
         with:
           name: test-report
