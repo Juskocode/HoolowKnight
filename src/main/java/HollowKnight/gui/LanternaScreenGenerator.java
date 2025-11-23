@@ -94,10 +94,19 @@ public class LanternaScreenGenerator implements ScreenGenerator {
     }
 
     private AWTTerminalFontConfiguration loadFont(int fontSize) throws URISyntaxException, IOException, FontFormatException {
-        URL resource = getClass().getClassLoader().getResource("fonts/pixel.ttf");
-        File fontFile = new File(Objects.requireNonNull(resource).toURI());
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.PLAIN, fontSize);
-        return AWTTerminalFontConfiguration.newInstance(font);
+        // Load embedded font from the classpath in a JAR-safe way. Avoid URL->File which breaks
+        // when running from fat JARs or shaded artifacts ("URI is not hierarchical").
+        try (var stream = Objects.requireNonNull(
+                getClass().getClassLoader().getResourceAsStream("fonts/pixel.ttf"),
+                "Resource fonts/pixel.ttf not found on classpath"
+        )) {
+            Font pixel = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(Font.PLAIN, fontSize);
+            return AWTTerminalFontConfiguration.newInstance(pixel);
+        } catch (Throwable t) {
+            // Fallback to a standard monospaced font if the custom font cannot be loaded
+            Font fallback = new Font(Font.MONOSPACED, Font.PLAIN, fontSize);
+            return AWTTerminalFontConfiguration.newInstance(fallback);
+        }
     }
 
     private int getBestFontSize(Rectangle terminalBounds) {
